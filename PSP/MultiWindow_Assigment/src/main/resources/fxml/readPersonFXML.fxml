@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.2" fx:controller="controllers.ReadPersonController">
+    <MFXListView fx:id="readListView" depthLevel="LEVEL3" layoutX="46.0" layoutY="40.0" prefHeight="320.0"
+                 prefWidth="254.0"/>
+    <MFXComboBox fx:id="filterComboBox" layoutX="356.0" layoutY="40.0" prefHeight="25.0" prefWidth="200.0"/>
+    <MFXButton layoutX="430.0" layoutY="242.0" mnemonicParsing="false" onAction="#filterData"
+               style="-fx-background-color: #6002EE;" text="Filtrar" textFill="WHITE">
+        <font>
+            <Font name="Open Sans ExtraBold" size="12.0"/>
+        </font>
+    </MFXButton>
+</AnchorPane>

@@ -1,0 +1,4 @@
+**/target/
+**/sonarlint/
+**/workspace.xml
+**/discord.xml

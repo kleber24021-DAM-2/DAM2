@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="500" prefWidth="700" xmlns="http://javafx.com/javafx/11.0.2"
+            fx:controller="controllers.MainController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="Opciones">
+                <MenuItem mnemonicParsing="false" text="Inicio" onAction="#showWelcomeScreen"/>
+                <MenuItem mnemonicParsing="false" text="Añadir persona" onAction="#showCreateScreen"/>
+                <MenuItem mnemonicParsing="false" text="Ver personas" onAction="#showReadScreen"/>
+                <MenuItem mnemonicParsing="false" text="Actualizar personas" onAction="#showUpdateScreen"/>
+                <MenuItem mnemonicParsing="false" text="Borrar personas" onAction="#showDeleteScreen"/>
+            </Menu>
+        </MenuBar>
+    </top>
+</BorderPane>

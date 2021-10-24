@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.2" fx:controller="controllers.UpdatePersonController">
+    <MFXListView fx:id="personListView" layoutX="7.0" layoutY="11.0" onMouseClicked="#showPersonInfo"
+                 prefHeight="381.0" prefWidth="293.0"/>
+    <MFXTextField fx:id="textName" layoutX="390.0" layoutY="36.0" promptText="Nombre">
+        <font>
+            <Font name="Open Sans SemiBold" size="13.0"/>
+        </font>
+    </MFXTextField>
+    <MFXTextField fx:id="textSurname" layoutX="390.0" layoutY="93.0" promptText="Apellidos">
+        <font>
+            <Font name="Open Sans SemiBold" size="13.0"/>
+        </font>
+    </MFXTextField>
+    <MFXTextField fx:id="textAge" layoutX="390.0" layoutY="149.0" promptText="Edad">
+        <font>
+            <Font name="Open Sans SemiBold" size="13.0"/>
+        </font>
+    </MFXTextField>
+    <MFXRadioButton fx:id="radioMale" layoutX="342.0" layoutY="209.0" mnemonicParsing="false" text="Hombre">
+        <font>
+            <Font name="Open Sans SemiBold" size="12.0"/>
+        </font>
+        <toggleGroup>
+            <ToggleGroup fx:id="toggleSexo"/>
+        </toggleGroup>
+    </MFXRadioButton>
+    <MFXRadioButton fx:id="radioFemale" layoutX="477.0" layoutY="209.0" mnemonicParsing="false" text="Mujer"
+                    toggleGroup="$toggleSexo">
+        <font>
+            <Font name="Open Sans SemiBold" size="12.0"/>
+        </font>
+    </MFXRadioButton>
+    <MFXButton layoutX="364.0" layoutY="317.0" mnemonicParsing="false" onAction="#updatePerson"
+               style="-fx-background-color: #6200ee;" text="Actualizar" textFill="WHITE"/>
+    <MFXButton layoutX="499.0" layoutY="317.0" mnemonicParsing="false" onAction="#showPersonInfo"
+               style="-fx-background-color: #6200ee;" text="Restablecer" textFill="WHITE"/>
+    <DatePicker fx:id="datePicker" layoutX="377.0" layoutY="260.0"/>
+</AnchorPane>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.2" fx:controller="controllers.CreatePersonController">
+    <MFXTextField fx:id="textName" layoutX="226.0" layoutY="41.0" promptText="Nombre">
+        <font>
+            <Font name="Open Sans SemiBold" size="13.0"/>
+        </font>
+    </MFXTextField>
+    <MFXTextField fx:id="textSurname" layoutX="226.0" layoutY="82.0" prefHeight="28.0" prefWidth="148.0"
+                  promptText="Apellidos">
+        <font>
+            <Font name="Open Sans SemiBold" size="13.0"/>
+        </font>
+    </MFXTextField>
+    <MFXTextField fx:id="textAge" layoutX="226.0" layoutY="130.0" promptText="Edad">
+        <font>
+            <Font name="Open Sans SemiBold" size="13.0"/>
+        </font>
+    </MFXTextField>
+    <MFXRadioButton layoutX="178.0" layoutY="230.0" mnemonicParsing="false" text="Hombre">
+        <font>
+            <Font name="Open Sans SemiBold" size="14.0"/>
+        </font>
+        <toggleGroup>
+            <ToggleGroup fx:id="personSexo"/>
+        </toggleGroup>
+    </MFXRadioButton>
+    <MFXRadioButton layoutX="360.0" layoutY="230.0" mnemonicParsing="false" text="Mujer" toggleGroup="$personSexo">
+        <font>
+            <Font name="Open Sans SemiBold" size="14.0"/>
+        </font>
+    </MFXRadioButton>
+    <MFXDatePicker fx:id="datePickerBirth" layoutX="250.0" layoutY="289.0" maxHeight="-Infinity"
+                   maxWidth="-Infinity" prefHeight="63.0" prefWidth="100.0"/>
+    <MFXButton layoutX="496.0" layoutY="228.0" mnemonicParsing="false" onAction="#createPerson"
+               style="-fx-background-color: #6200ee;" text="Crear" textAlignment="CENTER" textFill="WHITE">
+        <font>
+            <Font name="Open Sans SemiBold" size="12.0"/>
+        </font>
+    </MFXButton>
+</AnchorPane>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="488.0" prefWidth="1040.0" stylesheets="@../style/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.FilterCharacter">
+    <children>
+        <TextField fx:id="txtName" layoutX="60.0" layoutY="57.0" promptText="Nombre" />
+        <ComboBox fx:id="cbStatus" layoutX="60.0" layoutY="110.0" prefWidth="150.0" promptText="Status">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Alive" />
+                    <String fx:value="Dead" />
+                    <String fx:value="Unknown" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <ComboBox fx:id="cbSpecies" layoutX="60.0" layoutY="157.0" prefWidth="150.0" promptText="Especie">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Human" />
+                    <String fx:value="Humanoid" />
+                    <String fx:value="Alien" />
+                    <String fx:value="Planet" />
+                    <String fx:value="Disease" />
+                    <String fx:value="Animal" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <ComboBox fx:id="cbGender" layoutX="60.0" layoutY="204.0" prefWidth="150.0" promptText="Género">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Male" />
+                    <String fx:value="Female" />
+                    <String fx:value="Genderless" />
+                    <String fx:value="Unknown" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+        <ListView fx:id="listViewResults" layoutX="526.0" layoutY="31.0" onMouseClicked="#getSelectedCharacter" prefHeight="405.0" prefWidth="463.0" />
+        <Button layoutX="83.0" layoutY="244.0" mnemonicParsing="false" onAction="#filterCharacters" text="Buscar por filtros" />
+        <Label fx:id="pageLabel" layoutX="699.0" layoutY="449.0" prefHeight="25.0" prefWidth="118.0" textAlignment="CENTER" />
+        <Button layoutX="955.0" layoutY="449.0" mnemonicParsing="false" onAction="#goRight" text="--&gt;" />
+        <Button layoutX="526.0" layoutY="449.0" mnemonicParsing="false" onAction="#goLeft" text="&lt;--" />
+        <Button layoutX="85.0" layoutY="278.0" mnemonicParsing="false" onAction="#clearAll" text="Borrar selección" />
+      <TextArea editable="false" layoutX="260.0" layoutY="70.0" prefHeight="118.0" prefWidth="221.0" text="Utiliza estos parámetros para realizar una busquedad en el API de Rick y Morty.&#10;&#10;Si quieres deseleccionar algún campo, presiona borrar selección." wrapText="true" />
+      <TextArea editable="false" layoutX="260.0" layoutY="280.0" prefHeight="177.0" prefWidth="221.0" text="En caso de que la búsqueda devuelva más de 20 resultados, se habilitarán varías páginas en el listview de la derecha.&#10;Puede hacer click en cualquier personaje para ver más detalles.&#10;&#10;No cambie los parámetros de búsqueda mientras cambia de página" wrapText="true" />
+      <Button layoutX="91.0" layoutY="424.0" mnemonicParsing="false" onAction="#setCharacterByID" text="Buscar por ID" />
+      <TextField fx:id="inputId" layoutX="61.0" layoutY="382.0" onAction="#setCharacterByID" />
+      <Label layoutX="60.0" layoutY="346.0" prefHeight="25.0" prefWidth="149.0" text="ID del personaje (1-671)" textAlignment="CENTER" />
+    </children>
+</AnchorPane>

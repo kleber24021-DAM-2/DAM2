@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXLabel?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.1">
+    <MFXLabel labelStyle="STYLE2" layoutX="81.0" layoutY="127.0" prefHeight="146.0" prefWidth="438.0"
+              promptText="Bienvenido, escoja una opción del menu superior">
+        <font>
+            <Font name="Open Sans SemiBold" size="17.0"/>
+        </font>
+    </MFXLabel>
+</AnchorPane>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="467.0" prefWidth="685.0" stylesheets="@../style/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.LocationScreen">
+    <children>
+        <Label layoutX="36.0" layoutY="48.0" prefHeight="31.0" prefWidth="98.0" text="Nombre:" />
+        <TextField fx:id="txtName" editable="false" layoutX="36.0" layoutY="79.0" />
+        <Label layoutX="36.0" layoutY="119.0" prefHeight="31.0" prefWidth="98.0" text="Tipo:" />
+        <TextField fx:id="txtType" editable="false" layoutX="36.0" layoutY="150.0" />
+        <Label layoutX="36.0" layoutY="187.0" prefHeight="31.0" prefWidth="98.0" text="Dimensión:" />
+        <TextField fx:id="txtDimension" editable="false" layoutX="36.0" layoutY="218.0" />
+        <ListView fx:id="charactersListView" layoutX="373.0" layoutY="87.0" prefHeight="303.0" prefWidth="256.0" />
+        <Label layoutX="373.0" layoutY="48.0" prefHeight="31.0" prefWidth="256.0" text="Personajes de este lugar:" />
+    </children>
+</AnchorPane>
