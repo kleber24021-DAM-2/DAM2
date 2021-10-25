@@ -5,9 +5,8 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.time.LocalDateTime
 
-
 @JsonClass(generateAdapter = true)
-data class MarvelHeroItem(
+data class Result(
     @Json(name = "comics")
     val comics: Comics,
     @Json(name = "description")

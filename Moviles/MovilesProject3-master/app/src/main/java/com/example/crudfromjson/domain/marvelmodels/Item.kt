@@ -5,8 +5,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Comic(
-//    Este es el item de los comics
+data class Item(
     @Json(name = "name")
     val name: String,
     @Json(name = "resourceURI")
