@@ -17,10 +17,6 @@ class MarvelRepository(file: InputStream? = null) {
                 .add(LocalTimeAdapter())
                 .addLast(KotlinJsonAdapterFactory())
                 .build()
-            val listOfCardsType: Type = Types.newParameterizedType(
-                MarvelObject::class.java,
-                Data::class.java
-            )
             val marvelObject1 = moshi.adapter(MarvelObject::class.java)
                 .fromJson(file?.bufferedReader()?.readText())
 

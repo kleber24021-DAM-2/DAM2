@@ -27,14 +27,16 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/heroTextView"
-            android:background="@drawable/drawable_bg_eye"/>
+            android:layout_toStartOf="@+id/eraseButton"
+            android:background="@drawable/drawable_bg_eye" />
         <Button
             android:id="@+id/eraseButton"
-            android:layout_toEndOf="@id/button"
+            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/drawable_bg_bin" />
+            android:background="@drawable/drawable_bg_bin"
+            />
+
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

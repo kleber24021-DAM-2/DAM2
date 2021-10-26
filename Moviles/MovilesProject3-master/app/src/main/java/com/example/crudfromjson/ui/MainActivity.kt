@@ -22,8 +22,12 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = binding.mainRV
         heroesList.let {
             recyclerView.adapter = HeroAdapter(it, object : HeroAdapter.ButtonAction {
-                override fun onClickButton(nombre: String) {
-                    this@MainActivity.onClick(nombre)
+                override fun onClickEyeButton(nombre: String) {
+                    this@MainActivity.onClickEyeButton(nombre)
+                }
+
+                override fun onClickEraseButton() {
+                    this@MainActivity.onClickEraseButton()
                 }
             })
             recyclerView.layoutManager =
@@ -34,10 +38,17 @@ class MainActivity : AppCompatActivity() {
         toast.show()
     }
 
-    fun onClick(nombre: String) {
+    fun onClickEyeButton(nombre: String) {
         Snackbar.make(
             binding.mainRV, " $nombre", Snackbar.LENGTH_SHORT
         ).show()
     }
+
+    fun onClickEraseButton(){
+        Snackbar.make(
+            binding.mainRV, "Delete", Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
 
 }

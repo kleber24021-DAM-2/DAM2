@@ -15,7 +15,8 @@ class HeroAdapter(private val heroList: List<Hero>, private val buttonAction: Bu
     }
 
     interface ButtonAction{
-        fun onClickButton(nombre:String)
+        fun onClickEyeButton(nombre:String)
+        fun onClickEraseButton()
     }
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
@@ -35,7 +36,7 @@ class HeroViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         with(binding){
             heroTextView.text = hero.toString()
             binding.button.setOnClickListener{
-                buttonAction.onClickButton(heroTextView.text.toString())
+                buttonAction.onClickEyeButton(hero.name)
             }
         }
     }
