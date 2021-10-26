@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/drawable_bg_eye" />
+
+
         <TextView
             android:id="@+id/heroTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/imageView"
             android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
+            android:breakStrategy="balanced"
             android:maxLines="3"
             android:padding="8dp"
             android:text="@string/LoremIpsum"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textColor="#444"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:breakStrategy="balanced"/>
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/eraseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heroTextView"
+            android:layout_alignParentEnd="true"
+            android:text="@string/heroDisplay_deleteHero" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/eraseButton"
-            android:background="@drawable/drawable_bg_eye" />
-        <Button
-            android:id="@+id/eraseButton"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/drawable_bg_bin"
-            />
-
-
+            android:layout_below="@id/heroTextView"
+            android:layout_alignParentStart="true"
+            android:text="@string/heroDisplay_seeDetails" />
     </RelativeLayout>
+
 </androidx.cardview.widget.CardView>

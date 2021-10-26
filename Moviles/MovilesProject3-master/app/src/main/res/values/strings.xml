@@ -3,4 +3,9 @@
     <string name="heroDisplay_seeDetails">Ver detalles</string>
     <string name="heroDisplay_deleteHero">Borrar héroe</string>
     <string name="LoremIpsum">Example text here</string>
+    <string name="atention">Atención</string>
+    <string name="confirmation_erase">¿Seguro que quieres borrar este elemento?</string>
+    <string name="comics">Comics</string>
+    <string name="series">Series</string>
+    <string name="intent_idName">ID</string>
 </resources>

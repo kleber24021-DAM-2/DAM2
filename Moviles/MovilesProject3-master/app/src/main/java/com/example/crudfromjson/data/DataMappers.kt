@@ -1,20 +1,21 @@
 package com.example.crudfromjson.data
 
 import com.example.crudfromjson.domain.marvelmodels.Result
-import com.example.crudfromjson.domain.ownmodels.Hero
+import com.example.crudfromjson.domain.ownmodels.SuperHero
 
-fun Result.toHero(): Hero {
+fun Result.toHero(): SuperHero {
     val listOfComics = comics.items
         .map { it.name }.toMutableList()
 
     val listOfSeries = series.items
         .map { it.name }.toMutableList()
 
-    return Hero(
+    return SuperHero(
+        id,
         name,
         description,
         modified,
-        thumbnail.path,
+        thumbnail.path + "." + thumbnail.extension,
         listOfComics,
         listOfSeries
     )

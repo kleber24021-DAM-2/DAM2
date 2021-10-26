@@ -1,13 +1,10 @@
 package com.example.crudfromjson.data
 
-import com.example.crudfromjson.domain.marvelmodels.Data
 import com.example.crudfromjson.domain.marvelmodels.MarvelObject
-import com.example.crudfromjson.domain.ownmodels.Hero
+import com.example.crudfromjson.domain.ownmodels.SuperHero
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import java.io.InputStream
-import java.lang.reflect.Type
 
 class MarvelRepository(file: InputStream? = null) {
 
@@ -25,14 +22,14 @@ class MarvelRepository(file: InputStream? = null) {
     }
 
     companion object {
-        private val marvelList = mutableListOf<Hero>()
+        private val marvelList = mutableListOf<SuperHero>()
     }
 
-    fun getList(): MutableList<Hero> {
+    fun getList(): MutableList<SuperHero> {
         return marvelList
     }
 
-    fun addHero(hero: Hero) {
-        marvelList.add(hero)
+    fun deleteHero(toDelete: SuperHero) {
+        marvelList.remove(toDelete)
     }
 }
