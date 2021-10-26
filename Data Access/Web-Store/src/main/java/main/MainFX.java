@@ -5,29 +5,31 @@
  */
 package main;
 
-import java.io.IOException;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
- *
  * @author Laura
  */
 public class MainFX extends Application {
-    
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loaderMenu = new FXMLLoader(
                 getClass().getResource("/fxml/FXMLPrincipal.fxml"));
         BorderPane root = loaderMenu.load();
-        
 
 
         Scene scene = new Scene(root);
@@ -39,11 +41,4 @@ public class MainFX extends Application {
         primaryStage.setResizable(false);
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
 }

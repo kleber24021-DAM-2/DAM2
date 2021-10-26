@@ -7,8 +7,8 @@ package services;
 
 import java.util.List;
 
-import dao.dao_implementations.NioDAOPurchases;
-import dao.dao_implementations.XMLDaoCustomers;
+import dao.dao_implementations.file.NioDAOPurchases;
+import dao.dao_implementations.file.XMLDaoCustomers;
 import model.Customer;
 
 /**

@@ -5,8 +5,8 @@
  */
 package services;
 
-import dao.dao_implementations.IoDAOItems;
-import dao.dao_implementations.NioDAOPurchases;
+import dao.dao_implementations.file.IoDAOItems;
+import dao.dao_implementations.file.NioDAOPurchases;
 import model.Item;
 
 import java.util.List;

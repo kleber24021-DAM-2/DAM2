@@ -1,4 +1,4 @@
-package dao.dao_implementations;
+package dao.dao_implementations.file;
 
 import configuration.ConfigProperties;
 import dao.interfaces.DAOCustomers;

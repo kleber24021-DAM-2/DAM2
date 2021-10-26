@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.dao_implementations.NioDAOPurchases;
+import dao.dao_implementations.file.NioDAOPurchases;
 import model.Purchase;
 
 /**

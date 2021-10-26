@@ -4,4 +4,10 @@
     <entry key="itemFile">data/Items.txt</entry>
     <entry key="purchasesFile">./data/Purchases.txt</entry>
     <entry key="customerFile">data/Customers.xml</entry>
+
+
+<!-- Configuration of the database access information-->
+    <entry key="urlDB">jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andrePadilla_WebStore</entry>
+    <entry key="user_name">root</entry>
+    <entry key="password">quevedo2dam</entry>
 </properties>
