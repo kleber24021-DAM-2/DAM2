@@ -5,8 +5,9 @@
  */
 package services;
 
-import dao.dao_implementations.file.IoDAOItems;
+import dao.daofactories.DaoFactoryItems;
 import dao.dao_implementations.file.NioDAOPurchases;
+import dao.interfaces.DAOItems;
 import model.Item;
 
 import java.util.List;
@@ -17,19 +18,19 @@ import java.util.List;
 public class ItemsServices {
 
     public List<Item> getAllItems() {
-        IoDAOItems daoItems = new IoDAOItems();
+        DAOItems daoItems = new DaoFactoryItems().getDaoItems();
         return daoItems.getAll();
     }
 
     public boolean addItem(int itemId, String itemName, String itemCompany, double price) {
-        IoDAOItems daoItems = new IoDAOItems();
+        DAOItems daoItems = new DaoFactoryItems().getDaoItems();
         Item it = new Item(itemId, itemName, itemCompany, price);
         return daoItems.save(it);
     }
 
     public boolean deleteItem(Item toDelete) {
         NioDAOPurchases daoPurchases = new NioDAOPurchases();
-        IoDAOItems daoItems = new IoDAOItems();
+        DAOItems daoItems = new DaoFactoryItems().getDaoItems();
         if (daoPurchases.get(toDelete.getIdItem()) == null){
             return daoItems.delete(toDelete);
         }

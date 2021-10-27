@@ -7,8 +7,10 @@ package services;
 
 import java.util.List;
 
-import dao.dao_implementations.file.NioDAOPurchases;
-import dao.dao_implementations.file.XMLDaoCustomers;
+import dao.daofactories.DaoFactoryCustomers;
+import dao.daofactories.DaoFactoryPurchases;
+import dao.interfaces.DAOCustomers;
+import dao.interfaces.DAOPurchases;
 import model.Customer;
 
 /**
@@ -18,18 +20,19 @@ import model.Customer;
 public class CustomersServices {
 
     public List<Customer> getAllCustomers() {
-        XMLDaoCustomers dao = new XMLDaoCustomers();
+        DAOCustomers dao = new DaoFactoryCustomers().getDaoCustomers();
         return dao.getAll();
     }
 
     public Customer searchById(int id) {
-        XMLDaoCustomers dao = new XMLDaoCustomers();
+        DAOCustomers dao = new DaoFactoryCustomers().getDaoCustomers();
         return dao.get(id);
     }
 
     public boolean deleteCustomer(Customer customer) {
-        XMLDaoCustomers daoCustomers = new XMLDaoCustomers();
-        NioDAOPurchases daoPurchases = new NioDAOPurchases();
+        DAOCustomers daoCustomers = new DaoFactoryCustomers().getDaoCustomers();
+        DAOPurchases daoPurchases = new DaoFactoryPurchases().getDaoPurchases();
+
         if (!daoPurchases.getByCustomerId(customer.getIdCustomer()).isEmpty()){
             return false;
         }
@@ -39,7 +42,7 @@ public class CustomersServices {
 
     public boolean addCustomer(int customerId, String name, String phone, String address) {
         Customer toAdd = new Customer(customerId, name, phone, address);
-        XMLDaoCustomers dao = new XMLDaoCustomers();
+        DAOCustomers dao = new DaoFactoryCustomers().getDaoCustomers();
         return dao.save(toAdd);
     }
 

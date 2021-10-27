@@ -9,7 +9,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.daofactories.DaoFactoryPurchases;
 import dao.dao_implementations.file.NioDAOPurchases;
+import dao.interfaces.DAOPurchases;
 import model.Purchase;
 
 /**
@@ -19,7 +21,7 @@ import model.Purchase;
 public class PurchasesServices {
 
     public List<Purchase> getAllPurchases() {
-        NioDAOPurchases dao = new NioDAOPurchases();
+        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
         return dao.getAll();
     }
 
@@ -34,14 +36,14 @@ public class PurchasesServices {
     }
 
     public void deletePurchase(Purchase purchase) {
-        NioDAOPurchases dao = new NioDAOPurchases();
+        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
         dao.delete(purchase);
      }
 
     public void addPurchase(int customerId, int itemId, LocalDate date) {
-        NioDAOPurchases dao = new NioDAOPurchases();
+        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
         Purchase newPurchase = new Purchase();
-        newPurchase.setIdPurchase(dao.getLastId()+1);
+        newPurchase.setIdPurchase(-1);
         newPurchase.setDate(date);
         newPurchase.setIdCustomer(customerId);
         newPurchase.setIdItem(itemId);
@@ -50,17 +52,17 @@ public class PurchasesServices {
     }
 
     public void deletePurchasesByItemID(int idItem) {
-        NioDAOPurchases dao = new NioDAOPurchases();
-        dao.deleteByItemId(idItem);
+        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+            dao.deleteByItemId(idItem);
     }
 
     public List<Purchase> findByDate(LocalDate selectedDate) {
-        NioDAOPurchases dao = new NioDAOPurchases();
-        return dao.getByDate(selectedDate);
+        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+            return dao.getByDate(selectedDate);
     }
 
     public void deletePurchaseByCustomerId(int idCustomer) {
-        NioDAOPurchases dao = new NioDAOPurchases();
-        dao.deleteByCustomerId(idCustomer);
+        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+            dao.deleteByCustomerId(idCustomer);
     }
 }

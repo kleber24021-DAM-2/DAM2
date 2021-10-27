@@ -7,7 +7,15 @@
 
 
 <!-- Configuration of the database access information-->
+    <entry key="driver">com.mysql.jdbc.Driver</entry>
     <entry key="urlDB">jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andrePadilla_WebStore</entry>
     <entry key="user_name">root</entry>
     <entry key="password">quevedo2dam</entry>
+
+<!-- Configuration of the type of DAO-->
+    <entry key="daoItems">Files</entry>
+    <entry key="daoCustomers">Files</entry>
+    <entry key="daoPurchases">Files</entry>
+    <entry key="daoReviews">Files</entry>
+
 </properties>

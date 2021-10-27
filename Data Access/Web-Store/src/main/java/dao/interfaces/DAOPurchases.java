@@ -7,6 +7,8 @@ package dao.interfaces;
 
 import model.Purchase;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -23,4 +25,12 @@ public interface DAOPurchases {
     void update(Purchase t);
      
     void delete(Purchase t);
+
+    List<Purchase> getByCustomerId(int idCustomer);
+
+    List<Purchase> getByDate(LocalDate selectedDate);
+
+    void deleteByCustomerId(int idCustomer);
+
+    void deleteByItemId(int idItem);
 }

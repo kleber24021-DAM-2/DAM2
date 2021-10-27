@@ -48,6 +48,7 @@ public class NioDAOPurchases implements DAOPurchases {
     @Override
     public void save(Purchase t) {
         List<Purchase> purchaseList = getAll();
+        t.setIdPurchase(getLastId()+1);
         if (get(t.getIdItem()) == null) {
             purchaseList.add(t);
         }
@@ -93,7 +94,7 @@ public class NioDAOPurchases implements DAOPurchases {
         });
     }
 
-    public int getLastId() {
+    private int getLastId() {
         List<Purchase> purchaseList = getAll();
         if (purchaseList.isEmpty()) {
             return 0;
@@ -102,11 +103,9 @@ public class NioDAOPurchases implements DAOPurchases {
         return purchaseList.get(purchaseList.size() - 1).getIdPurchase();
     }
 
-
     public List<Purchase> getByDate(LocalDate selectedDate) {
         return getAll().stream().filter(purchase -> purchase.getDate().equals(selectedDate)).collect(Collectors.toList());
     }
-
 
     public List<Purchase> getByCustomerId(int idCustomer) {
         List<Purchase> purchaseList = getAll();
