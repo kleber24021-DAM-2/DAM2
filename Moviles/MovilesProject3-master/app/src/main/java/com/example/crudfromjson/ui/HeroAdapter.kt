@@ -27,11 +27,11 @@ class HeroAdapter(private val superHeroList: List<SuperHero>, private val button
     }
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
-        holder.render(superHeroList[position], buttonAction)
+        holder.render(heroFilterList[position], buttonAction)
     }
 
     override fun getItemCount(): Int {
-        return superHeroList.size
+        return heroFilterList.size
     }
 
     override fun getFilter(): Filter {
@@ -43,7 +43,7 @@ class HeroAdapter(private val superHeroList: List<SuperHero>, private val button
                 }else{
                     val resultList = ArrayList<SuperHero>()
                     for (row in superHeroList){
-                        if(row.name.lowercase().contains(p0.toString().lowercase())){
+                        if(row.name.lowercase().startsWith(p0.toString().lowercase())){
                             resultList.add(row)
                         }
                     }
@@ -55,6 +55,7 @@ class HeroAdapter(private val superHeroList: List<SuperHero>, private val button
             }
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+
                 heroFilterList = p1?.values as ArrayList<SuperHero>
                 notifyDataSetChanged()
             }

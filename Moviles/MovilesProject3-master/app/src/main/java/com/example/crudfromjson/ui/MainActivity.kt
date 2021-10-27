@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.crudfromjson.R
 import com.example.crudfromjson.data.MarvelRepository
 import com.example.crudfromjson.databinding.ActivityMainBinding
@@ -26,35 +24,32 @@ class MainActivity : AppCompatActivity() {
         val heroesList = MarvelRepository(assets.open("marvel.json")).getList()
         val recyclerView = binding.mainRV
         val searchView = binding.searchView
-        var customAdapter : HeroAdapter
+        val customAdapter = HeroAdapter(heroesList, object : HeroAdapter.ButtonAction {
+            override fun onClickEyeButton(id: Int) {
+                this@MainActivity.onClickEyeButton(id)
+            }
 
-        heroesList.let {
-            customAdapter = HeroAdapter(it, object : HeroAdapter.ButtonAction {
-                override fun onClickEyeButton(id: Int) {
-                    this@MainActivity.onClickEyeButton(id)
-                }
-
-                override fun onClickEraseButton(superHero: SuperHero) {
-                    this@MainActivity.onClickEraseButton(superHero)
-                }
-            })
-            recyclerView.adapter = customAdapter
-            recyclerView.layoutManager =
-                LinearLayoutManager(this)
-        }
+            override fun onClickEraseButton(superHero: SuperHero) {
+                this@MainActivity.onClickEraseButton(superHero)
+            }
+        })
+        recyclerView.adapter = customAdapter
+        recyclerView.layoutManager =
+            LinearLayoutManager(this)
 
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                return true
+                return false
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
                 customAdapter.filter.filter(p0)
-                return true
+                return false
             }
 
         })
+
     }
 
     fun onClickEyeButton(superHeroId: Int) {
@@ -64,11 +59,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickEraseButton(toEraseSuperHero: SuperHero) {
+        val adapter = binding.mainRV.adapter as HeroAdapter
         createConfirmationDialogToDelete(toEraseSuperHero)
     }
 
     private fun eraseElement(hero: SuperHero) {
-        val index = MarvelRepository().getList().indexOf(hero)
+        val adapter = binding.mainRV.adapter as HeroAdapter
+        val index = adapter.heroFilterList.indexOf(hero)
+        adapter.heroFilterList.removeAt(index)
         MarvelRepository().deleteHero(hero)
         binding.mainRV.adapter?.notifyItemRemoved(index)
     }
