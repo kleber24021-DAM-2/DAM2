@@ -13,7 +13,7 @@
         android:theme="@style/Theme.CrudFromJson"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.DetailActivity"
+            android:name=".ui.herodetails.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"

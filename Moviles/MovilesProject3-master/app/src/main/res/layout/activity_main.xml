@@ -6,11 +6,11 @@
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
+    <SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/LoremIpsum" />
+        android:queryHint="@string/search"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainRV"

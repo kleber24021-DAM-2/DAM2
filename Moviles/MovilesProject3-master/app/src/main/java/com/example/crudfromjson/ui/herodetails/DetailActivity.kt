@@ -1,4 +1,4 @@
-package com.example.crudfromjson.ui
+package com.example.crudfromjson.ui.herodetails
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,7 @@ import coil.load
 import com.example.crudfromjson.R
 import com.example.crudfromjson.data.MarvelRepository
 import com.example.crudfromjson.databinding.ActivityDetailBinding
+import com.example.crudfromjson.ui.DetailsAdapter
 
 class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
