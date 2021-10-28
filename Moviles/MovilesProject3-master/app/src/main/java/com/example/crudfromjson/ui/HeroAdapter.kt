@@ -10,6 +10,7 @@ import coil.load
 import com.example.crudfromjson.R
 import com.example.crudfromjson.databinding.HeroDisplayBinding
 import com.example.crudfromjson.domain.ownmodels.SuperHero
+import java.time.LocalDate
 
 class HeroAdapter(private val superHeroList: List<SuperHero>, private val buttonAction: ButtonAction) : RecyclerView.Adapter<HeroViewHolder>(), Filterable{
     var heroFilterList = ArrayList<SuperHero>()
@@ -62,6 +63,12 @@ class HeroAdapter(private val superHeroList: List<SuperHero>, private val button
 
         }
     }
+
+//    fun filterByDate(startDate: LocalDate, endDate: LocalDate){
+//        heroFilterList = superHeroList.filter {
+//
+//        }
+//    }
 
 }
 
