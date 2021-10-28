@@ -26,12 +26,22 @@ class DetailActivity : AppCompatActivity() {
         val comicRecyclerView = binding.comicRecyclerView
         comicRecyclerView.adapter = DetailsAdapter(heroe.comicsName)
         comicRecyclerView.layoutManager = LinearLayoutManager(this)
-        comicRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        comicRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
         val seriesRecyclerView = binding.seriesRecyclerView
         seriesRecyclerView.adapter = DetailsAdapter(heroe.seriesName)
         seriesRecyclerView.layoutManager = LinearLayoutManager(this)
-        seriesRecyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        seriesRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 }
 

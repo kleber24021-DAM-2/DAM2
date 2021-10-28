@@ -44,6 +44,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.67" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.83" />
+
     <EditText
         android:id="@+id/startDateFilter"
         android:layout_width="0dp"
@@ -56,7 +63,8 @@
         app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
         app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1" />
+        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1"
+        android:autofillHints="@string/fecha_inicio" />
 
     <EditText
         android:id="@+id/endDateFilter"
@@ -70,15 +78,17 @@
         app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
         app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_2"
         app:layout_constraintStart_toStartOf="@+id/vertical_guideline_1"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1" />
+        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1"
+        android:autofillHints="@string/fecha_inicio" />
 
     <Button
         android:id="@+id/filterByDate"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="@string/filtrar_por_fecha"
+        android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_"
         app:layout_constraintStart_toStartOf="@+id/vertical_guideline_2"
         app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1" />
 
@@ -88,7 +98,20 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_2" />
+        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/buttonClearFilter"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/clear"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_"
+        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,20 +10,24 @@ import coil.load
 import com.example.crudfromjson.R
 import com.example.crudfromjson.databinding.HeroDisplayBinding
 import com.example.crudfromjson.domain.ownmodels.SuperHero
-import java.time.LocalDate
 
-class HeroAdapter(private val superHeroList: List<SuperHero>, private val buttonAction: ButtonAction) : RecyclerView.Adapter<HeroViewHolder>(), Filterable{
+class HeroAdapter(
+    private val superHeroList: List<SuperHero>,
+    private val buttonAction: ButtonAction
+) : RecyclerView.Adapter<HeroViewHolder>(), Filterable {
     var heroFilterList = ArrayList<SuperHero>()
-    init{
-        heroFilterList = superHeroList as ArrayList<SuperHero>
+
+    init {
+        heroFilterList = ArrayList(superHeroList)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return HeroViewHolder(layoutInflater.inflate(R.layout.hero_display, parent, false))
     }
 
-    interface ButtonAction{
-        fun onClickEyeButton(id:Int)
+    interface ButtonAction {
+        fun onClickEyeButton(id: Int)
         fun onClickEraseButton(superHero: SuperHero)
     }
 
@@ -39,12 +43,12 @@ class HeroAdapter(private val superHeroList: List<SuperHero>, private val button
         return object : Filter() {
             override fun performFiltering(p0: CharSequence?): FilterResults {
                 val charSearch = p0.toString()
-                heroFilterList = if (charSearch.isBlank() || charSearch.isEmpty()){
+                heroFilterList = if (charSearch.isBlank() || charSearch.isEmpty()) {
                     superHeroList as ArrayList<SuperHero>
-                }else{
+                } else {
                     val resultList = ArrayList<SuperHero>()
-                    for (row in superHeroList){
-                        if(row.name.lowercase().startsWith(p0.toString().lowercase())){
+                    for (row in superHeroList) {
+                        if (row.name.lowercase().startsWith(p0.toString().lowercase())) {
                             resultList.add(row)
                         }
                     }
@@ -63,26 +67,21 @@ class HeroAdapter(private val superHeroList: List<SuperHero>, private val button
 
         }
     }
-
-//    fun filterByDate(startDate: LocalDate, endDate: LocalDate){
-//        heroFilterList = superHeroList.filter {
-//
-//        }
-//    }
-
 }
 
-class HeroViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class HeroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = HeroDisplayBinding.bind(view)
-    fun render(superHero: SuperHero,
-               buttonAction: HeroAdapter.ButtonAction) {
-        with(binding){
+    fun render(
+        superHero: SuperHero,
+        buttonAction: HeroAdapter.ButtonAction
+    ) {
+        with(binding) {
             heroTextView.text = superHero.toString()
             imageView.load(superHero.imageUrl)
-            binding.button.setOnClickListener{
+            binding.button.setOnClickListener {
                 buttonAction.onClickEyeButton(superHero.id)
             }
-            binding.eraseButton.setOnClickListener{
+            binding.eraseButton.setOnClickListener {
                 buttonAction.onClickEraseButton(superHero)
             }
         }

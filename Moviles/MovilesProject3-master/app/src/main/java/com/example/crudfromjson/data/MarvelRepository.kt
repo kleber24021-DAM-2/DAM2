@@ -21,7 +21,7 @@ class MarvelRepository(file: InputStream? = null) {
         }
     }
 
-    companion object {
+    private companion object {
         private val marvelList = mutableListOf<SuperHero>()
     }
 
@@ -32,4 +32,9 @@ class MarvelRepository(file: InputStream? = null) {
     fun deleteHero(toDelete: SuperHero) {
         marvelList.remove(toDelete)
     }
+
+    fun addHero(index:Int, toAdd: SuperHero){
+        marvelList.add(index, toAdd)
+    }
+
 }
