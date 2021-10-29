@@ -16,4 +16,12 @@
     <string name="error_emptyDate">Introduce fechas para filtrar</string>
     <string name="message_undo">¿Deshacer borrar?</string>
     <string name="UNDO">UNDO</string>
+    <string name="no">No</string>
+    <string name="si">Si</string>
+    <string name="dateAppend"> 00:00</string>
+    <string name="jsonName">marvel.json</string>
+    <string name="datePlaceHolder">%i / %i / %i</string>
+    <string name="datePlaceHolderMonthCorrection">%i / 0%i / %i</string>
+    <string name="datePlaceHolderDayCorrection">0%i / %i / %i</string>
+    <string name="datePlaceHolderDayMonthCorrection">0%i / 0%i / %i</string>
 </resources>

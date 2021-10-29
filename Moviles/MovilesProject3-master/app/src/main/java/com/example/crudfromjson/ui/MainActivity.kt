@@ -1,10 +1,8 @@
 package com.example.crudfromjson.ui
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -32,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //Cargamos la lista del repository y pintamos el Recyclerview
-        heroesList = MarvelRepository(assets.open("marvel.json")).getList()
+        heroesList = MarvelRepository(assets.open(getString(R.string.jsonName))).getList()
         updateRecyclerView(heroesList)
 
         //Cargamos los listeners
@@ -81,12 +79,12 @@ class MainActivity : AppCompatActivity() {
                 val formatter = DateTimeFormatter.ofPattern("dd / MM / yyyy HH:mm")
                 val startDate =
                     LocalDateTime.parse(
-                        (binding.startDateFilter.text.toString() + " 00:00"),
+                        (binding.startDateFilter.text.toString() + getString(R.string.dateAppend)),
                         formatter
                     )
                 val endDate =
                     LocalDateTime.parse(
-                        (binding.endDateFilter.text.toString() + " 00:00"),
+                        (binding.endDateFilter.text.toString() + getString(R.string.dateAppend)),
                         formatter
                     )
                 val filterList = mutableListOf<SuperHero>()
@@ -107,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             updateRecyclerView(heroesList)
 
         }
-        binding.searchView.setOnClickListener(object : View.OnClickListener{
+        binding.searchView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 binding.searchView.isIconified = false
                 binding.startDateFilter.visibility = View.VISIBLE
@@ -135,11 +133,11 @@ class MainActivity : AppCompatActivity() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(getString(R.string.atention))
             .setMessage(getString(R.string.confirmation_erase))
-            .setPositiveButton("Si") { view, _ ->
+            .setPositiveButton(getString(R.string.si)) { view, _ ->
                 eraseElement(toEraseSuperHero)
                 view.dismiss()
             }
-            .setNegativeButton("No") { view, _ ->
+            .setNegativeButton(getString(R.string.no)) { view, _ ->
                 view.dismiss()
             }
         dialog.show()
@@ -154,7 +152,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainRV.adapter?.notifyItemRemoved(index)
 
         Snackbar.make(binding.searchView, getString(R.string.message_undo), Snackbar.LENGTH_LONG)
-            .setAction(getString(R.string.UNDO)){
+            .setAction(getString(R.string.UNDO)) {
                 MarvelRepository().addHero(indexAtRepository, hero)
                 adapter.heroFilterList.add(index, hero)
                 binding.mainRV.adapter?.notifyItemInserted(index)
@@ -164,13 +162,13 @@ class MainActivity : AppCompatActivity() {
     private fun showDatePickerDialog(currentText: TextView) {
         val newFragment = DatePickerFragment.newInstance { _, year, month, day ->
             val selectedDate: String = if (day < 10 && month + 1 < 10) {
-                "0" + day.toString() + " / 0" + (month + 1) + " / " + year
+                getString(R.string.datePlaceHolderDayMonthCorrection, day, month+1,year)
             } else if (day < 10) {
-                "0" + day.toString() + " / " + (month + 1) + " / " + year
+                getString(R.string.datePlaceHolderDayCorrection, day, month+1,year)
             } else if (month + 1 < 10) {
-                day.toString() + " / 0" + (month + 1) + " / " + year
+                getString(R.string.datePlaceHolderMonthCorrection, day, month+1,year)
             } else {
-                day.toString() + " / " + (month + 1) + " / " + year
+                getString(R.string.datePlaceHolder, day, month+1,year)
             }
             currentText.text = selectedDate
         }
