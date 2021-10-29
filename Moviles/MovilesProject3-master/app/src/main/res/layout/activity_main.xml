@@ -7,90 +7,98 @@
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <SearchView
-        android:id="@+id/searchView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_1"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontal_guideline_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.07" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/horizontal_guideline_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15731874" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_guideline_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.33" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_guideline_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.67" />
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_guideline_"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.83" />
+        <EditText
+            android:id="@+id/startDateFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/fecha_inicio"
+            android:clickable="true"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="@string/fecha_inicio"
+            android:inputType="date"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchView" />
 
-    <EditText
-        android:id="@+id/startDateFilter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:ems="10"
-        android:hint="@string/fecha_inicio"
-        android:inputType="date"
-        android:focusable="false"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1"
-        android:autofillHints="@string/fecha_inicio" />
+        <EditText
+            android:id="@+id/endDateFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/fecha_inicio"
+            android:clickable="true"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="@string/fecha_final"
+            android:inputType="date"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_2"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline_1"
+            app:layout_constraintTop_toBottomOf="@id/searchView" />
 
-    <EditText
-        android:id="@+id/endDateFilter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:ems="10"
-        android:hint="@string/fecha_final"
-        android:inputType="date"
-        android:focusable="false"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_2"
-        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_1"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1"
-        android:autofillHints="@string/fecha_inicio" />
+        <Button
+            android:id="@+id/buttonClearFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/clear"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline_"
+            app:layout_constraintTop_toBottomOf="@id/searchView" />
 
-    <Button
-        android:id="@+id/filterByDate"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/filtrar_por_fecha"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
-        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_"
-        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_2"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1" />
+        <Button
+            android:id="@+id/filterByDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/filtrar_por_fecha"
+            android:textSize="20sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_"
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline_2"
+            app:layout_constraintTop_toBottomOf="@id/searchView" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainRV"
@@ -98,20 +106,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horizontal_guideline_2"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/buttonClearFilter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/clear"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_1" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

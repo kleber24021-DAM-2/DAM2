@@ -1,7 +1,10 @@
 package com.example.crudfromjson.ui
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
@@ -102,6 +105,23 @@ class MainActivity : AppCompatActivity() {
             binding.startDateFilter.text.clear()
             binding.endDateFilter.text.clear()
             updateRecyclerView(heroesList)
+
+        }
+        binding.searchView.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+                binding.searchView.isIconified = false
+                binding.startDateFilter.visibility = View.VISIBLE
+                binding.endDateFilter.visibility = View.VISIBLE
+                binding.buttonClearFilter.visibility = View.VISIBLE
+                binding.filterByDate.visibility = View.VISIBLE
+            }
+        })
+        binding.searchView.setOnCloseListener {
+            binding.startDateFilter.visibility = View.GONE
+            binding.endDateFilter.visibility = View.GONE
+            binding.buttonClearFilter.visibility = View.GONE
+            binding.filterByDate.visibility = View.GONE
+            false
         }
     }
 
