@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.filterByDate.setOnClickListener {
             if (binding.startDateFilter.text.isNotEmpty() && binding.endDateFilter.text.isNotEmpty()) {
-                val formatter = DateTimeFormatter.ofPattern("dd / MM / yyyy HH:mm")
+                val formatter = DateTimeFormatter.ofPattern("dd / MM / yyyyHH:mm")
                 val startDate =
                     LocalDateTime.parse(
                         (binding.startDateFilter.text.toString() + getString(R.string.dateAppend)),
@@ -162,13 +162,13 @@ class MainActivity : AppCompatActivity() {
     private fun showDatePickerDialog(currentText: TextView) {
         val newFragment = DatePickerFragment.newInstance { _, year, month, day ->
             val selectedDate: String = if (day < 10 && month + 1 < 10) {
-                getString(R.string.datePlaceHolderDayMonthCorrection, day, month+1,year)
+                getString(R.string.datePlaceHolderDayMonthCorrection, day, month + 1, year)
             } else if (day < 10) {
-                getString(R.string.datePlaceHolderDayCorrection, day, month+1,year)
+                getString(R.string.datePlaceHolderDayCorrection, day, month + 1, year)
             } else if (month + 1 < 10) {
-                getString(R.string.datePlaceHolderMonthCorrection, day, month+1,year)
+                getString(R.string.datePlaceHolderMonthCorrection, day, month + 1, year)
             } else {
-                getString(R.string.datePlaceHolder, day, month+1,year)
+                getString(R.string.datePlaceHolder, day, month + 1, year)
             }
             currentText.text = selectedDate
         }

@@ -33,7 +33,7 @@ class MarvelRepository(file: InputStream? = null) {
         marvelList.remove(toDelete)
     }
 
-    fun addHero(index:Int, toAdd: SuperHero){
+    fun addHero(index: Int, toAdd: SuperHero) {
         marvelList.add(index, toAdd)
     }
 

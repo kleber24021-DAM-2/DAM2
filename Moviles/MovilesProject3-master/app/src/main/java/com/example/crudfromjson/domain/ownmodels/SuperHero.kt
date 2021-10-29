@@ -8,7 +8,6 @@ import java.time.LocalDateTime
 class SuperHero(
     val id: Int,
     val name: String,
-    val description: String,
     val dateModified: LocalDateTime,
     val imageUrl: String,
     val comicsName: MutableList<String>,

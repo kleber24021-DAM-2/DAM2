@@ -43,7 +43,8 @@
             android:iconifiedByDefault="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:animateLayoutChanges="true"/>
 
         <EditText
             android:id="@+id/startDateFilter"
@@ -58,7 +59,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchView" />
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            android:animateLayoutChanges="true"/>
 
         <EditText
             android:id="@+id/endDateFilter"
@@ -73,7 +75,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_2"
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline_1"
-            app:layout_constraintTop_toBottomOf="@id/searchView" />
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            android:animateLayoutChanges="true"/>
 
         <Button
             android:id="@+id/buttonClearFilter"
@@ -84,7 +87,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline_"
-            app:layout_constraintTop_toBottomOf="@id/searchView" />
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            android:animateLayoutChanges="true"/>
 
         <Button
             android:id="@+id/filterByDate"
@@ -95,7 +99,8 @@
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_"
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline_2"
-            app:layout_constraintTop_toBottomOf="@id/searchView" />
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            android:animateLayoutChanges="true"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
