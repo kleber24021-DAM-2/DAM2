@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="488.0" prefWidth="1040.0" stylesheets="@../style/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.FilterCharacter">
+<AnchorPane prefHeight="488.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.FilterCharacter">
     <children>
         <TextField fx:id="txtName" layoutX="60.0" layoutY="57.0" promptText="Nombre" />
         <ComboBox fx:id="cbStatus" layoutX="60.0" layoutY="110.0" prefWidth="150.0" promptText="Status">

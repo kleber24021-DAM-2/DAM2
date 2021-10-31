@@ -1,5 +1,7 @@
 package dao.models.characters;
 
+import dao.models.ownmodels.OwnCharacter;
+
 import java.util.List;
 
 public class RickMortyCharacter {
@@ -67,5 +69,19 @@ public class RickMortyCharacter {
     @Override
     public String toString() {
         return "ID: " + id + ", " + name;
+    }
+
+    public OwnCharacter toOwnModel(){
+        return new OwnCharacter(name,
+                id,
+                image,
+                gender,
+                species,
+                origin.getName(),
+                type,
+                status,
+                location.getName(),
+                getLocation().getUrl(),
+                episode);
     }
 }

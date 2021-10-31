@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="691.0" prefWidth="1092.0" stylesheets="@../style/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CharacterDisplay">
+<AnchorPane prefHeight="691.0" prefWidth="1092.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CharacterDisplay">
     <children>
         <ImageView fx:id="imageView" fitHeight="329.0" fitWidth="412.0" layoutX="646.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
         <Label layoutX="24.0" layoutY="43.0" prefHeight="25.0" prefWidth="149.0" text="Nombre:" textAlignment="CENTER" />
@@ -25,5 +25,6 @@
         <TextArea editable="false" layoutX="426.0" layoutY="478.0" prefHeight="106.0" prefWidth="200.0" text="Este personaje aparece en los siguientes capítulos: &#10;&#10;(Pulsar para ver más detalles)&#10;(Puede tardar)" wrapText="true" />
         <Button layoutX="49.0" layoutY="535.0" mnemonicParsing="false" onAction="#showLocation" text="Ir a Localización" />
       <TextArea editable="false" layoutX="49.0" layoutY="585.0" prefHeight="82.0" prefWidth="200.0" text="Presiona &quot;Ir a localización&quot; para ver más detalles acerca de este lugar.&#10;(Puede tardar en cargar)" wrapText="true" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="Volver" />
     </children>
 </AnchorPane>

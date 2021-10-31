@@ -1,5 +1,7 @@
 package dao.models.locations;
 
+import dao.models.ownmodels.OwnLocation;
+
 import java.util.List;
 
 public class Location {
@@ -37,5 +39,9 @@ public class Location {
 
     public String getUrl() {
         return url;
+    }
+
+    public OwnLocation toOwnLocation(){
+        return new OwnLocation(name, id, type, dimension, residents);
     }
 }

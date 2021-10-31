@@ -1,27 +1,42 @@
 package dao;
 
 import dao.models.episodes.Episode;
+import dao.models.ownmodels.OwnEpisode;
 import dao.retrofit.RickAndMortyApi;
-import dao.utils.Singleton_RetroFit;
+import dao.utils.SingletonRetroFit;
+import io.vavr.control.Either;
+import lombok.extern.log4j.Log4j2;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+@Log4j2
 public class DaoEpisodes {
-    public Episode getEpisodeByID(int id) {
-        Retrofit retro = Singleton_RetroFit.getInstance();
+
+    private final SingletonRetroFit singletonRetroFit;
+
+    @Inject
+    public DaoEpisodes(SingletonRetroFit singletonRetroFit) {
+        this.singletonRetroFit = singletonRetroFit;
+    }
+
+    public Either<String, OwnEpisode> getEpisodeByID(int id) {
+        Either<String, OwnEpisode> result;
+        Retrofit retro = singletonRetroFit.getRetrofit();
         RickAndMortyApi api = retro.create(RickAndMortyApi.class);
         try {
             Response<Episode> episode = api.getEpisodeById(id).execute();
-            if (episode.isSuccessful()) {
-                return episode.body();
+            if (episode.isSuccessful() && episode.body() != null) {
+                result = Either.right(episode.body().toOwnModel());
+            } else {
+                result = Either.left(episode.errorBody().toString());
             }
         } catch (IOException io) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, io);
+            log.error(io.getMessage(), io);
+            result = Either.left(io.getMessage());
         }
-        return null;
+        return result;
     }
 }

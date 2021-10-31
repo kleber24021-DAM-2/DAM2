@@ -1,26 +1,26 @@
 package gui.controllers;
 
-import dao.models.characters.CharacterResponse;
-import dao.models.characters.RickMortyCharacter;
+import dao.models.ownmodels.OwnCharacter;
+import gui.utils.UserMessages;
+import io.vavr.Tuple2;
+import io.vavr.control.Either;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j2;
 import services.ServicesCharacter;
-import utils.FxmlPaths;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.inject.Inject;
+import java.util.List;
 
+@Log4j2
 public class FilterCharacter {
+    private final ServicesCharacter service;
     @FXML
     private TextField inputId;
     @FXML
     private Label pageLabel;
-
     @FXML
     private TextField txtName;
     @FXML
@@ -30,28 +30,36 @@ public class FilterCharacter {
     @FXML
     private ComboBox<String> cbGender;
     @FXML
-    private ListView<RickMortyCharacter> listViewResults;
-
-    private CharacterResponse actualResponse;
+    private ListView<OwnCharacter> listViewResults;
+    private List<OwnCharacter> actualResponse;
+    private int actualMaxPage;
     private int actualPage;
+    private MainController parent;
+
+
+    @Inject
+    public FilterCharacter(ServicesCharacter service) {
+        this.service = service;
+    }
 
     @FXML
     private void filterCharacters() {
-        ServicesCharacter service = new ServicesCharacter();
         actualPage = 1;
         doQuery(
                 txtName.getText(),
                 cbStatus.getSelectionModel().getSelectedItem(),
                 cbSpecies.getSelectionModel().getSelectedItem(),
                 cbGender.getSelectionModel().getSelectedItem());
-        refreshResultView();
     }
 
     @FXML
     private void goRight() {
-        if (actualPage != actualResponse.getInfo().getPages()) {
+        if (actualPage != actualMaxPage) {
             actualPage++;
-            refreshResultView();
+            doQuery(txtName.getText(),
+                    cbStatus.getSelectionModel().getSelectedItem(),
+                    cbSpecies.getSelectionModel().getSelectedItem(),
+                    cbGender.getSelectionModel().getSelectedItem());
         }
     }
 
@@ -59,28 +67,47 @@ public class FilterCharacter {
     private void goLeft() {
         if (actualPage != 1) {
             actualPage--;
-            refreshResultView();
+            doQuery(txtName.getText(),
+                    cbStatus.getSelectionModel().getSelectedItem(),
+                    cbSpecies.getSelectionModel().getSelectedItem(),
+                    cbGender.getSelectionModel().getSelectedItem());
         }
     }
 
-    private void refreshResultView() {
-        if (doQuery(txtName.getText(),
-                cbStatus.getSelectionModel().getSelectedItem(),
-                cbSpecies.getSelectionModel().getSelectedItem(),
-                cbGender.getSelectionModel().getSelectedItem())) {
-            listViewResults.getItems().setAll(actualResponse.getResults());
-            pageLabel.setText(actualPage + " / " + actualResponse.getInfo().getPages());
+    private void refreshResultView(boolean queryAnswer) {
+        if (queryAnswer) {
+            listViewResults.getItems().setAll(actualResponse);
+            pageLabel.setText(actualPage + " / " + actualMaxPage);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("No se han encontrado resultados");
+            alert.setContentText(UserMessages.EMPTY_QUERY);
             alert.showAndWait();
         }
     }
 
-    private boolean doQuery(String name, String status, String species, String gender) {
-        ServicesCharacter service = new ServicesCharacter();
-        actualResponse = service.getFilteredCharacters(name, status, species, gender, actualPage);
-        return actualResponse != null && !actualResponse.getResults().isEmpty();
+    private void doQuery(String name, String status, String species, String gender) {
+        var task = new Task<Either<String, Tuple2<Integer, List<OwnCharacter>>>>() {
+            @Override
+            protected Either<String, Tuple2<Integer, List<OwnCharacter>>> call() {
+                return service.getFilteredCharacters(name, status, species, gender, actualPage);
+            }
+        };
+        task.setOnSucceeded(event -> {
+            task.getValue()
+                    .peek(p -> {
+                        actualMaxPage = p._1;
+                        actualResponse = p._2;
+                        refreshResultView(actualResponse != null && !actualResponse.isEmpty());
+                    })
+                    .peekLeft(p -> new Alert(Alert.AlertType.ERROR, p).showAndWait());
+            this.parent.getRoot().setCursor(Cursor.DEFAULT);
+        });
+        task.setOnFailed(event -> {
+            this.parent.getRoot().setCursor(Cursor.DEFAULT);
+            new Alert(Alert.AlertType.ERROR, UserMessages.ERROR_APP).showAndWait();
+        });
+        this.parent.getRoot().setCursor(Cursor.WAIT);
+        new Thread(task).start();
     }
 
     @FXML
@@ -93,40 +120,35 @@ public class FilterCharacter {
 
     @FXML
     private void getSelectedCharacter() {
-        RickMortyCharacter selectedCharacter = listViewResults.getSelectionModel().getSelectedItem();
+        OwnCharacter selectedCharacter = listViewResults.getSelectionModel().getSelectedItem();
         if (selectedCharacter != null) {
-            openCharacterNewWindow(selectedCharacter);
+            showCharacterDisplay(selectedCharacter);
         }
     }
 
-    private void openCharacterNewWindow(RickMortyCharacter selectedCharacter) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource(FxmlPaths.CHARACTER_DISPLAY));
-            Stage stage = new Stage();
-            stage.setTitle(selectedCharacter.getName());
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(txtName.getScene().getWindow());
-            CharacterDisplay characterDisplay = fxmlLoader.getController();
-            characterDisplay.setInfo(selectedCharacter);
-            stage.showAndWait();
-        } catch (IOException io) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, io);
-        }
+    private void showCharacterDisplay(OwnCharacter selectedCharacter) {
+        parent.showCharacter(selectedCharacter);
     }
 
     @FXML
     private void setCharacterByID() {
-        ServicesCharacter service = new ServicesCharacter();
+        Either<String, OwnCharacter> serviceResult = null;
         try {
-            RickMortyCharacter character = service.getCharacterByID(Integer.parseInt(inputId.getText()));
-            openCharacterNewWindow(character);
+            serviceResult = service.getCharacterByID(Integer.parseInt(inputId.getText()));
         } catch (NumberFormatException wrongNum) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Introduzca un número en el campo de ID");
+            alert.setContentText(UserMessages.ERROR_NUMBER_INVALID);
             alert.showAndWait();
+            return;
         }
+        serviceResult.peek(this::showCharacterDisplay)
+                .peekLeft(p -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, p);
+                    alert.showAndWait();
+                });
+    }
 
+    public void setParent(MainController mainController) {
+        parent = mainController;
     }
 }

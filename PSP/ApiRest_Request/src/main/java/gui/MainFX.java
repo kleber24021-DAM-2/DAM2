@@ -1,30 +1,34 @@
 package gui;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.Level;
 import utils.FxmlPaths;
 
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import java.io.File;
 import java.io.IOException;
 
-public class MainFX extends Application {
+@Log4j2
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class MainFX {
+    @Inject
+    FXMLLoader fxmlLoader;
 
-    @Override
-    public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loaderMenu = new FXMLLoader(
-                getClass().getResource(FxmlPaths.FILTER_CHARACTER)
-        );
-        AnchorPane root = loaderMenu.load();
-        Scene scene = new Scene(root);
-        primaryStage.setTitle("Rick y Morty Api");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        primaryStage.setResizable(false);
+    public void start(@Observes @StartupScene Stage stage) {
+        try {
+            Parent fxmlParent = fxmlLoader.load(getClass().getResourceAsStream(FxmlPaths.MAIN_SCREEN));
+            fxmlParent.getStylesheets().add(getClass().getResource(FxmlPaths.STYLE).toExternalForm());
+            stage.setScene(new Scene(fxmlParent));
+            stage.setResizable(false);
+            stage.setTitle(FxmlPaths.SCREEN_NAME);
+            stage.show();
+        } catch (IOException io) {
+            log.log(Level.ERROR, io);
+        }
     }
 }

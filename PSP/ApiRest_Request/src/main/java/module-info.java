@@ -1,11 +1,10 @@
-module Rick.Morty.ApiRest.Client {
+module ApiRest.Request {
     //needed for JavaFX
     requires javafx.controls;
     requires javafx.fxml;
     requires org.yaml.snakeyaml;
     requires lombok;
     requires java.logging;
-    requires io.reactivex.rxjava2;
     requires io.vavr;
     requires retrofit2;
     requires okhttp3;
@@ -13,31 +12,27 @@ module Rick.Morty.ApiRest.Client {
     requires retrofit2.converter.gson;
     requires retrofit2.converter.scalars;
     requires com.google.gson;
-    requires jakarta.json.bind;
-    requires java.validation;
-    requires rxjavafx;
     requires org.apache.logging.log4j;
-
-
-    //requires javafx.swing;
-
-    //needed for HTTP
-    // requires unirest.java;
-
-    //needed for JSON
-//    requires gson;
-//    requires java.sql;
-
+    requires jakarta.enterprise.cdi.api;
+    requires jakarta.inject.api;
     //needed for JavaFX
-    opens gui.controllers to javafx.fxml;
-
+    opens gui;
+    opens gui.controllers;
+    opens config;
+    opens dao.utils;
+    opens utils;
+    opens dao;
     // yaml
-    //opens config to org.yaml.snakeyaml.Yaml;
-
-//    //needed for JSON
-//    opens com.edencoding.models.openVision to gson;
-//    opens com.edencoding.models.dogs to gson;
+    //opens config to org.yaml.snakeyaml.Yaml;¡
 
     exports gui;
-    opens gui to javafx.fxml;
+    exports dao.models.characters;
+    exports dao;
+    exports dao.models.episodes;
+    exports dao.models;
+    exports services;
+    exports dao.models.locations;
+    exports dao.models.ownmodels;
+    exports gui.utils;
+    opens gui.utils;
 }

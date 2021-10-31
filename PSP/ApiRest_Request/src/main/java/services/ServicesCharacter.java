@@ -1,23 +1,32 @@
 package services;
 
 import dao.DaoCharacters;
-import dao.models.characters.CharacterResponse;
-import dao.models.characters.RickMortyCharacter;
+import dao.models.ownmodels.OwnCharacter;
+import io.vavr.Tuple2;
+import io.vavr.control.Either;
+
+import javax.inject.Inject;
+import java.util.List;
 
 public class ServicesCharacter {
-    public RickMortyCharacter getCharacterByID(int id) {
-        DaoCharacters dao = new DaoCharacters();
+
+    private final DaoCharacters dao;
+
+    @Inject
+    public ServicesCharacter(DaoCharacters dao) {
+        this.dao = dao;
+    }
+
+    public Either<String, OwnCharacter> getCharacterByID(int id) {
         return dao.getCharacterById(id);
     }
 
-    public RickMortyCharacter getCharacterByURL(String url) {
+    public Either<String, OwnCharacter> getCharacterByURL(String url) {
         String[] splitUrl = url.split("/");
-        DaoCharacters dao = new DaoCharacters();
         return dao.getCharacterById(Integer.parseInt(splitUrl[splitUrl.length - 1]));
     }
 
-    public CharacterResponse getFilteredCharacters(String name, String status, String species, String gender, int page) {
-        DaoCharacters dao = new DaoCharacters();
+    public Either<String, Tuple2<Integer, List<OwnCharacter>>> getFilteredCharacters(String name, String status, String species, String gender, int page) {
         return dao.getFilteredCharacters(name, status, species, gender, page);
     }
 }

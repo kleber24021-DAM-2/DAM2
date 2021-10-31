@@ -1,15 +1,25 @@
 package services;
 
 import dao.DaoLocations;
-import dao.models.locations.Location;
+import dao.models.ownmodels.OwnLocation;
+import io.vavr.control.Either;
+
+import javax.inject.Inject;
 
 public class ServicesLocation {
-    public Location getLocation(int id) {
-        DaoLocations daoLocations = new DaoLocations();
-        return daoLocations.getLocationById(id);
+
+    private final DaoLocations dao;
+
+    @Inject
+    public ServicesLocation(DaoLocations dao) {
+        this.dao = dao;
     }
 
-    public Location getLocation(String url) {
+    public Either<String, OwnLocation> getLocation(int id) {
+        return dao.getLocationById(id);
+    }
+
+    public Either<String, OwnLocation> getLocation(String url) {
         String[] splitUrl = url.split("/");
         return getLocation(Integer.parseInt(splitUrl[splitUrl.length - 1]));
     }

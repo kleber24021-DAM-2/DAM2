@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="420.0" prefWidth="642.0" stylesheets="@../style/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.EpisodeDisplay">
+<AnchorPane prefHeight="420.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.EpisodeDisplay">
     <children>
         <Label layoutX="55.0" layoutY="67.0" prefHeight="43.0" prefWidth="99.0" text="Fecha de emisión:" />
         <TextField fx:id="txtDate" editable="false" layoutX="55.0" layoutY="110.0" />
@@ -12,5 +12,6 @@
         <Label layoutX="55.0" layoutY="250.0" prefHeight="43.0" prefWidth="99.0" text="Número episodio:" />
         <TextField fx:id="txtNumber" editable="false" layoutX="55.0" layoutY="293.0" />
         <ListView fx:id="listViewCharacters" layoutX="306.0" layoutY="85.0" prefHeight="251.0" prefWidth="276.0" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="Volver" />
     </children>
 </AnchorPane>

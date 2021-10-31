@@ -1,8 +1,19 @@
 package dao.models.episodes;
 
 import com.google.gson.annotations.SerializedName;
+import dao.models.ownmodels.OwnEpisode;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.TemporalAccessor;
 import java.util.List;
+import java.util.Locale;
 
 public class Episode {
 
@@ -53,5 +64,15 @@ public class Episode {
 
     public String getUrl() {
         return url;
+    }
+
+
+    public OwnEpisode toOwnModel(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, u", Locale.ENGLISH);
+        return new OwnEpisode(id,
+                name,
+                episode,
+                LocalDate.parse(airDate, formatter),
+                characters);
     }
 }
