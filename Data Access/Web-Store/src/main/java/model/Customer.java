@@ -22,9 +22,6 @@ public class Customer implements Comparable<Customer> {
     private String address;
     private List<Review> reviews;
 
-    public Customer() {
-    }
-
     public Customer(int idCustomer, String name, String phone, String address) {
         this.idCustomer = idCustomer;
         this.name = name;

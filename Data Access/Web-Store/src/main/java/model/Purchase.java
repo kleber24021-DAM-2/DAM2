@@ -13,51 +13,43 @@ import java.time.LocalDate;
  */
 public class Purchase implements Comparable<Purchase> {
 
-    private int idPurchase;
-    private int idCustomer;
-    private int idItem;
+    private int id;
+    private Customer customer;
+    private Item item;
     private LocalDate date;
 
     public Purchase() {
     }
 
-    public Purchase(String fromFile){
-        String[] splited = fromFile.split(";");
-        this.idPurchase = Integer.parseInt(splited[0]);
-        this.idCustomer = Integer.parseInt(splited[1]);
-        this.idItem = Integer.parseInt(splited[2]);
-        this.date = LocalDate.parse(splited[3]);
-    }
-
-    public Purchase(int idPurchase, int idCustomer, int item, LocalDate date) {
-        this.idPurchase = idPurchase;
-        this.idCustomer = idCustomer;
-        this.idItem = item;
+    public Purchase(int idPurchase, LocalDate date, Customer customer, Item item) {
+        this.id = idPurchase;
+        this.customer = customer;
+        this.item = item;
         this.date = date;
     }
 
-    public int getIdPurchase() {
-        return idPurchase;
+    public int getId() {
+        return id;
     }
 
-    public void setIdPurchase(int idPurchase) {
-        this.idPurchase = idPurchase;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getIdCustomer() {
-        return idCustomer;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setIdCustomer(int idCustomer) {
-        this.idCustomer = idCustomer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public int getIdItem() {
-        return idItem;
+    public Item getItem() {
+        return item;
     }
 
-    public void setIdItem(int idItem) {
-        this.idItem = idItem;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
     public LocalDate getDate() {
@@ -70,21 +62,21 @@ public class Purchase implements Comparable<Purchase> {
 
     @Override
     public String toString() {
-        return "ID: " + idPurchase + "  Customer: " + idCustomer + "  Item: " + idItem + "  Date: " + date;
+        return "ID: " + id + "  Customer: " + customer + "  Item: " + item + "  Date: " + date;
     }
     
     public String toStringForClientInfo() {
-        return "ID: " + idPurchase + "  Item: " + idItem + "  Date: " + date + "\n";
+        return "ID: " + id + "  Item: " + item + "  Date: " + date + "\n";
     }
 
     public String toStringTexto() {
-        return idPurchase + ";" + idCustomer + ";" + idItem + ";" + date;
+        return id + ";" + customer + ";" + item + ";" + date;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + this.idPurchase;
+        hash = 59 * hash + this.id;
         return hash;
     }
 
@@ -100,11 +92,11 @@ public class Purchase implements Comparable<Purchase> {
             return false;
         }
         final Purchase other = (Purchase) obj;
-        return this.idPurchase == other.idPurchase;
+        return this.id == other.id;
     }
 
     @Override
     public int compareTo(Purchase o) {
-        return Integer.compare(this.getIdPurchase(), o.getIdPurchase());
+        return Integer.compare(this.getId(), o.getId());
     }
 }

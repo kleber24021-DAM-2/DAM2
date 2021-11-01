@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author Laura
@@ -33,7 +34,7 @@ public class MainFX extends Application {
 
 
         Scene scene = new Scene(root);
-//        scene.getStylesheets().add("css/fxmlScene.css");
+        scene.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm()));
         primaryStage.setTitle("Web store");
         primaryStage.setScene(scene);
         primaryStage.show();

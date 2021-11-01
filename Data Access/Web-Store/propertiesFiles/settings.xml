@@ -13,9 +13,9 @@
     <entry key="password">quevedo2dam</entry>
 
 <!-- Configuration of the type of DAO-->
-    <entry key="daoItems">Files</entry>
-    <entry key="daoCustomers">Files</entry>
-    <entry key="daoPurchases">Files</entry>
-    <entry key="daoReviews">Files</entry>
+    <entry key="daoItems">JDBC</entry>
+    <entry key="daoCustomers">JDBC</entry>
+    <entry key="daoPurchases">JDBC</entry>
+    <entry key="daoReviews">JDBC</entry>
 
 </properties>

@@ -9,8 +9,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.daofactories.DaoFactoryCustomers;
+import dao.daofactories.DaoFactoryItems;
 import dao.daofactories.DaoFactoryPurchases;
-import dao.dao_implementations.file.NioDAOPurchases;
+import dao.interfaces.DAOCustomers;
+import dao.interfaces.DAOItems;
 import dao.interfaces.DAOPurchases;
 import model.Purchase;
 
@@ -42,11 +45,14 @@ public class PurchasesServices {
 
     public void addPurchase(int customerId, int itemId, LocalDate date) {
         DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+        DAOCustomers daoCustomers = new DaoFactoryCustomers().getDaoCustomers();
+        DAOItems daoItems = new DaoFactoryItems().getDaoItems();
+
         Purchase newPurchase = new Purchase();
-        newPurchase.setIdPurchase(-1);
+        newPurchase.setId(-1);
         newPurchase.setDate(date);
-        newPurchase.setIdCustomer(customerId);
-        newPurchase.setIdItem(itemId);
+        newPurchase.setCustomer(daoCustomers.get(customerId));
+        newPurchase.setItem(daoItems.get(itemId));
 
         dao.save(newPurchase);
     }

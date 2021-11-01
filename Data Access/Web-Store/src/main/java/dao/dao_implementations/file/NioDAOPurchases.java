@@ -26,7 +26,7 @@ public class NioDAOPurchases implements DAOPurchases {
     @Override
     public Purchase get(int id) {
         List<Purchase> purchaseList = getAll();
-        List<Purchase> result = purchaseList.stream().filter(purchase -> purchase.getIdItem() == id).collect(Collectors.toList());
+        List<Purchase> result = purchaseList.stream().filter(purchase -> purchase.getItem().getIdItem() == id).collect(Collectors.toList());
         if (result.isEmpty()) {
             return null;
         } else {
@@ -38,7 +38,7 @@ public class NioDAOPurchases implements DAOPurchases {
     public List<Purchase> getAll() {
         List<Purchase> purchaseList = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(file)) {
-            reader.lines().forEach(s -> purchaseList.add(new Purchase(s)));
+            reader.lines().forEach(s -> purchaseList.add(new Purchase()));
         } catch (IOException io) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "Error de IO DAOPurchase getAll()", io);
         }
@@ -48,8 +48,8 @@ public class NioDAOPurchases implements DAOPurchases {
     @Override
     public void save(Purchase t) {
         List<Purchase> purchaseList = getAll();
-        t.setIdPurchase(getLastId()+1);
-        if (get(t.getIdItem()) == null) {
+        t.setId(getLastId()+1);
+        if (get(t.getItem().getIdItem()) == null) {
             purchaseList.add(t);
         }
         OpenOption[] options = new OpenOption[2];
@@ -88,7 +88,7 @@ public class NioDAOPurchases implements DAOPurchases {
 
     public void deleteByItemId(int itemId){
         getAll().forEach(purchase -> {
-            if (purchase.getIdItem() == itemId){
+            if (purchase.getItem().getIdItem() == itemId){
                 delete(purchase);
             }
         });
@@ -100,7 +100,7 @@ public class NioDAOPurchases implements DAOPurchases {
             return 0;
         }
         purchaseList = purchaseList.stream().sorted().collect(Collectors.toList());
-        return purchaseList.get(purchaseList.size() - 1).getIdPurchase();
+        return purchaseList.get(purchaseList.size() - 1).getId();
     }
 
     public List<Purchase> getByDate(LocalDate selectedDate) {
@@ -109,12 +109,12 @@ public class NioDAOPurchases implements DAOPurchases {
 
     public List<Purchase> getByCustomerId(int idCustomer) {
         List<Purchase> purchaseList = getAll();
-        return purchaseList.stream().filter(p -> p.getIdCustomer() == idCustomer).collect(Collectors.toList());
+        return purchaseList.stream().filter(p -> p.getCustomer().getIdCustomer() == idCustomer).collect(Collectors.toList());
     }
 
     public void deleteByCustomerId(int idCustomer) {
         getAll().forEach(purchase -> {
-            if (purchase.getIdCustomer() == idCustomer)
+            if (purchase.getCustomer().getIdCustomer() == idCustomer)
                 delete(purchase);
         });
     }

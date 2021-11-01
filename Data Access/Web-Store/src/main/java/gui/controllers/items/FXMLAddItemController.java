@@ -1,4 +1,4 @@
-package fx.controllers.items;
+package gui.controllers.items;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

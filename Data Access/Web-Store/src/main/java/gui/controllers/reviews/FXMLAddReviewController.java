@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fx.controllers.reviews;
+package gui.controllers.reviews;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -7,7 +7,9 @@ package services;
 
 import dao.daofactories.DaoFactoryItems;
 import dao.dao_implementations.file.NioDAOPurchases;
+import dao.daofactories.DaoFactoryPurchases;
 import dao.interfaces.DAOItems;
+import dao.interfaces.DAOPurchases;
 import model.Item;
 
 import java.util.List;
@@ -29,7 +31,7 @@ public class ItemsServices {
     }
 
     public boolean deleteItem(Item toDelete) {
-        NioDAOPurchases daoPurchases = new NioDAOPurchases();
+        DAOPurchases daoPurchases = new DaoFactoryPurchases().getDaoPurchases();
         DAOItems daoItems = new DaoFactoryItems().getDaoItems();
         if (daoPurchases.get(toDelete.getIdItem()) == null){
             return daoItems.delete(toDelete);

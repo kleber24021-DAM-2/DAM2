@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fx.controllers;
+package gui.controllers;
 
-import fx.controllers.customers.FXMLAddCustomerController;
-import fx.controllers.customers.FXMLdeleteCustomerController;
-import fx.controllers.customers.FXMLfindCustomerController;
-import fx.controllers.items.FXMLAddItemController;
-import fx.controllers.items.FXMLDeleteItemController;
-import fx.controllers.items.FXMLListItemsController;
-import fx.controllers.purchases.FXMLAddPurchasesController;
-import fx.controllers.purchases.FXMLDatePurchasesController;
-import fx.controllers.purchases.FXMLDeleteController;
-import fx.controllers.reviews.FXMLAddReviewController;
-import fx.controllers.reviews.FXMLdeleteReviewController;
-import fx.controllers.reviews.FXMLfindReviewController;
+import gui.controllers.customers.FXMLAddCustomerController;
+import gui.controllers.customers.FXMLdeleteCustomerController;
+import gui.controllers.customers.FXMLfindCustomerController;
+import gui.controllers.items.FXMLAddItemController;
+import gui.controllers.items.FXMLDeleteItemController;
+import gui.controllers.items.FXMLListItemsController;
+import gui.controllers.purchases.FXMLAddPurchasesController;
+import gui.controllers.purchases.FXMLDatePurchasesController;
+import gui.controllers.purchases.FXMLDeleteController;
+import gui.controllers.reviews.FXMLAddReviewController;
+import gui.controllers.reviews.FXMLdeleteReviewController;
+import gui.controllers.reviews.FXMLfindReviewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

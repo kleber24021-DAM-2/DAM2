@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fx.controllers.customers;
+package gui.controllers.customers;
 
 import java.net.URL;
 import java.util.List;

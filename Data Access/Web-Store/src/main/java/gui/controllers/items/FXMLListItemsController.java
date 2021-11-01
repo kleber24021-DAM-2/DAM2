@@ -3,36 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fx.controllers.reviews;
+package gui.controllers.items;
+
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
+import model.Item;
+import services.ItemsServices;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import services.CustomersServices;
-import services.ItemsServices;
-import services.ReviewsServices;
 
 /**
  * FXML Controller class
- *
- * @author dam2
  */
-public class FXMLfindReviewController implements Initializable {
+public class FXMLListItemsController implements Initializable {
 
+    private final ItemsServices itemsService = new ItemsServices();
     @FXML
-    private ListView reviewList;
-    @FXML
-    private ComboBox itemBox;
+    private ListView<Item> itemsList;
 
-    public void loadItems() {
-    }
-
-    public void searchByItem() {
-
+    public void loadItemsList() {
+        itemsList.getItems().setAll(itemsService.getAllItems());
     }
 
     /**
@@ -40,7 +32,7 @@ public class FXMLfindReviewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadItems();
+        loadItemsList();
     }
 
 }

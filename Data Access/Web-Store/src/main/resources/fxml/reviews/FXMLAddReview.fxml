@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../style/dark-theme.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fx.controllers.reviews.FXMLAddReviewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.reviews.FXMLAddReviewController">
    <children>
       <ListView fx:id="clientBox" layoutX="29.0" layoutY="88.0" onMouseClicked="#loadPurchases" prefHeight="280.0" prefWidth="165.0" />
       <Button layoutX="399.0" layoutY="342.0" mnemonicParsing="false" onAction="#addReview" prefHeight="25.0" prefWidth="181.0" text="Send review" />
