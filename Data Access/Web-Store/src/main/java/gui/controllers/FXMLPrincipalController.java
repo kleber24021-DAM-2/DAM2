@@ -18,6 +18,7 @@ import gui.controllers.purchases.FXMLDeleteController;
 import gui.controllers.reviews.FXMLAddReviewController;
 import gui.controllers.reviews.FXMLdeleteReviewController;
 import gui.controllers.reviews.FXMLfindReviewController;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

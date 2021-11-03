@@ -129,10 +129,20 @@ public class JdbcDaoPurchases implements DAOPurchases {
 
     @Override
     public List<Purchase> getByDate(LocalDate selectedDate) {
-        List<Purchase> toReturn = getAll();
-        return toReturn.stream()
-                .filter(p -> p.getDate().equals(selectedDate))
-                .collect(Collectors.toList());
+        List<Purchase> toReturn;
+        prepareCall();
+        try {
+            preparedStatement = connection.prepareStatement(SqlQueries.SELECT_PURCHASE_BY_DATE);
+            preparedStatement.setDate(1, Date.valueOf(selectedDate));
+            resultSet = preparedStatement.executeQuery();
+            toReturn = getPurchasesList();
+            return toReturn;
+        } catch (SQLException sqlException) {
+            Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
+        } finally {
+            releaseAllResources();
+        }
+        return null;
     }
 
     @Override
