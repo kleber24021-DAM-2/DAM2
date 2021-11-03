@@ -29,6 +29,7 @@
                   <MenuItem mnemonicParsing="false" text="List Customers" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeFindCustomer" text="Find by ID" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeDeleteCustomer" text="Delete Customer" />
+                  <MenuItem mnemonicParsing="false" onAction="#showUpdateCustomers" text="Update Customer" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Purchases">
@@ -36,6 +37,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#chargePurchases" text="Add Purchase" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeDatePurchases" text="Find by Date" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeDelete" text="Delete Purchase" />
+                  <MenuItem mnemonicParsing="false" onAction="#showUpdatePurchases" text="Update Purchase" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Reviews">
@@ -43,6 +45,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#chargeAddReview" text="Add review" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeFindReview" text="Find by Item" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeDeleteReview" text="Delete Review" />
+                  <MenuItem mnemonicParsing="false" onAction="#showUpdateReviews" text="Update Review" />
               </items>
             </Menu>
         </menus>

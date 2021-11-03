@@ -86,4 +86,9 @@ public class PurchasesServices {
         DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
             dao.deleteByCustomerId(idCustomer);
     }
+
+    public void updatePurchase(Purchase updatedPurchase) {
+        DAOPurchases daoPurchases = new DaoFactoryPurchases().getDaoPurchases();
+        daoPurchases.update(updatedPurchase);
+    }
 }

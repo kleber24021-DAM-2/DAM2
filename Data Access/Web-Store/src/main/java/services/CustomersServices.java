@@ -46,4 +46,8 @@ public class CustomersServices {
         return dao.save(toAdd);
     }
 
+    public void updateCustomer(Customer updatedCustomer) {
+        DAOCustomers daoCustomers = new DaoFactoryCustomers().getDaoCustomers();
+        daoCustomers.update(updatedCustomer);
+    }
 }

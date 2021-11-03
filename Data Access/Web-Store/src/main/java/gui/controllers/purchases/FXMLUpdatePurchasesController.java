@@ -8,6 +8,8 @@ import javafx.scene.control.ListView;
 import model.Customer;
 import model.Item;
 import model.Purchase;
+import services.CustomersServices;
+import services.ItemsServices;
 import services.PurchasesServices;
 
 import java.time.LocalDate;
@@ -32,10 +34,25 @@ public class FXMLUpdatePurchasesController {
         Customer customer = customerBox.getSelectionModel().getSelectedItem();
 
         if (purchaseToUpdate != null && itemToPurchase != null && localDate != null && customer != null){
-
+            Purchase updatedPurchase = new Purchase(purchaseToUpdate.getId(), localDate, customer,itemToPurchase);
+            purchasesServices .updatePurchase(updatedPurchase);
+            loadAllLists();
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please, select all the fields to update the purchase");
             alert.showAndWait();
         }
+    }
+
+    public void loadAllLists() {
+        PurchasesServices purchasesServices = new PurchasesServices();
+        ItemsServices itemsServices = new ItemsServices();
+        CustomersServices customersServices = new CustomersServices();
+
+
+        purchaseList.getItems().setAll(purchasesServices.getAllPurchases());
+        itemBox.getItems().setAll(itemsServices.getAllItems());
+        customerBox.getItems().setAll(customersServices.getAllCustomers());
+
+
     }
 }
