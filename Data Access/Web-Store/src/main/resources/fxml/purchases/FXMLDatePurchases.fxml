@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.purchases.FXMLDatePurchasesController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.purchases.FXMLDatePurchasesController">
    <children>
       <Button layoutX="458.0" layoutY="194.0" mnemonicParsing="false" onAction="#searchByDate" text="Search by date" />
       <Label layoutX="27.0" layoutY="65.0" text="Purchases list:" />

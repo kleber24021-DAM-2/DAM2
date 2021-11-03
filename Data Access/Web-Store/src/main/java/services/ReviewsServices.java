@@ -6,6 +6,11 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import dao.daofactories.DaoFactoryReviews;
+import dao.interfaces.DAOReviews;
 import model.Customer;
 import model.Review;
 
@@ -17,24 +22,29 @@ public class ReviewsServices {
 
 
 
-    public ArrayList<Review> getAllReviews() {
-        ArrayList<Review> rev =  null;
-        return rev;
+    public List<Review> getAllReviews() {
+        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        return daoReviews.getAll();
     }
 
-    public void deleteReview(Customer customer, Review review) {
+    public void deleteReview(Review review) {
+        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        daoReviews.delete(review);
     }
 
-    public ArrayList<String> searchByItem(int id) {
-        ArrayList<String> st =  null;
-        return st;
+    public List<Review> searchByItem(int id) {
+        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        return daoReviews.getAll().stream()
+                .filter(r -> r.getPurchase().getItem().getIdItem() == id)
+                .collect(Collectors.toList());
     }
 
-    public Review createReview() {
-        Review rev = null;
-        return rev;    }
-
-    public void addReview(Customer customer, Review review) {
-
+    public void addReview(Review review) {
+        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        daoReviews.save(review);
+    }
+    public void updateReview(Review review){
+        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        daoReviews.update(review);
     }
 }

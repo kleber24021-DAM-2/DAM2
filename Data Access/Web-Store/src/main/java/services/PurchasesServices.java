@@ -8,14 +8,18 @@ package services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dao.daofactories.DaoFactoryCustomers;
 import dao.daofactories.DaoFactoryItems;
 import dao.daofactories.DaoFactoryPurchases;
+import dao.daofactories.DaoFactoryReviews;
 import dao.interfaces.DAOCustomers;
 import dao.interfaces.DAOItems;
 import dao.interfaces.DAOPurchases;
+import dao.interfaces.DAOReviews;
 import model.Purchase;
+import model.Review;
 
 /**
  *
@@ -38,9 +42,20 @@ public class PurchasesServices {
         return purch;
     }
 
-    public void deletePurchase(Purchase purchase) {
-        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
-        dao.delete(purchase);
+    public boolean deletePurchase(Purchase purchase) {
+        DAOPurchases daoPurchases = new DaoFactoryPurchases().getDaoPurchases();
+        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+
+        List<Review> reviewList = daoReviews.getAll();
+        reviewList = reviewList.stream()
+                .filter(r -> r.getPurchase().getId() == purchase.getId())
+                .collect(Collectors.toList());
+        if (reviewList.isEmpty()){
+            daoPurchases.delete(purchase);
+            return true;
+        }else {
+            return false;
+        }
      }
 
     public void addPurchase(int customerId, int itemId, LocalDate date) {

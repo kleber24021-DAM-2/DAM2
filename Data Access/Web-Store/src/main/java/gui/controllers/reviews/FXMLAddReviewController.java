@@ -7,15 +7,16 @@ package gui.controllers.reviews;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Customer;
 import model.Purchase;
 import model.Review;
+import services.CustomersServices;
+import services.PurchasesServices;
+import services.ReviewsServices;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 /**
@@ -26,29 +27,42 @@ import java.util.ResourceBundle;
 public class FXMLAddReviewController implements Initializable {
 
     @FXML
-    private ListView<Customer> clientBox;
-    @FXML
     private ListView<Purchase> purchaseBox;
     @FXML
-    private ComboBox<String> ratingBox;
-    //TODO combobox may not be String
+    private ComboBox<Ratings> ratingBox;
     @FXML
     private TextField titleBox;
     @FXML
     private TextArea textBox;
-    @FXML
-    private ListView<Review> reviewList;
-
-    public void loadCustomers() {
-        //Implement function to load customers of Review screen
-    }
-
     public void loadPurchases() {
-        //Implement function to load purchases of Review screen
+        PurchasesServices purchasesServices = new PurchasesServices();
+        purchaseBox.getItems().setAll(purchasesServices.getAllPurchases());
     }
 
-    public void addReview() {
-        //Implement function to add reviews
+    @FXML
+    private void addReview() {
+        ReviewsServices reviewsServices = new ReviewsServices();
+        Purchase purchase = purchaseBox.getSelectionModel().getSelectedItem();
+        Ratings rating = ratingBox.getSelectionModel().getSelectedItem();
+        if (purchase != null && rating != null){
+            Review review = new Review(-1, rating, titleBox.getText(), textBox.getText(), LocalDate.now(), purchase);
+            reviewsServices.addReview(review);
+            clearFields();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You must choose a purchase and a rating to create a review");
+            alert.showAndWait();
+        }
+    }
+
+    private void clearFields() {
+        titleBox.clear();
+        textBox.clear();
+        purchaseBox.getSelectionModel().clearSelection();
+        ratingBox.getSelectionModel().clearSelection();
+    }
+
+    private void loadRatings(){
+        ratingBox.getItems().setAll(Ratings.values());
     }
 
     /**
@@ -56,7 +70,7 @@ public class FXMLAddReviewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadCustomers();
+        loadRatings();
     }
 
 }

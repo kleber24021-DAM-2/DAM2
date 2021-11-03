@@ -9,7 +9,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import model.Review;
+import services.ReviewsServices;
 
 /**
  * FXML Controller class
@@ -19,18 +22,22 @@ import javafx.scene.control.ListView;
 public class FXMLdeleteReviewController implements Initializable {
 
     @FXML
-    private ListView customerBox;
-    @FXML
-    private ListView reviewBox;
+    private ListView<Review> reviewBox;
 
     public void loadReviewsList() {
+        ReviewsServices reviewsServices = new ReviewsServices();
+        reviewBox.getItems().setAll(reviewsServices.getAllReviews());
      }
 
-    public void loadCustomersList() {
-
-    }
-
     public void deleteReview() {
+        ReviewsServices reviewsServices = new ReviewsServices();
+        Review toDelete = reviewBox.getSelectionModel().getSelectedItem();
+        if (toDelete != null){
+            reviewsServices.deleteReview(toDelete);
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please, select a review to delete it");
+            alert.showAndWait();
+        }
     }
 
     /**
@@ -38,7 +45,6 @@ public class FXMLdeleteReviewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //loadCustomersList();
     }
 
 }

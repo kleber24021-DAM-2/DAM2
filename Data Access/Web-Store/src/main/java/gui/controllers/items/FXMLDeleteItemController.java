@@ -27,12 +27,12 @@ public class FXMLDeleteItemController {
         PurchasesServices purchasesService = new PurchasesServices();
         Item selectedItem = itemBox.getSelectionModel().getSelectedItem();
         try {
-            if (!itemsServices.deleteItem(selectedItem)) {
+            if (!itemsServices.deleteItem(selectedItem, false)) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "There are purchases with this item. Would you like to delete them to?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get()==ButtonType.OK){
                     purchasesService.deletePurchasesByItemID(selectedItem.getIdItem());
-                    itemsServices.deleteItem(selectedItem);
+                    itemsServices.deleteItem(selectedItem, true);
                 }
             }
             loadItemsList();

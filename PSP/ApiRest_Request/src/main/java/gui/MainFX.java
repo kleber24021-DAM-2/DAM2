@@ -10,7 +10,6 @@ import utils.FxmlPaths;
 
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 
 @Log4j2

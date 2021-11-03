@@ -10,8 +10,7 @@ import java.util.logging.Logger;
 
 public class DBConnPool {
     private static DBConnPool dbConnectionPool = null;
-    private BasicDataSource pool = null;
-    private String driver;
+    public BasicDataSource pool = null;
     private String urlDB;
     private String userName;
     private String password;
@@ -29,13 +28,11 @@ public class DBConnPool {
     }
 
     private BasicDataSource getPool(){
-        driver = ConfigProperties.getInstance().getProperty("driver");
         urlDB = ConfigProperties.getInstance().getProperty("urlDB");
         userName = ConfigProperties.getInstance().getProperty("user_name");
         password = ConfigProperties.getInstance().getProperty("password");
 
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName(driver);
         basicDataSource.setUsername(userName);
         basicDataSource.setPassword(password);
         basicDataSource.setUrl(urlDB);
@@ -48,11 +45,11 @@ public class DBConnPool {
         return basicDataSource;
     }
 
-    public static void closePool(BasicDataSource dbConnection){
-        System.out.println("Releasing all open resources");
+    public void closePool(){
+        System.out.println("Closing pool...");
         try{
-            if (dbConnection != null){
-                dbConnection.close();
+            if (pool != null){
+                pool.close();
             }
         }catch (SQLException sqlException){
             Logger.getLogger("closePool").log(Level.SEVERE, sqlException.getMessage(), sqlException);

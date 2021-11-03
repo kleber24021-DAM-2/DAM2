@@ -22,20 +22,20 @@ public class JdbcDaoItems implements DAOItems {
     @Override
     public Item get(int id) {
         prepareCall();
-
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.SELECT_ITEM_BY_ID);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
-            resultSet.next();
-            return new Item(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getFloat(4));
+            if (resultSet.next()){
+                return new Item(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDouble(4));
+            }
         }catch (SQLException sqlException){
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
-            return null;
         }finally {
             releaseAllResources();
         }
+        return null;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class JdbcDaoItems implements DAOItems {
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
-                Item item = new Item(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getFloat(4));
+                Item item = new Item(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDouble(4));
                 toReturn.add(item);
             }
             return toReturn;
@@ -61,15 +61,15 @@ public class JdbcDaoItems implements DAOItems {
 
     @Override
     public boolean save(Item t) {
-        prepareCall();
         if (get(t.getIdItem()) != null){
             return false;
         }
+        prepareCall();
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.INSERT_ITEMS);
             preparedStatement.setString(1, t.getName());
             preparedStatement.setString(2, t.getCompany());
-            preparedStatement.setFloat(3, (float)t.getPrice());
+            preparedStatement.setDouble(3, t.getPrice());
 
             preparedStatement.executeUpdate();
             return true;
@@ -88,7 +88,7 @@ public class JdbcDaoItems implements DAOItems {
             preparedStatement = connection.prepareStatement(SqlQueries.UPDATE_ITEM);
             preparedStatement.setString(1, t.getName());
             preparedStatement.setString(2, t.getCompany());
-            preparedStatement.setFloat(3, (float) t.getPrice());
+            preparedStatement.setDouble(3, t.getPrice());
             preparedStatement.setInt(4, t.getIdItem());
 
             preparedStatement.executeUpdate();
@@ -106,17 +106,40 @@ public class JdbcDaoItems implements DAOItems {
     public boolean delete(Item t) {
         prepareCall();
         try {
+            connection.setAutoCommit(false);
+
             preparedStatement = connection.prepareStatement(SqlQueries.DELETE_ITEM);
             preparedStatement.setInt(1, t.getIdItem());
             preparedStatement.executeUpdate();
 
+            preparedStatement2 = connection.prepareStatement(SqlQueries.DELETE_PURCHASE_BY_ITEM);
+            preparedStatement2.setInt(1, t.getIdItem());
+            preparedStatement.executeUpdate();
+
+            connection.commit();
             return true;
         }catch (SQLException sqlException){
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
+            try {
+                connection.rollback();
+            }catch (SQLException sqlException1){
+                Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException1);
+            }
             return false;
         }finally {
+            try {
+                connection.setAutoCommit(true);
+            }catch (SQLException sqlException2){
+                Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException2.getMessage(), sqlException2);
+            }
             releaseAllResources();
         }
+    }
+
+    @Override
+    public void closePool() {
+        DBConnPool dbConnPool = DBConnPool.getInstance();
+        dbConnPool.closePool();
     }
 
     private void prepareCall(){

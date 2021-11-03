@@ -5,11 +5,13 @@
  */
 package main;
 
+import gui.controllers.FXMLPrincipalController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -37,6 +39,8 @@ public class MainFX extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull(getClass().getResource("/style/dark-theme.css")).toExternalForm()));
         primaryStage.setTitle("Web store");
         primaryStage.setScene(scene);
+        FXMLPrincipalController controller = loaderMenu.getController();
+        primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, controller::closeApplication);
         primaryStage.show();
         //para no poder maximizar pantalla y
         primaryStage.setResizable(false);

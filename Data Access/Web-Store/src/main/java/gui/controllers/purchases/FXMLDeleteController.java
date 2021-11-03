@@ -34,14 +34,17 @@ public class FXMLDeleteController implements Initializable {
     public void deletePurchase(){
         PurchasesServices services = new PurchasesServices();
         Purchase selectedPurchase;
-        try {
-            selectedPurchase = purchaseBox.getSelectionModel().getSelectedItem();
-        }catch (NullPointerException e){
+        selectedPurchase = purchaseBox.getSelectionModel().getSelectedItem();
+        if (selectedPurchase == null){
             Alert alert = new Alert(AlertType.WARNING, "Please select a purchase to delete");
             alert.showAndWait();
             return;
         }
-        services.deletePurchase(selectedPurchase);
+        if (!services.deletePurchase(selectedPurchase)){
+            Alert alert = new Alert(AlertType.WARNING, "This purchase has an associated review. It can't be deleted");
+            alert.showAndWait();
+            return;
+        }
         loadPurchases();
     }
     

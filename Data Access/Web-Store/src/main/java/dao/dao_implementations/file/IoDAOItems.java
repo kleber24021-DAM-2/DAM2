@@ -85,4 +85,9 @@ public class IoDAOItems implements DAOItems {
         }
         return false;
     }
+
+    @Override
+    public void closePool() {
+        //Not needed in files
+    }
 }

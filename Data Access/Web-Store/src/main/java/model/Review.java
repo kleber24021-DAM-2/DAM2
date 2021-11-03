@@ -5,6 +5,8 @@
  */
 package model;
 
+import gui.controllers.reviews.Ratings;
+
 import java.time.LocalDate;
 
 /**
@@ -14,21 +16,27 @@ import java.time.LocalDate;
 public class Review  {
 
     private int idReview;
-    private int rating;
+    private Ratings rating;
     private String title;
     private String description;
     private LocalDate date;
     private Purchase purchase;
 
-    public Review() {
-    }
-
-    public Review(int idReview, int rating, String title, String description, Customer customer, Item item, Purchase purchase) {
+    public Review(int idReview, Ratings rating, String title, String description, LocalDate date, Purchase purchase) {
         this.idReview = idReview;
         this.rating = rating;
         this.title = title;
         this.description = description;
-        this.date = LocalDate.now();
+        this.date = date;
+        this.purchase = purchase;
+    }
+
+    public Review(int idReview, int rating, String title, String description, LocalDate date, Purchase purchase) {
+        this.idReview = idReview;
+        this.rating = Ratings.valueOf(rating);
+        this.title = title;
+        this.description = description;
+        this.date = date;
         this.purchase = purchase;
     }
 
@@ -40,12 +48,12 @@ public class Review  {
         this.idReview = idReview;
     }
 
-    public int getRating() {
+    public Ratings getRating() {
         return rating;
     }
 
     public void setRating(int rating) {
-        this.rating = rating;
+        this.rating = Ratings.valueOf(rating);
     }
 
     public String getTitle() {

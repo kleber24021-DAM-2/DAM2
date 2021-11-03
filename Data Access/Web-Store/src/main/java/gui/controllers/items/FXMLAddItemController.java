@@ -11,15 +11,15 @@ import services.ItemsServices;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FXMLAddItemController implements Initializable {
 
-    private ItemsServices services = new ItemsServices();
+    private final ItemsServices services = new ItemsServices();
 
     @FXML
     private ListView<Item> itemList;
-    @FXML
-    private TextField idBox;
     @FXML
     private TextField nameBox;
     @FXML
@@ -28,25 +28,29 @@ public class FXMLAddItemController implements Initializable {
     private TextField priceBox;
 
     @FXML
-    private void addItem(ActionEvent actionEvent) {
-        try {
-            int itemId = Integer.parseInt(idBox.getText());
+    private void addItem() {
+        ItemsServices itemsServices = new ItemsServices();
+
+        Pattern pattern = Pattern.compile("^\\d{1,6}(\\.\\d{1,2})?$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(priceBox.getText().replace(",","."));
+
+
+        if (matcher.matches()) {
             String itemName = nameBox.getText();
             String itemCompany = companyBox.getText();
-            float itemPrice = Float.parseFloat(priceBox.getText());
-            if (services.addItem(itemId, itemName, itemCompany, itemPrice)){
-                loadItemsList();
-            }else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setContentText("Item hasn't been uploaded. Check id");
+            double itemPrice = Double.parseDouble(priceBox.getText().replace(",","."));
+
+            if (!(itemName.isEmpty() || itemName.isBlank() || itemCompany.isBlank() || itemCompany.isEmpty())) {
+                itemsServices.addItem(itemName, itemCompany, itemPrice);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Name, phone and/or address can't be empty");
                 alert.showAndWait();
             }
-
-        }catch (NumberFormatException numEx){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Check the price. It must be a float");
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please, enter a valid number");
             alert.showAndWait();
         }
+        loadItemsList();
     }
 
     public void loadItemsList() {

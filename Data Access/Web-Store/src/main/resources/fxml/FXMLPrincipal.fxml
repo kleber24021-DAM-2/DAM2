@@ -11,6 +11,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#chargeLogin" text="Go back to login" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeWelcome" text="Welcome Pane" />
+                  <MenuItem mnemonicParsing="false" onAction="#closeWindow" text="Close application" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Items">
@@ -19,7 +20,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#listItems" text="List Items" />
                   <MenuItem mnemonicParsing="false" text="Find by ID" />
                   <MenuItem mnemonicParsing="false" onAction="#deleteItems" text="Delete Item" />
-                  <MenuItem mnemonicParsing="false" text="Update Item" />
+                  <MenuItem mnemonicParsing="false" onAction="#updateItems" text="Update Item" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Customers">

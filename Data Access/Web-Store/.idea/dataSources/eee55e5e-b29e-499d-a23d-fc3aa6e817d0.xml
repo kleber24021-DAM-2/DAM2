@@ -1388,48 +1388,48 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <RefTableName>ITEMS</RefTableName>
       <RefColNames>ID_ITEM</RefColNames>
     </foreign-key>
-    <column id="379" parent="331" name="idReview">
+    <column id="379" parent="331" name="ID_REVIEW">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="380" parent="331" name="rating">
+    <column id="380" parent="331" name="RATING">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="381" parent="331" name="title">
+    <column id="381" parent="331" name="TITLE">
       <Position>3</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="382" parent="331" name="description">
+    <column id="382" parent="331" name="DESCRIPTION">
       <Position>4</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="383" parent="331" name="date">
+    <column id="383" parent="331" name="DATE">
       <Position>5</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="384" parent="331" name="idPurchase">
+    <column id="384" parent="331" name="ID_PURCHASE">
       <Position>6</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="385" parent="331" name="FK_Purchase">
-      <ColNames>idPurchase</ColNames>
+      <ColNames>ID_PURCHASE</ColNames>
       <Type>btree</Type>
     </index>
     <key id="386" parent="331" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>idReview</ColNames>
+      <ColNames>ID_REVIEW</ColNames>
       <Primary>1</Primary>
     </key>
     <foreign-key id="387" parent="331" name="FK_Purchase">
-      <ColNames>idPurchase</ColNames>
+      <ColNames>ID_PURCHASE</ColNames>
       <RefTableName>PURCHASES</RefTableName>
       <RefColNames>ID_PURCHASE</RefColNames>
     </foreign-key>

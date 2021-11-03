@@ -23,4 +23,6 @@ public interface DAOItems {
     boolean update(Item t);
      
     boolean delete(Item t);
+
+    void closePool();
 }

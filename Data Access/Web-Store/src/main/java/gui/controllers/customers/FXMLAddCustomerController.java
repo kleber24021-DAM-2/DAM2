@@ -23,8 +23,6 @@ import services.CustomersServices;
 public class FXMLAddCustomerController implements Initializable {
 
     @FXML
-    private TextField idBox;
-    @FXML
     private TextField nameBox;
     @FXML
     private TextField phoneBox;
@@ -41,20 +39,11 @@ public class FXMLAddCustomerController implements Initializable {
 
     public void addCustomer() {
         CustomersServices services = new CustomersServices();
-        int customerId;
-        try {
-            customerId = Integer.parseInt(idBox.getText());
-        }catch (NumberFormatException exception){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Please, set valid number as ID");
-            alert.showAndWait();
-            return;
-        }
         String name = nameBox.getText();
         String phone = phoneBox.getText();
         String address = addressBox.getText();
 
-        if (services.addCustomer(customerId, name, phone, address)){
+        if (services.addCustomer(-1, name, phone, address)){
             loadCustomersList();
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
