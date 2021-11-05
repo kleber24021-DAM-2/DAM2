@@ -9,6 +9,8 @@ import services.ItemsServices;
 import services.PurchasesServices;
 
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FXMLDeleteItemController {
 
@@ -24,19 +26,22 @@ public class FXMLDeleteItemController {
     @FXML
     private void deleteItem() {
         ItemsServices itemsServices = new ItemsServices();
-        PurchasesServices purchasesService = new PurchasesServices();
         Item selectedItem = itemBox.getSelectionModel().getSelectedItem();
         try {
-            if (!itemsServices.deleteItem(selectedItem, false)) {
+            int deleteAnswer = itemsServices.deleteItem(selectedItem, false);
+            if (deleteAnswer == -1) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "There are purchases with this item. Would you like to delete them to?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get()==ButtonType.OK){
-                    purchasesService.deletePurchasesByItemID(selectedItem.getIdItem());
                     itemsServices.deleteItem(selectedItem, true);
                 }
+            }else if (deleteAnswer == -2){
+                Alert alert = new Alert(Alert.AlertType.WARNING, "There are reviews associated to this item. This item can't be deleted");
+                alert.showAndWait();
             }
             loadItemsList();
         }catch (NullPointerException exception){
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, exception.getMessage(), exception);
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please, select an object to delete");
             alert.showAndWait();
         }

@@ -6,6 +6,7 @@
 package gui.controllers;
 
 import gui.controllers.customers.FXMLAddCustomerController;
+import gui.controllers.customers.FXMLUpdateCostumerController;
 import gui.controllers.customers.FXMLdeleteCustomerController;
 import gui.controllers.customers.FXMLfindCustomerController;
 import gui.controllers.items.FXMLAddItemController;
@@ -15,10 +16,11 @@ import gui.controllers.items.FXMLUpdateItemController;
 import gui.controllers.purchases.FXMLAddPurchasesController;
 import gui.controllers.purchases.FXMLDatePurchasesController;
 import gui.controllers.purchases.FXMLDeleteController;
+import gui.controllers.purchases.FXMLUpdatePurchasesController;
 import gui.controllers.reviews.FXMLAddReviewController;
+import gui.controllers.reviews.FXMLUpdateReviewControllers;
 import gui.controllers.reviews.FXMLdeleteReviewController;
 import gui.controllers.reviews.FXMLfindReviewController;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -82,7 +84,15 @@ public class FXMLPrincipalController implements Initializable {
     private AnchorPane deleteItems;
     private FXMLDeleteItemController deleteItemsController;
     private AnchorPane updateItems;
+
     private FXMLUpdateItemController updateItemController;
+
+    private FXMLUpdatePurchasesController updatePurchasesController;
+    private AnchorPane updatePurchasePane;
+    private FXMLUpdateCostumerController updateCostumerController;
+    private AnchorPane updateCustomerPane;
+    private FXMLUpdateReviewControllers updateReviewControllers;
+    private AnchorPane updateReviewPane;
 
     public void setFxRoot(BorderPane fxRoot) {
         this.fxRoot = fxRoot;
@@ -269,14 +279,14 @@ public class FXMLPrincipalController implements Initializable {
         }
     }
 
-    public void preloadUpdateItem(){
+    public void preloadUpdateItem() {
         try {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource(
                             "/fxml/items/FXMLUpdateItem.fxml"));
             updateItems = loaderMenu.load();
             updateItemController = loaderMenu.getController();
-        }catch (IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -303,6 +313,42 @@ public class FXMLPrincipalController implements Initializable {
             deleteItemsController = loaderMenu.getController();
         } catch (IOException io) {
             Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, io);
+        }
+    }
+
+    public void preloadUpdateCustomer() {
+        try {
+            FXMLLoader loaderMenu = new FXMLLoader(
+                    getClass().getResource(
+                            "/fxml/customers/FXMLUpdateCustomer.fxml"));
+            updateCustomerPane = loaderMenu.load();
+            updateCostumerController = loaderMenu.getController();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void preloadUpdatePurchase() {
+        try {
+            FXMLLoader loaderMenu = new FXMLLoader(
+                    getClass().getResource(
+                            "/fxml/purchases/FXMLUpdatePurchases.fxml"));
+            updatePurchasePane = loaderMenu.load();
+            updatePurchasesController = loaderMenu.getController();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void preloadUpdateReviews() {
+        try {
+            FXMLLoader loaderMenu = new FXMLLoader(
+                    getClass().getResource(
+                            "/fxml/reviews/FXMLUpdateReview.fxml"));
+            updateReviewPane = loaderMenu.load();
+            updateReviewControllers = loaderMenu.getController();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -381,6 +427,21 @@ public class FXMLPrincipalController implements Initializable {
         fxRoot.setCenter(deleteItems);
     }
 
+    public void showUpdateCustomers() {
+        updateCostumerController.loadAllLists();
+        fxRoot.setCenter(updateCustomerPane);
+    }
+
+    public void showUpdatePurchases() {
+        updatePurchasesController.loadAllLists();
+        fxRoot.setCenter(updatePurchasePane);
+    }
+
+    public void showUpdateReviews() {
+        updateReviewControllers.loadAllLists();
+        fxRoot.setCenter(updateReviewPane);
+    }
+
     /**
      * Initializes the controller class.
      */
@@ -405,6 +466,10 @@ public class FXMLPrincipalController implements Initializable {
         preloadAddItems();
         preloadDeleteItems();
         preloadUpdateItem();
+        preloadUpdateCustomer();
+        preloadUpdatePurchase();
+        preloadUpdateReviews();
+
         chargeLogin();
 
     }
@@ -417,13 +482,14 @@ public class FXMLPrincipalController implements Initializable {
         if (answer.isPresent()) {
             if (answer.get().equals(ButtonType.OK)) {
                 services.onCloseApplication();
-            } else if (answer.get().equals(ButtonType.CANCEL)){
+            } else if (answer.get().equals(ButtonType.CANCEL)) {
                 event.consume();
             }
         }
     }
+
     @FXML
-    private void closeWindow(){
+    private void closeWindow() {
         Window window = fxRoot.getScene().getWindow();
         window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
     }

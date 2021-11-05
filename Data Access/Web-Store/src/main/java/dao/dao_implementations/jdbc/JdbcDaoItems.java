@@ -108,13 +108,14 @@ public class JdbcDaoItems implements DAOItems {
         try {
             connection.setAutoCommit(false);
 
+            preparedStatement2 = connection.prepareStatement(SqlQueries.DELETE_PURCHASE_BY_ITEM);
+            preparedStatement2.setInt(1, t.getIdItem());
+            preparedStatement2.executeUpdate();
+
             preparedStatement = connection.prepareStatement(SqlQueries.DELETE_ITEM);
             preparedStatement.setInt(1, t.getIdItem());
             preparedStatement.executeUpdate();
 
-            preparedStatement2 = connection.prepareStatement(SqlQueries.DELETE_PURCHASE_BY_ITEM);
-            preparedStatement2.setInt(1, t.getIdItem());
-            preparedStatement.executeUpdate();
 
             connection.commit();
             return true;
