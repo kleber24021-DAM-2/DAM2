@@ -1,6 +1,5 @@
 package gui.controllers.items;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -42,6 +41,7 @@ public class FXMLAddItemController implements Initializable {
 
             if (!(itemName.isEmpty() || itemName.isBlank() || itemCompany.isBlank() || itemCompany.isEmpty())) {
                 itemsServices.addItem(itemName, itemCompany, itemPrice);
+                clearAll();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Name, phone and/or address can't be empty");
                 alert.showAndWait();
@@ -56,7 +56,11 @@ public class FXMLAddItemController implements Initializable {
     public void loadItemsList() {
         itemList.getItems().setAll(services.getAllItems());
     }
-
+    private void clearAll(){
+        nameBox.clear();
+        companyBox.clear();
+        priceBox.clear();
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadItemsList();

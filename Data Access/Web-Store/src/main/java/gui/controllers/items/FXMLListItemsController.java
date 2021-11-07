@@ -32,7 +32,6 @@ public class FXMLListItemsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadItemsList();
     }
 
 }

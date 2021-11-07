@@ -1,6 +1,7 @@
 package dao.dao_implementations.jdbc;
 
-import dao.dao_implementations.jdbc.utils.SqlQueries;
+import dao.dao_implementations.SqlQueries;
+import dao.dbconnections.DBConnection;
 import dao.interfaces.DAOPurchases;
 import model.Customer;
 import model.Item;
@@ -13,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class JdbcDaoPurchases implements DAOPurchases {
 
@@ -49,7 +49,7 @@ public class JdbcDaoPurchases implements DAOPurchases {
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.SELECT_ALL_PURCHASES);
             resultSet = preparedStatement.executeQuery();
-            return getPurchasesList();
+            return getPurchasesList(resultSet);
         } catch (SQLException sqlException) {
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
         } finally {
@@ -118,7 +118,7 @@ public class JdbcDaoPurchases implements DAOPurchases {
             preparedStatement = connection.prepareStatement(SqlQueries.SELECT_ALL_PURCHASES_BY_CUSTOMER);
             preparedStatement.setInt(1, idCustomer);
             resultSet = preparedStatement.executeQuery();
-            return getPurchasesList();
+            return getPurchasesList(resultSet);
         } catch (SQLException sqlException) {
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
         } finally {
@@ -135,7 +135,7 @@ public class JdbcDaoPurchases implements DAOPurchases {
             preparedStatement = connection.prepareStatement(SqlQueries.SELECT_PURCHASE_BY_DATE);
             preparedStatement.setDate(1, Date.valueOf(selectedDate));
             resultSet = preparedStatement.executeQuery();
-            toReturn = getPurchasesList();
+            toReturn = getPurchasesList(resultSet);
             return toReturn;
         } catch (SQLException sqlException) {
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
@@ -185,9 +185,8 @@ public class JdbcDaoPurchases implements DAOPurchases {
         dbConnection.releaseResource(preparedStatement);
         dbConnection.closeConnection(connection);
     }
-    private List<Purchase> getPurchasesList() throws SQLException{
+    private List<Purchase> getPurchasesList(ResultSet resultSet) throws SQLException{
         List<Purchase> toReturn = new ArrayList<>();
-        resultSet = preparedStatement.executeQuery();
         while (resultSet.next()){
             Customer customer = new Customer(resultSet.getInt(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6));
             Item item = new Item(resultSet.getInt(7), resultSet.getString(8), resultSet.getString(9), resultSet.getFloat(10));

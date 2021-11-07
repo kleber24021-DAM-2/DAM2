@@ -1,9 +1,9 @@
 package dao.dao_implementations.jdbc;
 
-import dao.dao_implementations.jdbc.utils.SqlQueries;
+import dao.dao_implementations.SqlQueries;
+import dao.dbconnections.DBConnection;
 import dao.interfaces.DAOCustomers;
 import model.Customer;
-import model.Item;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

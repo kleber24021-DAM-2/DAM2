@@ -2,6 +2,7 @@ package dao.daofactories;
 
 import dao.dao_implementations.file.XMLDaoCustomers;
 import dao.dao_implementations.jdbc.JdbcDaoCustomers;
+import dao.dao_implementations.spring.SpringDaoCustomers;
 import dao.interfaces.DAOCustomers;
 
 import java.io.IOException;
@@ -32,10 +33,18 @@ public class DaoFactoryCustomers {
     public DAOCustomers getDaoCustomers(){
         DAOCustomers dao = null;
         String sourceProp = daoProps.getProperty("daoCustomers");
-        if (sourceProp.equals("JDBC")){
-            dao = new JdbcDaoCustomers();
-        }else if(sourceProp.equals("Files")){
-            dao = new XMLDaoCustomers();
+        switch (sourceProp){
+            case "JDBC":
+                dao = new JdbcDaoCustomers();
+                break;
+            case "Files":
+                dao = new XMLDaoCustomers();
+                break;
+            case "Spring":
+                dao = new SpringDaoCustomers();
+                break;
+            default:
+                break;
         }
         return dao;
     }

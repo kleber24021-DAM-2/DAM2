@@ -2,6 +2,7 @@ package dao.daofactories;
 
 import dao.dao_implementations.file.IoDAOItems;
 import dao.dao_implementations.jdbc.JdbcDaoItems;
+import dao.dao_implementations.spring.SpringDaoItems;
 import dao.interfaces.DAOItems;
 
 import java.io.IOException;
@@ -32,10 +33,18 @@ public class DaoFactoryItems {
     public DAOItems getDaoItems(){
         DAOItems dao = null;
         String sourceProp = daoProps.getProperty("daoItems");
-        if (sourceProp.equals("JDBC")){
-            dao = new JdbcDaoItems();
-        }else if(sourceProp.equals("Files")){
-            dao = new IoDAOItems();
+        switch (sourceProp){
+            case "JDBC":
+                dao = new JdbcDaoItems();
+                break;
+            case "Files":
+                dao = new IoDAOItems();
+                break;
+            case "Spring":
+                dao = new SpringDaoItems();
+                break;
+            default:
+                break;
         }
         return dao;
     }

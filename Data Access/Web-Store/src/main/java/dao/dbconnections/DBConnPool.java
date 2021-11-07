@@ -1,4 +1,4 @@
-package dao.dao_implementations.jdbc;
+package dao.dbconnections;
 
 import configuration.ConfigProperties;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class DBConnPool {
     private static DBConnPool dbConnectionPool = null;
-    public BasicDataSource pool = null;
+    private BasicDataSource pool = null;
     private String urlDB;
     private String userName;
     private String password;
@@ -27,22 +27,23 @@ public class DBConnPool {
         return dbConnectionPool;
     }
 
-    private BasicDataSource getPool(){
-        urlDB = ConfigProperties.getInstance().getProperty("urlDB");
-        userName = ConfigProperties.getInstance().getProperty("user_name");
-        password = ConfigProperties.getInstance().getProperty("password");
+    public BasicDataSource getPool(){
+        if (pool == null){
+            urlDB = ConfigProperties.getInstance().getProperty("urlDB");
+            userName = ConfigProperties.getInstance().getProperty("user_name");
+            password = ConfigProperties.getInstance().getProperty("password");
 
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUsername(userName);
-        basicDataSource.setPassword(password);
-        basicDataSource.setUrl(urlDB);
+            pool = new BasicDataSource();
+            pool.setUsername(userName);
+            pool.setPassword(password);
+            pool.setUrl(urlDB);
 
-        basicDataSource.setInitialSize(4);
+            pool.setInitialSize(4);
 
-        basicDataSource.setValidationQuery("select 1");
-
-        System.out.println("Pool created");
-        return basicDataSource;
+            pool.setValidationQuery("select 1");
+            System.out.println("Pool created");
+        }
+        return pool;
     }
 
     public void closePool(){

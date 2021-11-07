@@ -1,6 +1,8 @@
 package dao.dao_implementations.jdbc;
 
-import dao.dao_implementations.jdbc.utils.SqlQueries;
+import dao.dao_implementations.SqlQueries;
+import dao.dbconnections.DBConnPool;
+import dao.dbconnections.DBConnection;
 import dao.interfaces.DAOItems;
 import model.Item;
 
@@ -28,7 +30,7 @@ public class JdbcDaoItems implements DAOItems {
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()){
-                return new Item(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDouble(4));
+                return createItem();
             }
         }catch (SQLException sqlException){
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
@@ -36,6 +38,10 @@ public class JdbcDaoItems implements DAOItems {
             releaseAllResources();
         }
         return null;
+    }
+
+    private Item createItem() throws SQLException {
+        return new Item(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDouble(4));
     }
 
     @Override
@@ -47,8 +53,7 @@ public class JdbcDaoItems implements DAOItems {
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
-                Item item = new Item(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDouble(4));
-                toReturn.add(item);
+                toReturn.add(createItem());
             }
             return toReturn;
         }catch (SQLException sqlException){

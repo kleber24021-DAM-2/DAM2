@@ -1,6 +1,7 @@
 package dao.dao_implementations.jdbc;
 
-import dao.dao_implementations.jdbc.utils.SqlQueries;
+import dao.dao_implementations.SqlQueries;
+import dao.dbconnections.DBConnection;
 import dao.interfaces.DAOReviews;
 import model.Customer;
 import model.Item;
@@ -8,7 +9,6 @@ import model.Purchase;
 import model.Review;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -2,6 +2,7 @@ package dao.daofactories;
 
 import dao.dao_implementations.file.NioDAOPurchases;
 import dao.dao_implementations.jdbc.JdbcDaoPurchases;
+import dao.dao_implementations.spring.SpringDaoPurchases;
 import dao.interfaces.DAOPurchases;
 
 import java.io.IOException;
@@ -32,10 +33,18 @@ public class DaoFactoryPurchases {
     public DAOPurchases getDaoPurchases(){
         DAOPurchases dao = null;
         String sourceProp = daoProps.getProperty("daoPurchases");
-        if (sourceProp.equals("JDBC")){
-            dao = new JdbcDaoPurchases();
-        }else if(sourceProp.equals("Files")){
-            dao = new NioDAOPurchases();
+        switch (sourceProp){
+            case "JDBC":
+                dao = new JdbcDaoPurchases();
+                break;
+            case "Files":
+                dao = new NioDAOPurchases();
+                break;
+            case "Spring":
+                dao = new SpringDaoPurchases();
+                break;
+            default:
+                break;
         }
         return dao;
     }

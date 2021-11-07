@@ -1,4 +1,4 @@
-package dao.dao_implementations.jdbc;
+package dao.dbconnections;
 
 import java.sql.*;
 import java.util.logging.Level;

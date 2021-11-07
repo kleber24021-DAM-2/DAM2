@@ -171,7 +171,7 @@ public class FXMLPrincipalController implements Initializable {
             deleteController = loaderMenu.getController();
 
         } catch (IOException ex) {
-            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
 
     }

@@ -22,6 +22,10 @@ public class Review  {
     private LocalDate date;
     private Purchase purchase;
 
+
+    public Review(){
+
+    }
     public Review(int idReview, Ratings rating, String title, String description, LocalDate date, Purchase purchase) {
         this.idReview = idReview;
         this.rating = rating;

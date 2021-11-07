@@ -5,9 +5,6 @@
  */
 package gui.controllers.customers;
 
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -15,6 +12,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.Customer;
 import services.CustomersServices;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -45,13 +46,18 @@ public class FXMLAddCustomerController implements Initializable {
 
         if (services.addCustomer(-1, name, phone, address)){
             loadCustomersList();
+            clearAll();
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setContentText("Customer not added to the database. Please check the data introduced and try again. (Possible repeated ID)");
             alert.showAndWait();
         }
     }
-
+    private void clearAll(){
+        nameBox.clear();
+        phoneBox.clear();
+        addressBox.clear();
+    }
     /**
      * Initializes the controller class.
      */

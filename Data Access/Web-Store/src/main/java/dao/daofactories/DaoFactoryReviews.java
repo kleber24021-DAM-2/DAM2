@@ -2,6 +2,7 @@ package dao.daofactories;
 
 import dao.dao_implementations.file.FileDaoReview;
 import dao.dao_implementations.jdbc.JdbcDaoReview;
+import dao.dao_implementations.spring.SpringDaoReviews;
 import dao.interfaces.DAOReviews;
 
 import java.io.IOException;
@@ -32,10 +33,18 @@ public class DaoFactoryReviews {
     public DAOReviews getDaoReviews(){
         DAOReviews dao = null;
         String sourceProp = daoProps.getProperty("daoReviews");
-        if (sourceProp.equals("JDBC")){
-            dao = new JdbcDaoReview();
-        }else if(sourceProp.equals("Files")){
-            dao = new FileDaoReview();
+        switch (sourceProp){
+            case "JDBC":
+                dao = new JdbcDaoReview();
+                break;
+            case "Files":
+                dao = new FileDaoReview();
+                break;
+            case "Spring":
+                dao = new SpringDaoReviews();
+                break;
+            default:
+                break;
         }
         return dao;
     }

@@ -1,4 +1,4 @@
-package dao.dao_implementations.jdbc.utils;
+package dao.dao_implementations;
 
 public class SqlQueries {
     private SqlQueries(){
