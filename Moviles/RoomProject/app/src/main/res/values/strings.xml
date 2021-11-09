@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RoomProject</string>
+    <string name="seeHeroes">Ver lista héroes</string>
+    <string name="addHero">Añadir héroe</string>
+    <string name="editHero">Editar héroe</string>
+    <string name="deleteHero">Borrar héroe</string>
+    <string name="menuTitle">CRUD Héroes</string>
 </resources>
