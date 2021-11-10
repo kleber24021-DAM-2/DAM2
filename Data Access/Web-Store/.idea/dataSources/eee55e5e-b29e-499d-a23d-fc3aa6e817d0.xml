@@ -1,136 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="@dam2.mysql.iesquevedo.es">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.23">
-    <root id="1">
-      <ServerVersion>8.0.21</ServerVersion>
-      <Grants>|root||root||ALTER|G
-|root||root|localhost|ALTER|G
-|root||root||ALTER ROUTINE|G
-|root||root|localhost|ALTER ROUTINE|G
-|root||root||APPLICATION_PASSWORD_ADMIN|G
-|root||root|localhost|APPLICATION_PASSWORD_ADMIN|G
-|root||root||AUDIT_ADMIN|G
-|root||root|localhost|AUDIT_ADMIN|G
-|root||mysql.session|localhost|BACKUP_ADMIN|G
-|root||root||BACKUP_ADMIN|G
-|root||root|localhost|BACKUP_ADMIN|G
-|root||root||BINLOG_ADMIN|G
-|root||root|localhost|BINLOG_ADMIN|G
-|root||root||BINLOG_ENCRYPTION_ADMIN|G
-|root||root|localhost|BINLOG_ENCRYPTION_ADMIN|G
-|root||mysql.session|localhost|CLONE_ADMIN|G
-|root||root||CLONE_ADMIN|G
-|root||root|localhost|CLONE_ADMIN|G
-|root||mysql.session|localhost|CONNECTION_ADMIN|G
-|root||root||CONNECTION_ADMIN|G
-|root||root|localhost|CONNECTION_ADMIN|G
-|root||root||CREATE|G
-|root||root|localhost|CREATE|G
-|root||root||CREATE ROLE|G
-|root||root|localhost|CREATE ROLE|G
-|root||root||CREATE ROUTINE|G
-|root||root|localhost|CREATE ROUTINE|G
-|root||root||CREATE TABLESPACE|G
-|root||root|localhost|CREATE TABLESPACE|G
-|root||root||CREATE TEMPORARY TABLES|G
-|root||root|localhost|CREATE TEMPORARY TABLES|G
-|root||root||CREATE USER|G
-|root||root|localhost|CREATE USER|G
-|root||root||CREATE VIEW|G
-|root||root|localhost|CREATE VIEW|G
-|root||root||DELETE|G
-|root||root|localhost|DELETE|G
-|root||root||DROP|G
-|root||root|localhost|DROP|G
-|root||root||DROP ROLE|G
-|root||root|localhost|DROP ROLE|G
-|root||root||ENCRYPTION_KEY_ADMIN|G
-|root||root|localhost|ENCRYPTION_KEY_ADMIN|G
-|root||root||EVENT|G
-|root||root|localhost|EVENT|G
-|root||root||EXECUTE|G
-|root||root|localhost|EXECUTE|G
-|root||root||FILE|G
-|root||root|localhost|FILE|G
-|root||root||GROUP_REPLICATION_ADMIN|G
-|root||root|localhost|GROUP_REPLICATION_ADMIN|G
-|root||root||INDEX|G
-|root||root|localhost|INDEX|G
-|root||root||INNODB_REDO_LOG_ARCHIVE|G
-|root||root|localhost|INNODB_REDO_LOG_ARCHIVE|G
-|root||root||INNODB_REDO_LOG_ENABLE|G
-|root||root|localhost|INNODB_REDO_LOG_ENABLE|G
-|root||root||INSERT|G
-|root||root|localhost|INSERT|G
-|root||root||LOCK TABLES|G
-|root||root|localhost|LOCK TABLES|G
-|root||mysql.session|localhost|PERSIST_RO_VARIABLES_ADMIN|G
-|root||root||PERSIST_RO_VARIABLES_ADMIN|G
-|root||root|localhost|PERSIST_RO_VARIABLES_ADMIN|G
-|root||root||PROCESS|G
-|root||root|localhost|PROCESS|G
-|root||root||REFERENCES|G
-|root||root|localhost|REFERENCES|G
-|root||root||RELOAD|G
-|root||root|localhost|RELOAD|G
-|root||root||REPLICATION CLIENT|G
-|root||root|localhost|REPLICATION CLIENT|G
-|root||root||REPLICATION SLAVE|G
-|root||root|localhost|REPLICATION SLAVE|G
-|root||root||REPLICATION_APPLIER|G
-|root||root|localhost|REPLICATION_APPLIER|G
-|root||root||REPLICATION_SLAVE_ADMIN|G
-|root||root|localhost|REPLICATION_SLAVE_ADMIN|G
-|root||root||RESOURCE_GROUP_ADMIN|G
-|root||root|localhost|RESOURCE_GROUP_ADMIN|G
-|root||root||RESOURCE_GROUP_USER|G
-|root||root|localhost|RESOURCE_GROUP_USER|G
-|root||root||ROLE_ADMIN|G
-|root||root|localhost|ROLE_ADMIN|G
-|root||mysql.infoschema|localhost|SELECT|G
-|root||root||SELECT|G
-|root||root|localhost|SELECT|G
-|root||root||SERVICE_CONNECTION_ADMIN|G
-|root||root|localhost|SERVICE_CONNECTION_ADMIN|G
-|root||mysql.session|localhost|SESSION_VARIABLES_ADMIN|G
-|root||root||SESSION_VARIABLES_ADMIN|G
-|root||root|localhost|SESSION_VARIABLES_ADMIN|G
-|root||root||SET_USER_ID|G
-|root||root|localhost|SET_USER_ID|G
-|root||root||SHOW DATABASES|G
-|root||root|localhost|SHOW DATABASES|G
-|root||root||SHOW VIEW|G
-|root||root|localhost|SHOW VIEW|G
-|root||root||SHOW_ROUTINE|G
-|root||root|localhost|SHOW_ROUTINE|G
-|root||mysql.session|localhost|SHUTDOWN|G
-|root||root||SHUTDOWN|G
-|root||root|localhost|SHUTDOWN|G
-|root||mysql.session|localhost|SUPER|G
-|root||root||SUPER|G
-|root||root|localhost|SUPER|G
-|root||mysql.session|localhost|SYSTEM_USER|G
-|root||root||SYSTEM_USER|G
-|root||root|localhost|SYSTEM_USER|G
-|root||mysql.session|localhost|SYSTEM_VARIABLES_ADMIN|G
-|root||root||SYSTEM_VARIABLES_ADMIN|G
-|root||root|localhost|SYSTEM_VARIABLES_ADMIN|G
-|root||root||TABLE_ENCRYPTION_ADMIN|G
-|root||root|localhost|TABLE_ENCRYPTION_ADMIN|G
-|root||root||TRIGGER|G
-|root||root|localhost|TRIGGER|G
-|root||root||UPDATE|G
-|root||root|localhost|UPDATE|G
-|root||root||XA_RECOVER_ADMIN|G
-|root||root|localhost|XA_RECOVER_ADMIN|G
-|root||root||grant option|G
-|root||root|localhost|grant option|G
-performance_schema|schema||mysql.session|localhost|SELECT|G
-sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
-      <DefaultEngine>InnoDB</DefaultEngine>
-      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
-      <DefaultCasing>exact</DefaultCasing>
-    </root>
+    <root id="1"/>
     <schema id="2" parent="1" name="CarlosLuis_WebStore">
       <Current>1</Current>
       <Collation>utf8mb4_0900_ai_ci</Collation>
@@ -1143,292 +1014,147 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="324" parent="2" name="Customers"/>
-    <table id="325" parent="2" name="Items"/>
-    <table id="326" parent="2" name="Purchases"/>
-    <table id="327" parent="2" name="Reviews"/>
-    <table id="328" parent="17" name="CUSTOMERS"/>
-    <table id="329" parent="17" name="ITEMS"/>
-    <table id="330" parent="17" name="PURCHASES"/>
-    <table id="331" parent="17" name="REVIEWS"/>
-    <column id="332" parent="324" name="idCustomer">
+    <table id="324" parent="17" name="CUSTOMERS"/>
+    <table id="325" parent="17" name="ITEMS"/>
+    <table id="326" parent="17" name="PURCHASES"/>
+    <table id="327" parent="17" name="REVIEWS"/>
+    <column id="328" parent="324" name="ID_CUSTOMER">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="333" parent="324" name="name">
+    <column id="329" parent="324" name="NAME">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="334" parent="324" name="telephone">
+    <column id="330" parent="324" name="TELEPHONE">
       <Position>3</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="335" parent="324" name="address">
+    <column id="331" parent="324" name="ADDRESS">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="336" parent="324" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idCustomer</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="337" parent="325" name="idItem">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="338" parent="325" name="name">
-      <Position>2</Position>
-      <DataType>varchar(45)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="339" parent="325" name="company">
-      <Position>3</Position>
-      <DataType>varchar(45)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="340" parent="325" name="price">
-      <Position>4</Position>
-      <DataType>float|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="341" parent="325" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idItem</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="342" parent="326" name="idPurchase">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="343" parent="326" name="date">
-      <Position>2</Position>
-      <DataType>date|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="344" parent="326" name="idCustomer">
-      <Position>3</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="345" parent="326" name="idItem">
-      <Position>4</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <index id="346" parent="326" name="FK_idCustomer">
-      <ColNames>idCustomer</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="347" parent="326" name="FK_idItem">
-      <ColNames>idItem</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="348" parent="326" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idPurchase</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="349" parent="326" name="FK_idCustomer">
-      <ColNames>idCustomer</ColNames>
-      <RefTableName>Customers</RefTableName>
-      <RefColNames>idCustomer</RefColNames>
-    </foreign-key>
-    <foreign-key id="350" parent="326" name="FK_idItem">
-      <ColNames>idItem</ColNames>
-      <RefTableName>Items</RefTableName>
-      <RefColNames>idItem</RefColNames>
-    </foreign-key>
-    <column id="351" parent="327" name="idReview">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="352" parent="327" name="rating">
-      <Position>2</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="353" parent="327" name="title">
-      <Position>3</Position>
-      <DataType>varchar(200)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="354" parent="327" name="description">
-      <Position>4</Position>
-      <DataType>varchar(200)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="355" parent="327" name="date">
-      <Position>5</Position>
-      <DataType>date|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="356" parent="327" name="idPurchase">
-      <Position>6</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <index id="357" parent="327" name="FK_Purchase">
-      <ColNames>idPurchase</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="358" parent="327" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>idReview</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="359" parent="327" name="FK_Purchase">
-      <ColNames>idPurchase</ColNames>
-      <RefTableName>Purchases</RefTableName>
-      <RefColNames>idPurchase</RefColNames>
-    </foreign-key>
-    <column id="360" parent="328" name="ID_CUSTOMER">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
-    <column id="361" parent="328" name="NAME">
-      <Position>2</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="362" parent="328" name="TELEPHONE">
-      <Position>3</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="363" parent="328" name="ADDRESS">
-      <Position>4</Position>
-      <DataType>varchar(100)|0s</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <key id="364" parent="328" name="PRIMARY">
+    <key id="332" parent="324" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID_CUSTOMER</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="365" parent="329" name="ID_ITEM">
+    <column id="333" parent="325" name="ID_ITEM">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="366" parent="329" name="NAME">
+    <column id="334" parent="325" name="NAME">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="367" parent="329" name="COMPANY">
+    <column id="335" parent="325" name="COMPANY">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="368" parent="329" name="PRICE">
+    <column id="336" parent="325" name="PRICE">
       <Position>4</Position>
       <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="369" parent="329" name="PRIMARY">
+    <key id="337" parent="325" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID_ITEM</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="370" parent="330" name="ID_PURCHASE">
+    <column id="338" parent="326" name="ID_PURCHASE">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="371" parent="330" name="DATE">
+    <column id="339" parent="326" name="DATE">
       <Position>2</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="372" parent="330" name="ID_CUSTOMER">
+    <column id="340" parent="326" name="ID_CUSTOMER">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="373" parent="330" name="ID_ITEM">
+    <column id="341" parent="326" name="ID_ITEM">
       <Position>4</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="374" parent="330" name="FK_idCustomer">
+    <index id="342" parent="326" name="FK_idCustomer">
       <ColNames>ID_CUSTOMER</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="375" parent="330" name="FK_idItem">
+    <index id="343" parent="326" name="FK_idItem">
       <ColNames>ID_ITEM</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="376" parent="330" name="PRIMARY">
+    <key id="344" parent="326" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID_PURCHASE</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="377" parent="330" name="FK_idCustomer">
+    <foreign-key id="345" parent="326" name="FK_idCustomer">
       <ColNames>ID_CUSTOMER</ColNames>
       <RefTableName>CUSTOMERS</RefTableName>
       <RefColNames>ID_CUSTOMER</RefColNames>
     </foreign-key>
-    <foreign-key id="378" parent="330" name="FK_idItem">
+    <foreign-key id="346" parent="326" name="FK_idItem">
       <ColNames>ID_ITEM</ColNames>
       <RefTableName>ITEMS</RefTableName>
       <RefColNames>ID_ITEM</RefColNames>
     </foreign-key>
-    <column id="379" parent="331" name="ID_REVIEW">
+    <column id="347" parent="327" name="ID_REVIEW">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="380" parent="331" name="RATING">
+    <column id="348" parent="327" name="RATING">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="381" parent="331" name="TITLE">
+    <column id="349" parent="327" name="TITLE">
       <Position>3</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="382" parent="331" name="DESCRIPTION">
+    <column id="350" parent="327" name="DESCRIPTION">
       <Position>4</Position>
       <DataType>varchar(200)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="383" parent="331" name="DATE">
+    <column id="351" parent="327" name="DATE">
       <Position>5</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="384" parent="331" name="ID_PURCHASE">
+    <column id="352" parent="327" name="ID_PURCHASE">
       <Position>6</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="385" parent="331" name="FK_Purchase">
+    <index id="353" parent="327" name="FK_Purchase">
       <ColNames>ID_PURCHASE</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="386" parent="331" name="PRIMARY">
+    <key id="354" parent="327" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID_REVIEW</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="387" parent="331" name="FK_Purchase">
+    <foreign-key id="355" parent="327" name="FK_Purchase">
       <ColNames>ID_PURCHASE</ColNames>
       <RefTableName>PURCHASES</RefTableName>
       <RefColNames>ID_PURCHASE</RefColNames>

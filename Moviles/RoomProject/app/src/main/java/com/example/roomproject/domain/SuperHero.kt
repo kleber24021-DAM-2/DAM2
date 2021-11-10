@@ -7,5 +7,7 @@ class SuperHero (
     val name:String,
     val description:String,
     val imageUrl:String,
-    val modifiedDate:LocalDate
+    val modifiedDate:LocalDate,
+    val comicsList:List<Comic>?,
+    val seriesList:List<Series>?
     )

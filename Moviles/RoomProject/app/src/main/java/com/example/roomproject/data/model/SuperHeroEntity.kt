@@ -3,11 +3,12 @@ package com.example.roomproject.data.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.time.LocalDate
 
 @Entity
 data class SuperHeroEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "ID")
+    @ColumnInfo(name = "HERO_ID")
     val id:Int,
     @ColumnInfo(name = "NAME")
     val name:String,
@@ -16,5 +17,9 @@ data class SuperHeroEntity(
     @ColumnInfo(name = "IMAGE")
     val imageUrl:String,
     @ColumnInfo(name = "DATE")
-    val modifiedDate:String
+    val modifiedDate:LocalDate,
+    @ColumnInfo(name = "COMICS")
+    val listComics:List<ComicEntity>?,
+    @ColumnInfo(name = "SERIES")
+    val listSeries:List<SeriesEntity>?
 )
