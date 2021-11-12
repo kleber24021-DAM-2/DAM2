@@ -2,10 +2,15 @@ package com.example.roomproject.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 
-@Entity
+@Entity(tableName = "COMICS", foreignKeys = [
+    ForeignKey(entity = SuperHeroEntity::class,
+    parentColumns = ["HERO_ID"],
+    childColumns = ["SUPERHERO_ID"])
+])
 data class ComicEntity (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "COMIC_ID")
@@ -13,5 +18,7 @@ data class ComicEntity (
     @ColumnInfo(name = "NAME")
     val name:String,
     @ColumnInfo(name = "DATE")
-    val publishedDate:LocalDate
+    val publishedDate:LocalDate,
+    @ColumnInfo(name = "SUPERHERO_ID")
+    val superHeroId:Int
         )

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RoomProject">
         <activity
-            android:name=".ui.MenuActivity"
+            android:name=".ui.heroListActivity.HeroListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

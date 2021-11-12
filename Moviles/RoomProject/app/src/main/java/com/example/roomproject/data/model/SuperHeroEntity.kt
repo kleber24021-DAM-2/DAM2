@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDate
 
-@Entity
+@Entity(tableName = "HEROES")
 data class SuperHeroEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "HERO_ID")
@@ -18,8 +18,4 @@ data class SuperHeroEntity(
     val imageUrl:String,
     @ColumnInfo(name = "DATE")
     val modifiedDate:LocalDate,
-    @ColumnInfo(name = "COMICS")
-    val listComics:List<ComicEntity>?,
-    @ColumnInfo(name = "SERIES")
-    val listSeries:List<SeriesEntity>?
 )
