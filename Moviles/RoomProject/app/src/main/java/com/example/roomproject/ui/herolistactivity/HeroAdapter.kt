@@ -1,4 +1,4 @@
-package com.example.roomproject.ui.herolistactivity
+package com.example.roomproject.ui.heroListActivity
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +11,8 @@ import com.example.roomproject.R
 import com.example.roomproject.databinding.ViewHeroBinding
 import com.example.roomproject.domain.SuperHeroDisplay
 
-class HeroAdapter(private val buttonActions: ButtonActions) :
-    ListAdapter<SuperHeroDisplay, HeroAdapter.ItemViewholder>(DiffCallback()) {
+class HeroAdapter:
+    ListAdapter<SuperHeroDisplay,HeroAdapter.ItemViewholder>(DiffCallback()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewholder {
         return ItemViewholder(
@@ -23,36 +23,20 @@ class HeroAdapter(private val buttonActions: ButtonActions) :
 
     override fun onBindViewHolder(holder: ItemViewholder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, buttonActions)
+        holder.bind(item)
     }
 
-    interface ButtonActions {
-        fun onClickEyeButton(id: Int)
-        fun onClickEditButton(id: Int)
-        fun onClickEraseButton(id: Int)
-    }
-
-    class ItemViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ItemViewholder(itemView : View) : RecyclerView.ViewHolder(itemView){
         private val binding = ViewHeroBinding.bind(itemView)
 
-        fun bind(item: SuperHeroDisplay, buttonActions: ButtonActions) = with(binding) {
+        fun bind(item: SuperHeroDisplay) = with(binding){
             imageview.load(item.imageUrl)
             tvName.text = item.name
-            viewButton.setOnClickListener {
-                buttonActions.onClickEyeButton(item.id)
-            }
-            editButton.setOnClickListener {
-                buttonActions.onClickEditButton(item.id)
-            }
-            deleteButton.setOnClickListener {
-                buttonActions.onClickEraseButton(item.id)
-            }
-
         }
     }
 }
 
-class DiffCallback : DiffUtil.ItemCallback<SuperHeroDisplay>() {
+class DiffCallback : DiffUtil.ItemCallback<SuperHeroDisplay>(){
     override fun areItemsTheSame(oldItem: SuperHeroDisplay, newItem: SuperHeroDisplay): Boolean {
         return oldItem.id == newItem.id
     }
