@@ -17,7 +17,7 @@ public class FileDaoReview implements DAOReviews {
     }
 
     @Override
-    public void save(Review t) {
+    public Review save(Review t) {
 
     }
 

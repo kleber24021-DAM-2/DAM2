@@ -63,7 +63,7 @@ public class JdbcDaoReview implements DAOReviews {
     }
 
     @Override
-    public void save(Review t) {
+    public Review save(Review t) {
         prepareCall();
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.INSERT_REVIEW);

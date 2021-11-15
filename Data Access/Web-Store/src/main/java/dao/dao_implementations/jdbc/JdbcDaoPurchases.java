@@ -59,7 +59,7 @@ public class JdbcDaoPurchases implements DAOPurchases {
     }
 
     @Override
-    public void save(Purchase t) {
+    public Purchase save(Purchase t) {
         prepareCall();
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.INSERT_PURCHASE);

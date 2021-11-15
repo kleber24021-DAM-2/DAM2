@@ -46,7 +46,7 @@ public class NioDAOPurchases implements DAOPurchases {
     }
 
     @Override
-    public void save(Purchase t) {
+    public Purchase save(Purchase t) {
         List<Purchase> purchaseList = getAll();
         t.setId(getLastId()+1);
         if (get(t.getItem().getIdItem()) == null) {

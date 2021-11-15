@@ -4,7 +4,6 @@ import dao.dao_implementations.SqlQueries;
 import dao.dbconnections.DBConnPool;
 import dao.interfaces.DAOCustomers;
 import model.Customer;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -64,8 +63,7 @@ public class SpringDaoCustomers implements DAOCustomers {
         return resultOfDelete;
     }
 
-    public static final class CustomerMapper implements RowMapper<Customer>{
-
+    private static final class CustomerMapper implements RowMapper<Customer>{
         @Override
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Customer(

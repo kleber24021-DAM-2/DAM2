@@ -18,7 +18,7 @@ public interface DAOReviews {
      
     List<Review> getAll();
      
-    void save(Review t);
+    Review save(Review t);
      
     void update(Review t);
      
