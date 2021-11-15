@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">RoomProject</string>
+    <string name="seeHeroes">Ver lista héroes</string>
+    <string name="addHero">Añadir héroe</string>
+    <string name="editHero">Editar héroe</string>
+    <string name="deleteHero">Borrar héroe</string>
+    <string name="menuTitle">CRUD Héroes</string>
+    <string name="fecha_de_primera_publicaci_n">Fecha de primera publicación:</string>
+    <string name="heroIdExtra">heroId</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="imageurl">ImageUrl</string>
+    <string name="modified_date">Modified Date</string>
+    <string name="imagen_aleatoria">Imagen Aleatoria?</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="datePattern">dd-MM-yyyy</string>
+    <string name="randomImage">https://picsum.photos/1920/640</string>
+    <string name="add">Añadir</string>
+    <string name="add_a_hero">Add a hero</string>
+    <string name="transition">imageTransition</string>
+    <string name="comics">Comics</string>
+    <string name="series">Series</string>
+    <string name="comic_serie_name">Comic/Serie Name</string>
+    <string name="comic_serie_date">Comic/Serie Date</string>
+    <string name="add_serie">Add Serie</string>
+    <string name="add_comic">Add Comic</string>
+    <string name="DatePickerName">Date Picker</string>
+    <string name="nameEmptyError">El nombre no puede estar vacío</string>
+    <string name="descriptionEmptyError">La descripción no puede estar vacía</string>
+    <string name="imageEmptyError">La imagen no puede ser nula. Seleccione imagen aleatoria</string>
+    <string name="emptyDateErrorHero">Por favor, introduce una fecha de creación del superhéroe</string>
+    <string name="comisNameError">El nombre del comic o serie no puede estar vacío</string>
+    <string name="comicDateError">Por favor, selecciona una fecha de creación del comic o serie</string>
+    <string name="heroImageTransition">heroImage</string>
+</resources>
