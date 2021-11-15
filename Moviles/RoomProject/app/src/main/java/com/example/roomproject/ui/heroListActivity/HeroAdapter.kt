@@ -32,7 +32,6 @@ class HeroAdapter:
         fun bind(item: SuperHeroDisplay) = with(binding){
             imageview.load(item.imageUrl)
             tvName.text = item.name
-
         }
     }
 }

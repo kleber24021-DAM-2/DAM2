@@ -9,7 +9,7 @@ import com.example.roomproject.data.model.ComicEntity
 import com.example.roomproject.data.model.SeriesEntity
 import com.example.roomproject.data.model.SuperHeroEntity
 
-@Database(entities = [SuperHeroEntity::class, ComicEntity::class, SeriesEntity::class], version = 1, exportSchema = true)
+@Database(entities = [SuperHeroEntity::class, ComicEntity::class, SeriesEntity::class], version = 2, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class SuperHeroRoomDatabase : RoomDatabase() {
     abstract fun superHeroDao():SuperHeroDao
@@ -25,8 +25,7 @@ abstract class SuperHeroRoomDatabase : RoomDatabase() {
                     SuperHeroRoomDatabase::class.java,
                     "item_database"
                 )
-                    .createFromAsset("database/heroes.db")
-                    .fallbackToDestructiveMigrationFrom(4)
+                    .fallbackToDestructiveMigrationFrom(1)
                     .build()
                 INSTANCE = instance
                 instance

@@ -8,6 +8,4 @@ class MainViewModel (
     private val insertHero: InsertHero,
     private val editHero: EditHero,
     private val deleteHero: DeleteHero
-){
-    private val
-}
+)
