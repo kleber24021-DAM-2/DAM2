@@ -66,7 +66,6 @@ class HeroListActivity : AppCompatActivity() {
 
     fun deleteHero(heroId: Int) {
         viewModel.deleteHeroes(heroId)
-        viewModel.getHeroes()
     }
 
     fun updateHero(heroId: Int) {
