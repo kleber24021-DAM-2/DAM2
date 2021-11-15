@@ -5,30 +5,55 @@ import com.example.roomproject.domain.Series
 import com.example.roomproject.domain.SuperHero
 import com.example.roomproject.domain.SuperHeroDisplay
 
-fun SuperHeroesWithComicsSeries.superHeroEntityToDomain() : SuperHero{
-    return SuperHero(superHeroe.id, superHeroe.name, superHeroe.description,superHeroe.imageUrl, superHeroe.modifiedDate, comics?.map(ComicEntity::comicEntityToDomain), series?.map(SeriesEntity::seriesEntityToDomain))
+fun SuperHeroWithComicsSeries.entityToDomain() : SuperHero{
+    return SuperHero(
+        superHeroComic.superHeroe.id,
+        superHeroComic.superHeroe.name,
+        superHeroComic.superHeroe.description,
+        superHeroComic.superHeroe.imageUrl,
+        superHeroComic.superHeroe.modifiedDate,
+        superHeroComic.comics?.map(ComicEntity::entityToDomain),
+        series?.map(SeriesEntity::entityToDomain))
 }
 
-fun SuperHero.superHeroDomainToEntity() : SuperHeroesWithComicsSeries{
-    return SuperHeroesWithComicsSeries(SuperHeroEntity(id, name, description, imageUrl, modifiedDate), comicsList?.map{it.comicToEntity(id)}, seriesList?.map{it.seriesToEntity(id)})
+fun SuperHero.domainToSuperHeroWithComics() : SuperHeroWithComicsSeries{
+    return SuperHeroWithComicsSeries(
+        SuperHeroesWithComics(
+            SuperHeroEntity(
+                id,
+                name,
+                description,
+                imageUrl,
+                modifiedDate),
+            comicsList?.map{it.toEntity(id)})
+        , seriesList?.map{it.toEntity(id)})
 }
 
-fun SuperHeroEntity.superHeroEntityToDisplay() : SuperHeroDisplay{
+fun SuperHero.domainToEntity() : SuperHeroEntity{
+    return SuperHeroEntity(
+                id,
+                name,
+                description,
+                imageUrl,
+                modifiedDate)
+}
+
+fun SuperHeroEntity.entityToDomain() : SuperHeroDisplay{
     return SuperHeroDisplay(id, name, imageUrl)
 }
 
-fun ComicEntity.comicEntityToDomain() : Comic{
+fun ComicEntity.entityToDomain() : Comic{
     return Comic(id, name, publishedDate)
 }
 
-fun Comic.comicToEntity(heroId:Int) : ComicEntity{
+fun Comic.toEntity(heroId:Int) : ComicEntity{
     return ComicEntity(id, name, publishedDate, heroId)
 }
 
-fun SeriesEntity.seriesEntityToDomain() : Series{
+fun SeriesEntity.entityToDomain() : Series{
     return Series(id, name, publishDate)
 }
 
-fun Series.seriesToEntity(heroId:Int) : SeriesEntity{
+fun Series.toEntity(heroId:Int) : SeriesEntity{
     return SeriesEntity(id, name, publishedDate, heroId)
 }

@@ -14,11 +14,11 @@ import java.time.LocalDate
 data class SeriesEntity (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "SERIES_ID")
-    val id:Int,
+    var id:Int,
     @ColumnInfo(name = "NAME")
     val name:String,
     @ColumnInfo(name="DATE")
     val publishDate:LocalDate,
     @ColumnInfo(name="SUPERHERO_ID")
-    val superHeroId: Int,
-        )
+    var superHeroId: Int,
+)

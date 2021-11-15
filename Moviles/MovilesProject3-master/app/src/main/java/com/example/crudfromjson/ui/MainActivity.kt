@@ -105,15 +105,13 @@ class MainActivity : AppCompatActivity() {
             updateRecyclerView(heroesList)
 
         }
-        binding.searchView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                binding.searchView.isIconified = false
-                binding.startDateFilter.visibility = View.VISIBLE
-                binding.endDateFilter.visibility = View.VISIBLE
-                binding.buttonClearFilter.visibility = View.VISIBLE
-                binding.filterByDate.visibility = View.VISIBLE
-            }
-        })
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+            binding.startDateFilter.visibility = View.VISIBLE
+            binding.endDateFilter.visibility = View.VISIBLE
+            binding.buttonClearFilter.visibility = View.VISIBLE
+            binding.filterByDate.visibility = View.VISIBLE
+        }
         binding.searchView.setOnCloseListener {
             binding.startDateFilter.visibility = View.GONE
             binding.endDateFilter.visibility = View.GONE

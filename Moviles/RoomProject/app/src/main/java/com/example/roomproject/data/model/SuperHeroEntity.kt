@@ -9,7 +9,7 @@ import java.time.LocalDate
 data class SuperHeroEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "HERO_ID")
-    val id:Int,
+    var id:Int = 0,
     @ColumnInfo(name = "NAME")
     val name:String,
     @ColumnInfo(name = "DESCRIPTION")

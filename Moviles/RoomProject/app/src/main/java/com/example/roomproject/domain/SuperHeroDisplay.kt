@@ -3,11 +3,11 @@ package com.example.roomproject.domain
 //Esta clase se utiliza para mostrar los héroes en la lista, es diferente
 //al héroe del detalle, porque tiene menos datos
 
-class SuperHeroDisplay (
+class SuperHeroDisplay(
     val id: Int,
     val name: String,
-    val imageUrl:String
-        ){
+    val imageUrl: String
+) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
