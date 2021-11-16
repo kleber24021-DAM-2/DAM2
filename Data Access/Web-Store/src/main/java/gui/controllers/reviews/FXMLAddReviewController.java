@@ -5,13 +5,12 @@
  */
 package gui.controllers.reviews;
 
+import gui.controllers.FXMLPrincipalController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.Customer;
 import model.Purchase;
 import model.Review;
-import services.CustomersServices;
 import services.PurchasesServices;
 import services.ReviewsServices;
 
@@ -34,9 +33,13 @@ public class FXMLAddReviewController implements Initializable {
     private TextField titleBox;
     @FXML
     private TextArea textBox;
+
+    //We get the reference to the parent to get the actual user
+    FXMLPrincipalController parent;
+
     public void loadPurchases() {
         PurchasesServices purchasesServices = new PurchasesServices();
-        purchaseBox.getItems().setAll(purchasesServices.getAllPurchases());
+        purchaseBox.getItems().setAll(purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getId()));
     }
 
     @FXML
@@ -47,6 +50,8 @@ public class FXMLAddReviewController implements Initializable {
         if (purchase != null && rating != null){
             Review review = new Review(-1, rating, titleBox.getText(), textBox.getText(), LocalDate.now(), purchase);
             reviewsServices.addReview(review);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added review");
+            alert.showAndWait();
             clearFields();
         }else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "You must choose a purchase and a rating to create a review");
@@ -73,4 +78,7 @@ public class FXMLAddReviewController implements Initializable {
         loadRatings();
     }
 
+    public void setParent(FXMLPrincipalController parent) {
+        this.parent = parent;
+    }
 }

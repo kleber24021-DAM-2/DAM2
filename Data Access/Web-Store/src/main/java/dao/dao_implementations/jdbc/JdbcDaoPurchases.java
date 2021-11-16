@@ -74,6 +74,7 @@ public class JdbcDaoPurchases implements DAOPurchases {
         }finally {
             releaseAllResources();
         }
+        return null;
     }
 
     @Override
@@ -115,7 +116,7 @@ public class JdbcDaoPurchases implements DAOPurchases {
     public List<Purchase> getByCustomerId(int idCustomer) {
         prepareCall();
         try {
-            preparedStatement = connection.prepareStatement(SqlQueries.SELECT_ALL_PURCHASES_BY_CUSTOMER);
+            preparedStatement = connection.prepareStatement(SqlQueries.SELECT_PURCHASES_BY_CUSTOMER);
             preparedStatement.setInt(1, idCustomer);
             resultSet = preparedStatement.executeQuery();
             return getPurchasesList(resultSet);
@@ -125,6 +126,11 @@ public class JdbcDaoPurchases implements DAOPurchases {
             releaseAllResources();
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public List<Purchase> getByItemId(int idItem) {
+        return null;
     }
 
     @Override

@@ -29,6 +29,24 @@ public class SpringDaoReviews implements DAOReviews {
     }
 
     @Override
+    public List<Review> getByCustomerId(int customerId) {
+        JdbcTemplate jdbcTemplate = getTemplate();
+        return jdbcTemplate.query(SqlQueries.SELECT_REVIEW_BY_CUSTOMER, new ReviewsMapper(), customerId);
+    }
+
+    @Override
+    public List<Review> getByItemId(int itemId) {
+        JdbcTemplate jdbcTemplate = getTemplate();
+        return jdbcTemplate.query(SqlQueries.SELECT_REVIEW_BY_ITEM, new ReviewsMapper(), itemId);
+    }
+
+    @Override
+    public List<Review> getByPurchaseId(int purchaseId) {
+        JdbcTemplate jdbcTemplate = getTemplate();
+        return jdbcTemplate.query(SqlQueries.SELECT_REVIEW_BY_PURCHASE, new ReviewsMapper(), purchaseId);
+    }
+
+    @Override
     public Review save(Review t) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         JdbcTemplate jdbcTemplate = getTemplate();

@@ -49,4 +49,14 @@ public class FXMLUpdateItemController {
         ItemsServices itemsServices = new ItemsServices();
         itemList.getItems().setAll(itemsServices.getAllItems());
     }
+
+    @FXML
+    private void setItemInfo() {
+        Item selectedItem = itemList.getSelectionModel().getSelectedItem();
+        if (selectedItem != null){
+            nameBox.setText(selectedItem.getName());
+            companyBox.setText(selectedItem.getCompany());
+            priceBox.setText(String.valueOf(selectedItem.getPrice()));
+        }
+    }
 }

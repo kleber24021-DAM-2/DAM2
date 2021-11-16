@@ -43,13 +43,13 @@ public class FXMLAddCustomerController implements Initializable {
         String name = nameBox.getText();
         String phone = phoneBox.getText();
         String address = addressBox.getText();
-
-        if (services.addCustomer(-1, name, phone, address)){
-            loadCustomersList();
+        Customer savedCustomer = services.addCustomer(new Customer(-1, name, phone, address));
+        if (savedCustomer != null && savedCustomer.getIdCustomer()!= -1){
+            customerListView.getItems().add(savedCustomer);
             clearAll();
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setContentText("Customer not added to the database. Please check the data introduced and try again. (Possible repeated ID)");
+            alert.setContentText("Customer not added to the database. Internal error");
             alert.showAndWait();
         }
     }
@@ -63,6 +63,5 @@ public class FXMLAddCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadCustomersList();
     }
 }

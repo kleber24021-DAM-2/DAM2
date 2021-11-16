@@ -61,10 +61,7 @@ public class JdbcDaoCustomers implements DAOCustomers {
     }
 
     @Override
-    public boolean save(Customer customer) {
-        if (get(customer.getIdCustomer()) != null){
-            return false;
-        }
+    public Customer save(Customer customer) {
         prepareCall();
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.INSERT_CUSTOMERS);
@@ -73,13 +70,12 @@ public class JdbcDaoCustomers implements DAOCustomers {
             preparedStatement.setString(3, customer.getAddress());
 
             preparedStatement.executeUpdate();
-            return true;
         }catch (SQLException sqlException){
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
-            return false;
         }finally {
             releaseAllResources();
         }
+        return null;
     }
 
     @Override

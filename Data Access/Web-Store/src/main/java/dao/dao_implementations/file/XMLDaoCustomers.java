@@ -50,7 +50,7 @@ public class XMLDaoCustomers implements DAOCustomers {
     }
 
     @Override
-    public boolean save(Customer t) {
+    public Customer save(Customer t) {
         if (get(t.getIdCustomer()) == null) {
             try {
                 JAXBContext context = JAXBContext.newInstance(Customers.class);
@@ -61,12 +61,11 @@ public class XMLDaoCustomers implements DAOCustomers {
                 Customers customersList = new Customers();
                 customersList.setCustomerList(toLoad.stream().sorted().collect(Collectors.toList()));
                 marshaller.marshal(customersList, Files.newOutputStream(path));
-                return true;
             } catch (JAXBException | IOException exception) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, exception.toString(), exception);
             }
         }
-        return false;
+        return null;
     }
 
     @Override

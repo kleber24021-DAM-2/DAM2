@@ -12,6 +12,7 @@
               <MenuItem mnemonicParsing="false" onAction="#chargeLogin" text="Go back to login" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeWelcome" text="Welcome Pane" />
                   <MenuItem mnemonicParsing="false" onAction="#closeWindow" text="Close application" />
+                  <MenuItem mnemonicParsing="false" onAction="#chargePasswordUpdate" text="Update password" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Items">
@@ -26,7 +27,7 @@
             <Menu mnemonicParsing="false" text="Customers">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#chargeAddCustomer" text="Add Customer" />
-                  <MenuItem mnemonicParsing="false" text="List Customers" />
+                  <MenuItem mnemonicParsing="false" onAction="#chargeListCustomer" text="List Customers" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeFindCustomer" text="Find by ID" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeDeleteCustomer" text="Delete Customer" />
                   <MenuItem mnemonicParsing="false" onAction="#showUpdateCustomers" text="Update Customer" />

@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gui.controllers.items.FXMLUpdateItemController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.items.FXMLUpdateItemController">
     <children>
-        <ListView fx:id="itemList" layoutX="29.0" layoutY="89.0" prefHeight="280.0" prefWidth="370.0" />
+        <ListView fx:id="itemList" layoutX="29.0" layoutY="89.0" onMouseClicked="#setItemInfo" prefHeight="280.0" prefWidth="370.0" />
         <TextField fx:id="nameBox" layoutX="428.0" layoutY="104.0" />
         <Button layoutX="442.0" layoutY="254.0" mnemonicParsing="false" onAction="#updateItem" text="Update item" />
         <Label layoutX="428.0" layoutY="82.0" text="Name" />

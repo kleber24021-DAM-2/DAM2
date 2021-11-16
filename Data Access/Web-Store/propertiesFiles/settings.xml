@@ -8,16 +8,17 @@
 
 <!-- Configuration of the database access information-->
     <entry key="driver">com.mysql.jdbc.Driver</entry>
-<!--    <entry key="urlDB">jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andrePadilla_WebStore</entry>-->
-    <entry key="urlDB">jdbc:mysql://localhost:3306/WebStore</entry>
+    <entry key="urlDB">jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andrePadilla_WebStore</entry>
+<!--    <entry key="urlDB">jdbc:mysql://localhost:3306/WebStore</entry>-->
     <entry key="user_name">root</entry>
-<!--    <entry key="password">quevedo2dam</entry>-->
-    <entry key="password">root</entry>
+    <entry key="password">quevedo2dam</entry>
+<!--    <entry key="password">root</entry>-->
 
 <!-- Configuration of the type of DAO-->
     <entry key="daoItems">Spring</entry>
     <entry key="daoCustomers">Spring</entry>
     <entry key="daoPurchases">Spring</entry>
     <entry key="daoReviews">Spring</entry>
+    <entry key="daoUsers">Spring</entry>
 
 </properties>

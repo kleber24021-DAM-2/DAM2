@@ -6,9 +6,6 @@
 package gui.controllers.purchases;
 
 
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -20,6 +17,10 @@ import model.Purchase;
 import services.CustomersServices;
 import services.ItemsServices;
 import services.PurchasesServices;
+
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -66,8 +67,10 @@ public class FXMLAddPurchasesController implements Initializable {
 
     public void addPurchase() {
         PurchasesServices service = new PurchasesServices();
-        service.addPurchase(customerBox.getSelectionModel().getSelectedItem().getIdCustomer(), itemBox.getSelectionModel().getSelectedItem().getIdItem(), dateBox.getValue());
-        loadPurchasesList();
+        Purchase addedPurchase = service.addPurchase(customerBox.getSelectionModel().getSelectedItem().getIdCustomer(),
+                itemBox.getSelectionModel().getSelectedItem().getIdItem(),
+                dateBox.getValue());
+        purchaseList.getItems().add(addedPurchase);
     }
 
     /**

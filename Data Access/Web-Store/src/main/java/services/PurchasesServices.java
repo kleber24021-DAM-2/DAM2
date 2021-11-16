@@ -5,21 +5,16 @@
  */
 package services;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import dao.daofactories.DaoFactoryCustomers;
-import dao.daofactories.DaoFactoryItems;
-import dao.daofactories.DaoFactoryPurchases;
-import dao.daofactories.DaoFactoryReviews;
+import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOCustomers;
 import dao.interfaces.DAOItems;
 import dao.interfaces.DAOPurchases;
 import dao.interfaces.DAOReviews;
 import model.Purchase;
 import model.Review;
+
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -28,28 +23,25 @@ import model.Review;
 public class PurchasesServices {
 
     public List<Purchase> getAllPurchases() {
-        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
         return dao.getAll();
     }
 
-    public ArrayList<Purchase> searchByDate(String date) {
-        ArrayList<Purchase> purch =  null;
-        return purch;
+    public List<Purchase> searchByDate(LocalDate date) {
+        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
+        return dao.getByDate(date);
     }
 
-    public ArrayList<Purchase> getPurchasesByClientId(int id) {
-        ArrayList<Purchase> purch =  null;
-        return purch;
+    public List<Purchase> getPurchasesByClientId(int id) {
+        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
+        return dao.getByCustomerId(id);
     }
 
     public boolean deletePurchase(Purchase purchase) {
-        DAOPurchases daoPurchases = new DaoFactoryPurchases().getDaoPurchases();
-        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
+        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
 
-        List<Review> reviewList = daoReviews.getAll();
-        reviewList = reviewList.stream()
-                .filter(r -> r.getPurchase().getId() == purchase.getId())
-                .collect(Collectors.toList());
+        List<Review> reviewList = daoReviews.getByPurchaseId(purchase.getId());
         if (reviewList.isEmpty()){
             daoPurchases.delete(purchase);
             return true;
@@ -58,10 +50,10 @@ public class PurchasesServices {
         }
      }
 
-    public void addPurchase(int customerId, int itemId, LocalDate date) {
-        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
-        DAOCustomers daoCustomers = new DaoFactoryCustomers().getDaoCustomers();
-        DAOItems daoItems = new DaoFactoryItems().getDaoItems();
+    public Purchase addPurchase(int customerId, int itemId, LocalDate date) {
+        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
+        DAOCustomers daoCustomers = DaoFactory.getInstance().getDaoCustomers();
+        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
 
         Purchase newPurchase = new Purchase();
         newPurchase.setId(-1);
@@ -69,26 +61,26 @@ public class PurchasesServices {
         newPurchase.setCustomer(daoCustomers.get(customerId));
         newPurchase.setItem(daoItems.get(itemId));
 
-        dao.save(newPurchase);
+        return dao.save(newPurchase);
     }
 
     public void deletePurchasesByItemID(int idItem) {
-        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
             dao.deleteByItemId(idItem);
     }
 
     public List<Purchase> findByDate(LocalDate selectedDate) {
-        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
             return dao.getByDate(selectedDate);
     }
 
     public void deletePurchaseByCustomerId(int idCustomer) {
-        DAOPurchases dao = new DaoFactoryPurchases().getDaoPurchases();
+        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
             dao.deleteByCustomerId(idCustomer);
     }
 
     public void updatePurchase(Purchase updatedPurchase) {
-        DAOPurchases daoPurchases = new DaoFactoryPurchases().getDaoPurchases();
+        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
         daoPurchases.update(updatedPurchase);
     }
 }

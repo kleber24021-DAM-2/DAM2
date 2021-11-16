@@ -61,6 +61,7 @@ public class NioDAOPurchases implements DAOPurchases {
         } catch (IOException io) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, io);
         }
+        return null;
     }
 
     @Override
@@ -110,6 +111,11 @@ public class NioDAOPurchases implements DAOPurchases {
     public List<Purchase> getByCustomerId(int idCustomer) {
         List<Purchase> purchaseList = getAll();
         return purchaseList.stream().filter(p -> p.getCustomer().getIdCustomer() == idCustomer).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Purchase> getByItemId(int idItem) {
+        return null;
     }
 
     public void deleteByCustomerId(int idCustomer) {

@@ -5,13 +5,16 @@
  */
 package gui.controllers;
 
-import configuration.ConfigYaml;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.user.FullUser;
+import model.user.SafeUser;
+import services.UserService;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -30,7 +33,7 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private Label errorBox;
     
-    //Referencia al controlador principal para poder acceder a el, junto con su set para poder cambiarlo.
+    //Referencia al controlador principal para poder acceder a él, junto con su set para poder cambiarlo.
     private FXMLPrincipalController principal;
 
     public void setPrincipal(FXMLPrincipalController principal) {
@@ -39,22 +42,22 @@ public class FXMLLoginController implements Initializable {
     
     
     public void clickLogin(){
-        
-        if(fxUser.getText().equals(ConfigYaml.getInstance().getUser()) 
-                && passBox.getText().equals(ConfigYaml.getInstance().getPass())){
-            principal.setUsername(fxUser.getText());
+        UserService userService = new UserService();
+        FullUser fullUser = new FullUser(0, fxUser.getText(), passBox.getText());
+        SafeUser returnedUser = userService.checkUserPassword(fullUser);
+        if (returnedUser!= null){
+            principal.setLoggedUser(returnedUser);
             principal.chargeWelcome();
         }else{
             errorBox.setText("User or password is wrong");
         }
-        
     }
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Not needed. Imposed by exercise.
+        //Not needed.
     }    
     
 }

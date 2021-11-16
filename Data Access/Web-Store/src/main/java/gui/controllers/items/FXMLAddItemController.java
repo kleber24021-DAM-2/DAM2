@@ -40,7 +40,8 @@ public class FXMLAddItemController implements Initializable {
             double itemPrice = Double.parseDouble(priceBox.getText().replace(",","."));
 
             if (!(itemName.isEmpty() || itemName.isBlank() || itemCompany.isBlank() || itemCompany.isEmpty())) {
-                itemsServices.addItem(itemName, itemCompany, itemPrice);
+                Item addedItem = itemsServices.addItem(itemName, itemCompany, itemPrice);
+                itemList.getItems().add(addedItem);
                 clearAll();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Name, phone and/or address can't be empty");
@@ -50,7 +51,6 @@ public class FXMLAddItemController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please, enter a valid number");
             alert.showAndWait();
         }
-        loadItemsList();
     }
 
     public void loadItemsList() {

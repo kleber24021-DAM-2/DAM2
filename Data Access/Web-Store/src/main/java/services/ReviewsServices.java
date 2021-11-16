@@ -5,12 +5,11 @@
  */
 package services;
 
-import dao.daofactories.DaoFactoryReviews;
+import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOReviews;
 import model.Review;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Laura
@@ -19,29 +18,34 @@ public class ReviewsServices {
 
 
     public List<Review> getAllReviews() {
-        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         return daoReviews.getAll();
     }
 
+    public List<Review> getReviewsByCustomer(int customerId){
+        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
+        return daoReviews.getByCustomerId(customerId);
+    }
+
     public void deleteReview(Review review) {
-        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         daoReviews.delete(review);
     }
 
     public List<Review> searchByItem(int id) {
-        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
-        return daoReviews.getAll().stream()
-                .filter(r -> r.getPurchase().getItem().getIdItem() == id)
-                .collect(Collectors.toList());
+        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
+        return daoReviews.getByItemId(id);
     }
 
-    public void addReview(Review review) {
-        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
-        daoReviews.save(review);
+    public Review addReview(Review review) {
+        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
+        return daoReviews.save(review);
     }
 
     public void updateReview(Review review) {
-        DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
+        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         daoReviews.update(review);
     }
+
+
 }

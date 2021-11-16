@@ -11,10 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,7 +33,7 @@ public class SpringDaoPurchases implements DAOPurchases {
         JdbcTemplate jdbcTemplate = getTemplate();
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(SqlQueries.INSERT_PURCHASE);
+            PreparedStatement ps = con.prepareStatement(SqlQueries.INSERT_PURCHASE, Statement.RETURN_GENERATED_KEYS);
             ps.setDate(1, Date.valueOf(t.getDate()));
             ps.setInt(2, t.getCustomer().getIdCustomer());
             ps.setInt(3, t.getItem().getIdItem());
@@ -62,8 +59,13 @@ public class SpringDaoPurchases implements DAOPurchases {
     @Override
     public List<Purchase> getByCustomerId(int idCustomer) {
         JdbcTemplate jdbcTemplate = getTemplate();
-        return jdbcTemplate.query(SqlQueries.SELECT_ALL_PURCHASES_BY_CUSTOMER, new PurchasesMapper(), idCustomer);
+        return jdbcTemplate.query(SqlQueries.SELECT_PURCHASES_BY_CUSTOMER, new PurchasesMapper(), idCustomer);
     }
+
+    @Override
+    public List<Purchase> getByItemId(int idItem) {
+        JdbcTemplate jdbcTemplate = getTemplate();
+        return jdbcTemplate.query(SqlQueries.SELECT_PURCHASES_BY_ITEM, new PurchasesMapper(), idItem);    }
 
     @Override
     public List<Purchase> getByDate(LocalDate selectedDate) {

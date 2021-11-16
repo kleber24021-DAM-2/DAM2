@@ -27,6 +27,8 @@ public interface DAOPurchases {
 
     List<Purchase> getByCustomerId(int idCustomer);
 
+    List<Purchase> getByItemId(int idItem);
+
     List<Purchase> getByDate(LocalDate selectedDate);
 
     void deleteByCustomerId(int idCustomer);

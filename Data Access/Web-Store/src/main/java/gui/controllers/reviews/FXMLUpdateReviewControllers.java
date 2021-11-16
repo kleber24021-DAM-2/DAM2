@@ -1,5 +1,6 @@
 package gui.controllers.reviews;
 
+import gui.controllers.FXMLPrincipalController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import model.Purchase;
@@ -20,6 +21,8 @@ public class FXMLUpdateReviewControllers {
     @FXML
     private TextField titleBox;
 
+    private FXMLPrincipalController parent;
+
     public void updateReview() {
         ReviewsServices reviewsServices = new ReviewsServices();
         String comment = textBox.getText();
@@ -32,6 +35,8 @@ public class FXMLUpdateReviewControllers {
             if (purchase != null && rating != null && review != null){
                 reviewsServices.updateReview(new Review(review.getIdReview(),rating,title, comment,review.getDate(), purchase));
                 loadAllLists();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Update review");
+                alert.showAndWait();
             }else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please, set a purchase and a rating for the review");
                 alert.showAndWait();
@@ -46,8 +51,12 @@ public class FXMLUpdateReviewControllers {
         ReviewsServices reviewsServices = new ReviewsServices();
         PurchasesServices purchasesServices = new PurchasesServices();
 
-        reviewsBox.getItems().setAll(reviewsServices.getAllReviews());
-        purchaseBox.getItems().setAll(purchasesServices.getAllPurchases());
+        reviewsBox.getItems().setAll(reviewsServices.getReviewsByCustomer(parent.getLoggedUser().getId()));
+        purchaseBox.getItems().setAll(purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getId()));
         ratingBox.getItems().setAll(Ratings.values());
+    }
+
+    public void setParent(FXMLPrincipalController parent) {
+        this.parent = parent;
     }
 }

@@ -30,6 +30,7 @@ public class FXMLUpdateCostumerController {
                 Customer updatedCustomer = new Customer(selectedCustomer.getIdCustomer(), name, phone, address);
                 customersServices.updateCustomer(updatedCustomer);
                 loadAllLists();
+                clearTextFields();
             } catch (NullPointerException exception) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please, select a customer to update it");
                 alert.showAndWait();
@@ -43,5 +44,21 @@ public class FXMLUpdateCostumerController {
     public void loadAllLists() {
         CustomersServices customersServices = new CustomersServices();
         customerListView.getItems().setAll(customersServices.getAllCustomers());
+    }
+
+    @FXML
+    public void showCustomerInfo() {
+        Customer selectedCustomer = customerListView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer != null){
+            nameBox.setText(selectedCustomer.getName());
+            phoneBox.setText(selectedCustomer.getPhone());
+            addressBox.setText(selectedCustomer.getAddress());
+        }
+    }
+
+    private void clearTextFields(){
+        nameBox.clear();
+        phoneBox.clear();
+        addressBox.clear();
     }
 }

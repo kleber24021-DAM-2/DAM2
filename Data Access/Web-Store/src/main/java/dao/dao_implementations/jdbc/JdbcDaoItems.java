@@ -65,10 +65,7 @@ public class JdbcDaoItems implements DAOItems {
     }
 
     @Override
-    public boolean save(Item t) {
-        if (get(t.getIdItem()) != null){
-            return false;
-        }
+    public Item save(Item t) {
         prepareCall();
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.INSERT_ITEMS);
@@ -77,13 +74,12 @@ public class JdbcDaoItems implements DAOItems {
             preparedStatement.setDouble(3, t.getPrice());
 
             preparedStatement.executeUpdate();
-            return true;
         }catch (SQLException sqlException){
             Logger.getLogger(getClass().toString()).log(Level.SEVERE, sqlException.getMessage(), sqlException);
-            return false;
         }finally {
             releaseAllResources();
         }
+        return null;
     }
 
     @Override

@@ -5,10 +5,7 @@
  */
 package gui.controllers;
 
-import gui.controllers.customers.FXMLAddCustomerController;
-import gui.controllers.customers.FXMLUpdateCostumerController;
-import gui.controllers.customers.FXMLdeleteCustomerController;
-import gui.controllers.customers.FXMLfindCustomerController;
+import gui.controllers.customers.*;
 import gui.controllers.items.FXMLAddItemController;
 import gui.controllers.items.FXMLDeleteItemController;
 import gui.controllers.items.FXMLListItemsController;
@@ -21,6 +18,7 @@ import gui.controllers.reviews.FXMLAddReviewController;
 import gui.controllers.reviews.FXMLUpdateReviewControllers;
 import gui.controllers.reviews.FXMLdeleteReviewController;
 import gui.controllers.reviews.FXMLfindReviewController;
+import gui.controllers.users.FXMLUpdatePassword;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,6 +29,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import model.user.SafeUser;
 import services.ItemsServices;
 
 import java.io.IOException;
@@ -53,7 +52,7 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private MenuBar fxMenuTop;
     // Get y set of the user to use it wherever we need it
-    private String username;
+    private SafeUser loggedUser;
     // References to other panes to load them and access their controllers
     private AnchorPane login;
     private FXMLLoginController loginController;
@@ -94,23 +93,29 @@ public class FXMLPrincipalController implements Initializable {
     private FXMLUpdateReviewControllers updateReviewControllers;
     private AnchorPane updateReviewPane;
 
+    private FXMLListCustomerController listCustomerController;
+    private AnchorPane listCustomerPane;
+
+    private FXMLUpdatePassword updatePasswordController;
+    private AnchorPane updatePasswordPane;
+
     public void setFxRoot(BorderPane fxRoot) {
         this.fxRoot = fxRoot;
     }
 
-    public String getUsername() {
-        return username;
+    public SafeUser getLoggedUser() {
+        return loggedUser;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLoggedUser(SafeUser loggedUser) {
+        this.loggedUser = loggedUser;
     }
 
     public void preloadLogin() {
         try {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource(
-                            "/fxml/FXMLLogin.fxml"));
+                            "/fxml/users/FXMLLogin.fxml"));
             login = loaderMenu.load();
             loginController
                     = loaderMenu.getController();
@@ -352,13 +357,38 @@ public class FXMLPrincipalController implements Initializable {
         }
     }
 
+    public void preloadListCustomer(){
+        try {
+            FXMLLoader loaderMenu = new FXMLLoader(
+                    getClass().getResource("/fxml/customers/FXMLListCustomers.fxml")
+            );
+            listCustomerPane = loaderMenu.load();
+            listCustomerController = loaderMenu.getController();
+        }catch (IOException ex){
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void preloadUpdatePassword(){
+        try {
+            FXMLLoader loaderMenu = new FXMLLoader(
+                    getClass().getResource("/fxml/users/FXMLUpdatePassword.fxml")
+            );
+            updatePasswordPane = loaderMenu.load();
+            updatePasswordController = loaderMenu.getController();
+        }catch (IOException ex){
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void chargeLogin() {
+        loggedUser = null;
         fxRoot.setCenter(login);
         fxMenuTop.setVisible(false);
     }
 
     public void chargeWelcome() {
-        welcomeController.setLogin(this.getUsername());
+        welcomeController.setLogin(this.getLoggedUser());
         fxMenuTop.setVisible(true);
         fxRoot.setCenter(welcome);
     }
@@ -393,6 +423,7 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void chargeAddReview() {
+        addReviewController.setParent(this);
         addReviewController.loadPurchases();
         fxRoot.setCenter(addReview);
     }
@@ -437,8 +468,19 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void showUpdateReviews() {
+        updateReviewControllers.setParent(this);
         updateReviewControllers.loadAllLists();
         fxRoot.setCenter(updateReviewPane);
+    }
+
+    public void chargePasswordUpdate() {
+        updatePasswordController.setParent(this);
+        fxRoot.setCenter(updatePasswordPane);
+    }
+
+    public void chargeListCustomer() {
+        listCustomerController.loadList();
+        fxRoot.setCenter(listCustomerPane);
     }
 
     /**
@@ -456,6 +498,7 @@ public class FXMLPrincipalController implements Initializable {
         preloadAddCustomer();
         preloadFindCustomer();
         preloadDeleteCustomer();
+        preloadListCustomer();
 
         preloadAddReview();
         preloadDeleteReview();
@@ -468,6 +511,7 @@ public class FXMLPrincipalController implements Initializable {
         preloadUpdateCustomer();
         preloadUpdatePurchase();
         preloadUpdateReviews();
+        preloadUpdatePassword();
 
         chargeLogin();
 

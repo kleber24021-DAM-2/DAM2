@@ -6,8 +6,12 @@ import dao.interfaces.DAOItems;
 import model.Item;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -46,7 +50,7 @@ public class SpringDaoItems implements DAOItems {
         boolean resultOfUpdate = false;
         JdbcTemplate jdbcTemplate = getTemplate();
         int affectedRow = jdbcTemplate.update(SqlQueries.UPDATE_ITEM,
-                t.getName(), t.getCompany(), t.getPrice());
+                t.getName(), t.getCompany(), t.getPrice(),t.getIdItem());
         if (affectedRow > 0){
             resultOfUpdate = true;
         }
@@ -56,10 +60,18 @@ public class SpringDaoItems implements DAOItems {
     @Override
     public boolean delete(Item t) {
         boolean resultOfDelete = false;
-        JdbcTemplate jdbcTemplate = getTemplate();
-        int affectedRows = jdbcTemplate.update(SqlQueries.DELETE_ITEM, t.getIdItem());
-        if (affectedRows > 0){
+        //We create everything needed to make transactions with Spring
+        TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(DBConnPool.getInstance().getPool());
+        TransactionStatus status = transactionManager.getTransaction(transactionDefinition);
+        try{
+            JdbcTemplate jdbcTemplate = new JdbcTemplate(transactionManager.getDataSource());
+            jdbcTemplate.update(SqlQueries.DELETE_PURCHASE_BY_ITEM, t.getIdItem());
+            jdbcTemplate.update(SqlQueries.DELETE_ITEM, t.getIdItem());
+            transactionManager.commit(status);
             resultOfDelete = true;
+        }catch (Exception e){
+            transactionManager.rollback(status);
         }
         return resultOfDelete;
     }

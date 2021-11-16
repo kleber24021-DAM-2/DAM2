@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customers.FXMLUpdateCostumerController">
     <children>
-        <ListView fx:id="customerListView" layoutX="29.0" layoutY="89.0" prefHeight="280.0" prefWidth="370.0" />
+        <ListView fx:id="customerListView" layoutX="29.0" layoutY="89.0" onMouseClicked="#showCustomerInfo" prefHeight="280.0" prefWidth="370.0" />
         <TextField fx:id="nameBox" layoutX="425.0" layoutY="113.0" />
         <Button layoutX="441.0" layoutY="320.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update customer" />
         <Label layoutX="425.0" layoutY="90.0" text="Name" />

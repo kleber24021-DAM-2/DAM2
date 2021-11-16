@@ -45,7 +45,7 @@ public class IoDAOItems implements DAOItems {
     }
 
     @Override
-    public boolean save(Item t) {
+    public Item save(Item t) {
         if (get(t.getIdItem()) == null) {
             try (FileWriter writer = new FileWriter(sourceFile, true);
                  BufferedWriter bw = new BufferedWriter(writer)) {
@@ -53,12 +53,9 @@ public class IoDAOItems implements DAOItems {
                 bw.newLine();
             } catch (Exception io) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, io.toString());
-                return false;
             }
-            return true;
-        } else {
-            return false;
         }
+        return null;
     }
 
     @Override

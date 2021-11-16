@@ -63,6 +63,21 @@ public class JdbcDaoReview implements DAOReviews {
     }
 
     @Override
+    public List<Review> getByCustomerId(int customerId) {
+        return null;
+    }
+
+    @Override
+    public List<Review> getByItemId(int itemId) {
+        return null;
+    }
+
+    @Override
+    public List<Review> getByPurchaseId(int purchaseId) {
+        return null;
+    }
+
+    @Override
     public Review save(Review t) {
         prepareCall();
         try {
@@ -79,6 +94,7 @@ public class JdbcDaoReview implements DAOReviews {
         }finally {
             releaseAllResources();
         }
+        return null;
     }
 
     @Override

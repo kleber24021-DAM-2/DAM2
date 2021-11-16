@@ -4,10 +4,15 @@ import dao.dao_implementations.SqlQueries;
 import dao.dbconnections.DBConnPool;
 import dao.interfaces.DAOCustomers;
 import model.Customer;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +23,14 @@ import java.util.List;
 public class SpringDaoCustomers implements DAOCustomers {
     @Override
     public Customer get(int id) {
+        Customer toReturn;
         JdbcTemplate jdbcTemplate = getTemplate();
-        return jdbcTemplate.queryForObject(SqlQueries.SELECT_CUSTOMER_BY_ID, new CustomerMapper(), id);
+        try {
+            toReturn = jdbcTemplate.queryForObject(SqlQueries.SELECT_CUSTOMER_BY_ID, new CustomerMapper(), id);
+        }catch (EmptyResultDataAccessException emptyData){
+            toReturn = null;
+        }
+        return toReturn;
     }
 
     @Override
@@ -30,17 +41,34 @@ public class SpringDaoCustomers implements DAOCustomers {
 
     @Override
     public Customer save(Customer t) {
+        //I create this final customer because lambda expressions requiere that any variable used in them has to be final or effectively final
+        final Customer copyCustomer = new Customer(t.getIdCustomer(), t.getName(),t.getPhone(), t.getAddress());
+        //Keyholder to get the generated ID at the creation of the user
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        JdbcTemplate jdbcTemplate = getTemplate();
-        jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(SqlQueries.INSERT_CUSTOMERS, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, t.getName());
-            ps.setString(2, t.getPhone());
-            ps.setString(3, t.getAddress());
-            return ps;
-        }, keyHolder);
-        if (keyHolder.getKey() != null){
+        //We create everything needed to make transactions with Spring
+        TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(DBConnPool.getInstance().getPool());
+        TransactionStatus status = transactionManager.getTransaction(transactionDefinition);
+
+        try {
+            JdbcTemplate template = new JdbcTemplate(transactionManager.getDataSource());
+            template.update(con -> {
+                PreparedStatement ps = con.prepareStatement(SqlQueries.INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, (copyCustomer.getName()));
+                //The created user has a default password (the name), that can be changed later
+                ps.setString(2, copyCustomer.getName());
+                return ps;
+            }, keyHolder);
+            //We modify the id of the customer
             t.setIdCustomer(keyHolder.getKey().intValue());
+            template.update(SqlQueries.INSERT_CUSTOMERS, t.getIdCustomer(),t.getName(), t.getPhone(), t.getAddress());
+            transactionManager.commit(status);
+        }catch (Exception e){
+            transactionManager.rollback(status);
+        }
+        //In case the transaction hasn't completed we give back a null
+        if (!status.isCompleted()){
+            t = null;
         }
         return t;
     }
@@ -55,10 +83,20 @@ public class SpringDaoCustomers implements DAOCustomers {
     @Override
     public boolean delete(Customer t) {
         boolean resultOfDelete = false;
-        JdbcTemplate jdbcTemplate = getTemplate();
-        int affectedRows = jdbcTemplate.update(SqlQueries.DELETE_CUSTOMER, t.getIdCustomer());
-        if (affectedRows > 0){
+        //We create everything needed to make transactions with Spring
+        TransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(DBConnPool.getInstance().getPool());
+        TransactionStatus status = transactionManager.getTransaction(transactionDefinition);
+        try {
+            JdbcTemplate template = new JdbcTemplate(transactionManager.getDataSource());
+            //First query of the transaction
+            template.update(SqlQueries.DELETE_CUSTOMER, t.getIdCustomer());
+            //Second query of the transaction
+            template.update(SqlQueries.DELETE_USER, t.getIdCustomer());
+            transactionManager.commit(status);
             resultOfDelete = true;
+        }catch (Exception e){
+            transactionManager.rollback(status);
         }
         return resultOfDelete;
     }

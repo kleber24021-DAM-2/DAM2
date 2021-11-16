@@ -17,6 +17,12 @@ public interface DAOReviews {
     Review get(int id);
      
     List<Review> getAll();
+
+    List<Review> getByCustomerId(int customerId);
+
+    List<Review> getByItemId(int itemId);
+
+    List<Review> getByPurchaseId(int purchaseId);
      
     Review save(Review t);
      
