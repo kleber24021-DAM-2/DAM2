@@ -33,4 +33,8 @@ public class SqlQueries {
     public static final String INSERT_REVIEW = "INSERT INTO REVIEWS (RATING, TITLE, DESCRIPTION, DATE, ID_PURCHASE) VALUES (?, ?, ?, ?, ?)";
     public static final String UPDATE_REVIEW = "UPDATE REVIEWS SET RATING = ?, TITLE = ?, DESCRIPTION = ?, DATE = ?, ID_PURCHASE = ? WHERE ID_REVIEW = ?";
     public static final String DELETE_REVIEW = "DELETE FROM REVIEWS WHERE ID_REVIEW = ?";
+
+//  Queries from Users
+    public static final String CHECK_USER_PASSWORD = "SELECT IF((USERNAME = ? AND PASSWORD = ?), TRUE, FALSE) AS RESULT FROM USERS WHERE USERNAME = ?";
+
 }

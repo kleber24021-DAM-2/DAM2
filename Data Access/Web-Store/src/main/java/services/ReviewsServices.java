@@ -5,21 +5,17 @@
  */
 package services;
 
-import java.util.ArrayList;
+import dao.daofactories.DaoFactoryReviews;
+import dao.interfaces.DAOReviews;
+import model.Review;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
-import dao.daofactories.DaoFactoryReviews;
-import dao.interfaces.DAOReviews;
-import model.Customer;
-import model.Review;
-
 /**
- *
  * @author Laura
  */
 public class ReviewsServices {
-
 
 
     public List<Review> getAllReviews() {
@@ -43,7 +39,8 @@ public class ReviewsServices {
         DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
         daoReviews.save(review);
     }
-    public void updateReview(Review review){
+
+    public void updateReview(Review review) {
         DAOReviews daoReviews = new DaoFactoryReviews().getDaoReviews();
         daoReviews.update(review);
     }
