@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Window;
@@ -46,6 +47,45 @@ import java.util.logging.Logger;
  */
 public class FXMLPrincipalController implements Initializable {
 
+    //Vista del Admin
+    @FXML
+    private MenuItem menuItemAdd;
+    @FXML
+    private MenuItem menuItemList;
+    @FXML
+    private MenuItem menuItemFind;
+    @FXML
+    private MenuItem menuItemDelete;
+    @FXML
+    private MenuItem menuItemUpdate;
+    @FXML
+    private MenuItem menuCustomerAdd;
+    @FXML
+    private MenuItem menuCustomerList;
+    @FXML
+    private MenuItem menuCustomerFind;
+    @FXML
+    private MenuItem menuCustomerDelete;
+    @FXML
+    private MenuItem menuPurchaseAdd;
+    @FXML
+    private MenuItem menuPurchaseFindDate;
+    @FXML
+    private MenuItem menuPurchaseDelete;
+    @FXML
+    private MenuItem menuPurchaseUpdate;
+    @FXML
+    private MenuItem menuReviewDelete;
+    //Vista de Customer
+    @FXML
+    private MenuItem menuReviewAdd;
+    @FXML
+    private MenuItem menuReviewUpdate;
+    //Vista mixta
+    @FXML
+    private MenuItem menuCustomerUpdate;
+    @FXML
+    private MenuItem menuReviewFind;
     //Reference to the top menu to change its visibility when needed.
     @FXML
     private BorderPane fxRoot;
@@ -383,6 +423,8 @@ public class FXMLPrincipalController implements Initializable {
 
     public void chargeLogin() {
         loggedUser = null;
+        setForAdmin(false);
+        setForCustomer(false);
         fxRoot.setCenter(login);
         fxMenuTop.setVisible(false);
     }
@@ -536,4 +578,28 @@ public class FXMLPrincipalController implements Initializable {
         Window window = fxRoot.getScene().getWindow();
         window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
+
+    public void setForCustomer(boolean isCustomer){
+        menuItemAdd.setDisable(isCustomer);
+        menuItemList.setDisable(isCustomer);
+        menuItemFind.setDisable(isCustomer);
+        menuItemDelete.setDisable(isCustomer);
+        menuItemUpdate.setDisable(isCustomer);
+        menuCustomerAdd.setDisable(isCustomer);
+        menuCustomerList.setDisable(isCustomer);
+        menuCustomerFind.setDisable(isCustomer);
+        menuCustomerDelete.setDisable(isCustomer);
+        menuPurchaseAdd.setDisable(isCustomer);
+        menuPurchaseFindDate.setDisable(isCustomer);
+        menuPurchaseDelete.setDisable(isCustomer);
+        menuPurchaseUpdate.setDisable(isCustomer);
+        menuReviewDelete.setDisable(isCustomer);
+        //TODO
+    }
+
+    public void setForAdmin(boolean isAdmin){
+        menuReviewAdd.setDisable(isAdmin);
+        menuReviewUpdate.setDisable(isAdmin);
+    }
+
 }

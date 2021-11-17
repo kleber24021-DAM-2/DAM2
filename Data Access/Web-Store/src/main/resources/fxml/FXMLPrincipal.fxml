@@ -17,36 +17,36 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Items">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#addItems" text="Add Item" />
-                  <MenuItem mnemonicParsing="false" onAction="#listItems" text="List Items" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeFindCustomer" text="Find by ID" />
-                  <MenuItem mnemonicParsing="false" onAction="#deleteItems" text="Delete Item" />
-                  <MenuItem mnemonicParsing="false" onAction="#updateItems" text="Update Item" />
+                  <MenuItem fx:id="menuItemAdd" mnemonicParsing="false" onAction="#addItems" text="Add Item" />
+                  <MenuItem fx:id="menuItemList" mnemonicParsing="false" onAction="#listItems" text="List Items" />
+                  <MenuItem fx:id="menuItemFind" mnemonicParsing="false" onAction="#chargeFindCustomer" text="Find by ID" />
+                  <MenuItem fx:id="menuItemDelete" mnemonicParsing="false" onAction="#deleteItems" text="Delete Item" />
+                  <MenuItem fx:id="menuItemUpdate" mnemonicParsing="false" onAction="#updateItems" text="Update Item" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Customers">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#chargeAddCustomer" text="Add Customer" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeListCustomer" text="List Customers" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeFindCustomer" text="Find by ID" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeDeleteCustomer" text="Delete Customer" />
-                  <MenuItem mnemonicParsing="false" onAction="#showUpdateCustomers" text="Update Customer" />
+                <MenuItem fx:id="menuCustomerAdd" mnemonicParsing="false" onAction="#chargeAddCustomer" text="Add Customer" />
+                  <MenuItem fx:id="menuCustomerList" mnemonicParsing="false" onAction="#chargeListCustomer" text="List Customers" />
+                  <MenuItem fx:id="menuCustomerFind" mnemonicParsing="false" onAction="#chargeFindCustomer" text="Find by ID" />
+                  <MenuItem fx:id="menuCustomerDelete" mnemonicParsing="false" onAction="#chargeDeleteCustomer" text="Delete Customer" />
+                  <MenuItem fx:id="menuCustomerUpdate" mnemonicParsing="false" onAction="#showUpdateCustomers" text="Update Customer" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Purchases">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#chargePurchases" text="Add Purchase" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeDatePurchases" text="Find by Date" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeDelete" text="Delete Purchase" />
-                  <MenuItem mnemonicParsing="false" onAction="#showUpdatePurchases" text="Update Purchase" />
+                <MenuItem fx:id="menuPurchaseAdd" mnemonicParsing="false" onAction="#chargePurchases" text="Add Purchase" />
+                  <MenuItem fx:id="menuPurchaseFindDate" mnemonicParsing="false" onAction="#chargeDatePurchases" text="Find by Date" />
+                  <MenuItem fx:id="menuPurchaseDelete" mnemonicParsing="false" onAction="#chargeDelete" text="Delete Purchase" />
+                  <MenuItem fx:id="menuPurchaseUpdate" mnemonicParsing="false" onAction="#showUpdatePurchases" text="Update Purchase" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Reviews">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#chargeAddReview" text="Add review" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeFindReview" text="Find by Item" />
-                  <MenuItem mnemonicParsing="false" onAction="#chargeDeleteReview" text="Delete Review" />
-                  <MenuItem mnemonicParsing="false" onAction="#showUpdateReviews" text="Update Review" />
+                <MenuItem fx:id="menuReviewAdd" mnemonicParsing="false" onAction="#chargeAddReview" text="Add review" />
+                  <MenuItem fx:id="menuReviewFind" mnemonicParsing="false" onAction="#chargeFindReview" text="Find by Item" />
+                  <MenuItem fx:id="menuReviewDelete" mnemonicParsing="false" onAction="#chargeDeleteReview" text="Delete Review" />
+                  <MenuItem fx:id="menuReviewUpdate" mnemonicParsing="false" onAction="#showUpdateReviews" text="Update Review" />
               </items>
             </Menu>
         </menus>

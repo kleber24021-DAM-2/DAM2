@@ -47,6 +47,11 @@ public class FXMLLoginController implements Initializable {
         SafeUser returnedUser = userService.checkUserPassword(fullUser);
         if (returnedUser!= null){
             principal.setLoggedUser(returnedUser);
+            if (returnedUser.getId() > 0){
+                principal.setForCustomer(true);
+            }else {
+                principal.setForAdmin(true);
+            }
             principal.chargeWelcome();
         }else{
             errorBox.setText("User or password is wrong");
