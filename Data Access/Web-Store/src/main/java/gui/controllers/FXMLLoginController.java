@@ -53,6 +53,8 @@ public class FXMLLoginController implements Initializable {
                 principal.setForAdmin(true);
             }
             principal.chargeWelcome();
+            fxUser.clear();
+            passBox.clear();
         }else{
             errorBox.setText("User or password is wrong");
         }

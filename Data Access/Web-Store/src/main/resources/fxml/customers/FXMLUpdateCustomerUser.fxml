@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customers.FXMLUpdateCostumerAsUserController">
+    <children>
+        <TextField fx:id="nameBox" layoutX="230.0" layoutY="120.0" />
+        <Button layoutX="250.0" layoutY="325.0" mnemonicParsing="false" onAction="#updateInfo" text="Update" />
+        <Label layoutX="285.0" layoutY="96.0" text="Name" />
+        <Label layoutX="277.0" layoutY="151.0" text="Telephone" />
+        <Label layoutX="229.0" layoutY="36.0" text="UPDATE MY INFO" textFill="#000000bb">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TextField fx:id="phoneBox" layoutX="230.0" layoutY="175.0" />
+        <Label layoutX="279.0" layoutY="208.0" text="Address" />
+        <TextField fx:id="addressBox" layoutX="230.0" layoutY="232.0" />
+    </children>
+</AnchorPane>

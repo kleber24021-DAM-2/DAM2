@@ -9,7 +9,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Options">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#chargeLogin" text="Go back to login" />
+              <MenuItem mnemonicParsing="false" onAction="#chargeLogin" text="Logout" />
                   <MenuItem mnemonicParsing="false" onAction="#chargeWelcome" text="Welcome Pane" />
                   <MenuItem mnemonicParsing="false" onAction="#closeWindow" text="Close application" />
                   <MenuItem mnemonicParsing="false" onAction="#chargePasswordUpdate" text="Update password" />
@@ -36,6 +36,7 @@
             <Menu mnemonicParsing="false" text="Purchases">
               <items>
                 <MenuItem fx:id="menuPurchaseAdd" mnemonicParsing="false" onAction="#chargePurchases" text="Add Purchase" />
+                  <MenuItem fx:id="menuPurchaseList" mnemonicParsing="false" onAction="#chargeListPurchase" text="List Purchase" />
                   <MenuItem fx:id="menuPurchaseFindDate" mnemonicParsing="false" onAction="#chargeDatePurchases" text="Find by Date" />
                   <MenuItem fx:id="menuPurchaseDelete" mnemonicParsing="false" onAction="#chargeDelete" text="Delete Purchase" />
                   <MenuItem fx:id="menuPurchaseUpdate" mnemonicParsing="false" onAction="#showUpdatePurchases" text="Update Purchase" />

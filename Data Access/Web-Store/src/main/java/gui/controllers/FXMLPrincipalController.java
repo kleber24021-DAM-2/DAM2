@@ -10,10 +10,7 @@ import gui.controllers.items.FXMLAddItemController;
 import gui.controllers.items.FXMLDeleteItemController;
 import gui.controllers.items.FXMLListItemsController;
 import gui.controllers.items.FXMLUpdateItemController;
-import gui.controllers.purchases.FXMLAddPurchasesController;
-import gui.controllers.purchases.FXMLDatePurchasesController;
-import gui.controllers.purchases.FXMLDeleteController;
-import gui.controllers.purchases.FXMLUpdatePurchasesController;
+import gui.controllers.purchases.*;
 import gui.controllers.reviews.FXMLAddReviewController;
 import gui.controllers.reviews.FXMLUpdateReviewControllers;
 import gui.controllers.reviews.FXMLdeleteReviewController;
@@ -138,6 +135,12 @@ public class FXMLPrincipalController implements Initializable {
 
     private FXMLUpdatePassword updatePasswordController;
     private AnchorPane updatePasswordPane;
+
+    private AnchorPane updateCustomerUserPane;
+    private FXMLUpdateCostumerAsUserController updateCostumerUserController;
+
+    private AnchorPane listPurchasesPane;
+    private FXMLListPurchasesController listPurchasesController;
 
     public void setFxRoot(BorderPane fxRoot) {
         this.fxRoot = fxRoot;
@@ -365,9 +368,21 @@ public class FXMLPrincipalController implements Initializable {
         try {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource(
-                            "/fxml/customers/FXMLUpdateCustomer.fxml"));
+                            "/fxml/customers/FXMLUpdateCustomerAdmin.fxml"));
             updateCustomerPane = loaderMenu.load();
             updateCostumerController = loaderMenu.getController();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void preloadUpdateCustomerAsUser(){
+        try {
+            FXMLLoader loaderMenu = new FXMLLoader(
+                    getClass().getResource(
+                            "/fxml/customers/FXMLUpdateCustomerUser.fxml"));
+            updateCustomerUserPane = loaderMenu.load();
+            updateCostumerUserController = loaderMenu.getController();
         } catch (IOException ex) {
             Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -418,7 +433,25 @@ public class FXMLPrincipalController implements Initializable {
             updatePasswordController = loaderMenu.getController();
         }catch (IOException ex){
             Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+
         }
+    }
+    public void preloadListPurchase(){
+        try {
+            FXMLLoader loaderMenu = new FXMLLoader(
+                    getClass().getResource("/fxml/purchases/FXMLListPurchases.fxml")
+            );
+            listPurchasesPane = loaderMenu.load();
+            listPurchasesController = loaderMenu.getController();
+        }catch (IOException ex){
+            Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void chargeListPurchase(){
+        listPurchasesController.setParent(this);
+        listPurchasesController.chargeList();
+        fxRoot.setCenter(listPurchasesPane);
     }
 
     public void chargeLogin() {
@@ -441,7 +474,6 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void chargeDatePurchases() {
-        datePurchasesController.loadPurchasesList();
         fxRoot.setCenter(datePurchases);
     }
 
@@ -500,8 +532,14 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void showUpdateCustomers() {
-        updateCostumerController.loadAllLists();
-        fxRoot.setCenter(updateCustomerPane);
+        if (getLoggedUser().getId() > 0){
+            updateCostumerUserController.setParent(this);
+            updateCostumerUserController.loadUserInfo();
+            fxRoot.setCenter(updateCustomerUserPane);
+        }else {
+            updateCostumerController.loadAllLists();
+            fxRoot.setCenter(updateCustomerPane);
+        }
     }
 
     public void showUpdatePurchases() {
@@ -524,6 +562,7 @@ public class FXMLPrincipalController implements Initializable {
         listCustomerController.loadList();
         fxRoot.setCenter(listCustomerPane);
     }
+
 
     /**
      * Initializes the controller class.
@@ -554,6 +593,8 @@ public class FXMLPrincipalController implements Initializable {
         preloadUpdatePurchase();
         preloadUpdateReviews();
         preloadUpdatePassword();
+        preloadUpdateCustomerAsUser();
+        preloadListPurchase();
 
         chargeLogin();
 

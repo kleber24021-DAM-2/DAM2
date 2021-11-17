@@ -79,7 +79,7 @@ public class JdbcDaoCustomers implements DAOCustomers {
     }
 
     @Override
-    public void update(Customer customer) {
+    public boolean update(Customer customer) {
         prepareCall();
         try {
             preparedStatement = connection.prepareStatement(SqlQueries.UPDATE_CUSTOMER);
@@ -95,6 +95,7 @@ public class JdbcDaoCustomers implements DAOCustomers {
         }finally {
             releaseAllResources();
         }
+        return false;
     }
 
     @Override

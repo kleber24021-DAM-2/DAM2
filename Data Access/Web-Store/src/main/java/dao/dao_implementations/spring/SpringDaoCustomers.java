@@ -74,10 +74,14 @@ public class SpringDaoCustomers implements DAOCustomers {
     }
 
     @Override
-    public void update(Customer t) {
+    public boolean update(Customer t) {
+        boolean updateResult = false;
         JdbcTemplate jdbcTemplate = getTemplate();
-        jdbcTemplate.update(SqlQueries.UPDATE_CUSTOMER,
-                t.getName(), t.getPhone(), t.getAddress(), t.getIdCustomer());
+        if (jdbcTemplate.update(SqlQueries.UPDATE_CUSTOMER,
+                t.getName(), t.getPhone(), t.getAddress(), t.getIdCustomer()) > 0){
+            updateResult = true;
+        }
+        return updateResult;
     }
 
     @Override

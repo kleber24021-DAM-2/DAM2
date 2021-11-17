@@ -20,7 +20,7 @@ public interface DAOCustomers {
      
     Customer save(Customer t);
      
-    void update(Customer t);
+    boolean update(Customer t);
      
     boolean delete(Customer t);
 }

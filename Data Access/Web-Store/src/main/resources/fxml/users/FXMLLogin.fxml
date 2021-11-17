@@ -7,7 +7,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.FXMLLoginController">
    <children>
       <TextField fx:id="fxUser" layoutX="244.0" layoutY="183.0" />
-      <TextField fx:id="passBox" accessibleRole="PASSWORD_FIELD" layoutX="244.0" layoutY="215.0" />
+      <TextField fx:id="passBox" accessibleRole="PASSWORD_FIELD" layoutX="244.0" layoutY="215.0" onAction="#clickLogin" />
       <Label layoutX="163.0" layoutY="186.0" prefWidth="60.0" text="User" />
       <Label layoutX="163.0" layoutY="219.0" text="Password" />
       <Label alignment="CENTER" layoutX="234.0" layoutY="76.0" text="Welcome" textFill="#000000ae">

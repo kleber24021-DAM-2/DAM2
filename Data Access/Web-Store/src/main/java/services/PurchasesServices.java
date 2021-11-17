@@ -27,11 +27,6 @@ public class PurchasesServices {
         return dao.getAll();
     }
 
-    public List<Purchase> searchByDate(LocalDate date) {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-        return dao.getByDate(date);
-    }
-
     public List<Purchase> getPurchasesByClientId(int id) {
         DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
         return dao.getByCustomerId(id);
@@ -64,19 +59,9 @@ public class PurchasesServices {
         return dao.save(newPurchase);
     }
 
-    public void deletePurchasesByItemID(int idItem) {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-            dao.deleteByItemId(idItem);
-    }
-
     public List<Purchase> findByDate(LocalDate selectedDate) {
         DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
             return dao.getByDate(selectedDate);
-    }
-
-    public void deletePurchaseByCustomerId(int idCustomer) {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-            dao.deleteByCustomerId(idCustomer);
     }
 
     public void updatePurchase(Purchase updatedPurchase) {

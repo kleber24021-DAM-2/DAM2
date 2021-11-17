@@ -69,8 +69,9 @@ public class XMLDaoCustomers implements DAOCustomers {
     }
 
     @Override
-    public void update(Customer t) {
+    public boolean update(Customer t) {
         //Implementar método para hacer update de un customer
+        return false;
     }
 
     @Override
