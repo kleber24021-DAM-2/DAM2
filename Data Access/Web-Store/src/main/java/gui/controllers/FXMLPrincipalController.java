@@ -503,6 +503,8 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void chargeDeleteReview() {
+        deleteReviewController.setParent(this);
+        deleteReviewController.loadReviewsList();
         fxRoot.setCenter(deleteReview);
     }
 

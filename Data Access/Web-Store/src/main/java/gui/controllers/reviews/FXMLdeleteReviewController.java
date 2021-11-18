@@ -7,6 +7,8 @@ package gui.controllers.reviews;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gui.controllers.FXMLPrincipalController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -23,6 +25,8 @@ public class FXMLdeleteReviewController implements Initializable {
 
     @FXML
     private ListView<Review> reviewBox;
+
+    private FXMLPrincipalController parent;
 
     public void loadReviewsList() {
         ReviewsServices reviewsServices = new ReviewsServices();
@@ -47,4 +51,7 @@ public class FXMLdeleteReviewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
+    public void setParent(FXMLPrincipalController parent) {
+        this.parent = parent;
+    }
 }
