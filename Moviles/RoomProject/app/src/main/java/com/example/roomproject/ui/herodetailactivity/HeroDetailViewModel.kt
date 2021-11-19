@@ -14,14 +14,14 @@ import javax.inject.Inject
 class HeroDetailViewModel @Inject constructor(private val getCompleteHero: GetCompleteHero) :
     ViewModel() {
 
-    private val privateSuperHero = MutableLiveData<SuperHero>()
-    val superHero: LiveData<SuperHero> get() = privateSuperHero
+    private val _superHero = MutableLiveData<SuperHero>()
+    val superHero: LiveData<SuperHero> get() = _superHero
 
 
     fun getCompleteHero(id: Int) {
         viewModelScope.launch {
             val superHero = getCompleteHero.invoke(id)
-            privateSuperHero.postValue(superHero)
+            _superHero.postValue(superHero)
         }
     }
 
