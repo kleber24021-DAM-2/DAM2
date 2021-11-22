@@ -1,5 +1,6 @@
 package com.example.roomproject.ui.updateheroactivity
 
+import android.os.Build
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -25,6 +26,18 @@ class UpdateHeroActivity : AppCompatActivity() {
         setContentView(binding.root)
         heroId = intent.getIntExtra(getString(R.string.heroIdExtra), -1)
 
+        updateHeroViewModel.getCompleteHero(heroId)
+
+        setListeners()
+        setViewModelObservers()
+
+        if(Build.VERSION.SDK_INT > 26){
+            val imageTransitionName = intent.getStringExtra(getString(R.string.imageTransition))
+            binding.imageView2.transitionName = imageTransitionName
+        }
+    }
+
+    private fun setViewModelObservers() {
         updateHeroViewModel.hero.observe(this, {
             with(binding) {
                 textName.setText(it.name)
@@ -35,9 +48,11 @@ class UpdateHeroActivity : AppCompatActivity() {
             }
         })
 
-        updateHeroViewModel.getCompleteHero(heroId)
-
-        setListeners()
+        updateHeroViewModel.error.observe(this, {
+            if(!it){
+                createToast(getString(R.string.errorDatabase))
+            }
+        })
     }
 
     private fun setListeners() {

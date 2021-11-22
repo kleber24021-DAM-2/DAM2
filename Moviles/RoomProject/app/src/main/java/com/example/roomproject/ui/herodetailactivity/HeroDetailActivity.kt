@@ -1,6 +1,8 @@
 package com.example.roomproject.ui.herodetailactivity
 
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
@@ -34,8 +36,19 @@ class HeroDetailActivity : AppCompatActivity() {
             rvComics.adapter = comicsAdapter
             rvSeries.adapter = seriesAdapter
         }
+        setViewModelObservers()
 
+        superHeroViewModel.getCompleteHero(heroId)
 
+        if(Build.VERSION.SDK_INT > 26){
+            val imageTransitionName = intent.getStringExtra(getString(R.string.imageTransition))
+            val nameTextTransitionName = intent.getStringExtra(getString(R.string.textTransition))
+            binding.imageView.transitionName = imageTransitionName
+            binding.tvName.transitionName = nameTextTransitionName
+        }
+    }
+
+    private fun setViewModelObservers(){
         superHeroViewModel.superHero.observe(this, {
             with(binding) {
                 imageView.load(it.imageUrl)
@@ -48,7 +61,10 @@ class HeroDetailActivity : AppCompatActivity() {
                 seriesAdapter.submitList(it.seriesList)
             }
         })
-
-        superHeroViewModel.getCompleteHero(heroId)
+        superHeroViewModel.error.observe(this, {
+            if (!it){
+                Toast.makeText(this, getString(R.string.errorDatabase), Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

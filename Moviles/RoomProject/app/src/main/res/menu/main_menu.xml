@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/app_bar_add_button"
+        android:title="@string/add_hero"
+        android:icon="@drawable/outline_add_24"
+        app:showAsAction="ifRoom"/>
+</menu>

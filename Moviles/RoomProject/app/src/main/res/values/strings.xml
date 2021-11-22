@@ -17,7 +17,7 @@
     <string name="randomImage">https://picsum.photos/1920/640</string>
     <string name="add">Añadir</string>
     <string name="add_a_hero">Add a hero</string>
-    <string name="transition">imageTransition</string>
+    <string name="imageTransition">imageTransition</string>
     <string name="comics">Comics</string>
     <string name="series">Series</string>
     <string name="comic_serie_name">Comic/Serie Name</string>
@@ -32,4 +32,8 @@
     <string name="comisNameError">El nombre del comic o serie no puede estar vacío</string>
     <string name="comicDateError">Por favor, selecciona una fecha de creación del comic o serie</string>
     <string name="heroImageTransition">heroImage</string>
+    <string name="errorDatabase">Ha surgido un error en la base de datos</string>
+    <string name="add_hero">Añadir héroe</string>
+    <string name="search_hero">Buscar héroe</string>
+    <string name="textTransition">nameTransition</string>
 </resources>

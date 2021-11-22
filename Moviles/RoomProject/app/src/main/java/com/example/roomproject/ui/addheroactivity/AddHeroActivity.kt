@@ -36,11 +36,14 @@ class AddHeroActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         setListeners()
+        setViewModelObservers()
         with(binding) {
             rvHeroComics.adapter = comicAdapter
             rvHeroSeries.adapter = seriesAdapter
         }
     }
+
+
 
     private fun setListeners() {
         with(binding) {
@@ -65,6 +68,16 @@ class AddHeroActivity : AppCompatActivity() {
                 showDatePickerDialog(addComicDate)
             }
         }
+    }
+
+    private fun setViewModelObservers(){
+        addHeroViewModel.response.observe(this, {
+            if (it){
+                finish()
+            }else{
+                createToast(getString(R.string.errorDatabase))
+            }
+        })
     }
 
     private fun createNewHero() {

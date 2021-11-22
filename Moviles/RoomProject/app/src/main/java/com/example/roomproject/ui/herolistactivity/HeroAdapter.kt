@@ -3,6 +3,8 @@ package com.example.roomproject.ui.herolistactivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +12,7 @@ import coil.load
 import com.example.roomproject.R
 import com.example.roomproject.databinding.ViewHeroBinding
 import com.example.roomproject.domain.SuperHeroDisplay
+import com.example.roomproject.ui.ConstantsUI
 
 class HeroAdapter(private val buttonActions: ButtonActions) :
     ListAdapter<SuperHeroDisplay, HeroAdapter.ItemViewholder>(DiffCallback()) {
@@ -27,8 +30,8 @@ class HeroAdapter(private val buttonActions: ButtonActions) :
     }
 
     interface ButtonActions {
-        fun onClickEyeButton(id: Int)
-        fun onClickEditButton(id: Int)
+        fun onClickEyeButton(id: Int, imageView: ImageView, title:TextView)
+        fun onClickEditButton(id: Int, imageView: ImageView)
         fun onClickEraseButton(id: Int)
     }
 
@@ -38,11 +41,14 @@ class HeroAdapter(private val buttonActions: ButtonActions) :
         fun bind(item: SuperHeroDisplay, buttonActions: ButtonActions) = with(binding) {
             imageview.load(item.imageUrl)
             tvName.text = item.name
+            //Ponemos los nombres de las transiciones a cada elemento
+            imageview.transitionName = item.name.plus(item.id).plus(ConstantsUI.IMAGEVIEW)
+            tvName.transitionName = item.name.plus(item.id).plus(ConstantsUI.TITLEVIEW)
             viewButton.setOnClickListener {
-                buttonActions.onClickEyeButton(item.id)
+                buttonActions.onClickEyeButton(item.id, binding.imageview, binding.tvName)
             }
             editButton.setOnClickListener {
-                buttonActions.onClickEditButton(item.id)
+                buttonActions.onClickEditButton(item.id, binding.imageview)
             }
             deleteButton.setOnClickListener {
                 buttonActions.onClickEraseButton(item.id)
