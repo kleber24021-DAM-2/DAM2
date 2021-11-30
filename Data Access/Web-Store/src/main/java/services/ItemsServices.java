@@ -5,7 +5,6 @@
  */
 package services;
 
-import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOItems;
 import dao.interfaces.DAOPurchases;
 import dao.interfaces.DAOReviews;

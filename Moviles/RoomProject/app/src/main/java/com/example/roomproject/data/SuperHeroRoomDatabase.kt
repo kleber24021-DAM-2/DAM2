@@ -10,7 +10,6 @@ import com.example.roomproject.data.model.SuperHeroEntity
 @Database(
     entities = [SuperHeroEntity::class, ComicEntity::class, SeriesEntity::class],
     version = 6,
-    exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class SuperHeroRoomDatabase : RoomDatabase() {

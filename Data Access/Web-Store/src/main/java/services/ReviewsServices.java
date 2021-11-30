@@ -5,7 +5,6 @@
  */
 package services;
 
-import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOReviews;
 import model.Review;
 

@@ -1,6 +1,5 @@
 package services;
 
-import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOUsers;
 import model.user.FullUser;
 import model.user.SafeUser;

@@ -2,7 +2,7 @@ package com.example.roomproject.domain
 
 import java.time.LocalDate
 
-class SuperHero(
+data class SuperHero(
     val id: Int,
     val name: String,
     val description: String,
