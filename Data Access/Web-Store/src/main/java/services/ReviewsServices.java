@@ -5,7 +5,8 @@
  */
 package services;
 
-import dao.interfaces.DAOReviews;
+import dao.dao_implementations.*;
+import dao.interfaces.*;
 import model.Review;
 
 import java.util.List;
@@ -14,35 +15,33 @@ import java.util.List;
  * @author Laura
  */
 public class ReviewsServices {
-
+    DAOItems daoItems = new DaoItemsHibernate();
+    DAOCustomers daoCustomers = new DaoCustomersHibernate();
+    DAOReviews daoReviews = new DaoReviewsHibernate();
+    DAOPurchases daoPurchases = new DaoPurchaseHibernate();
+    DAOUsers daoUsers = new DaoUserHibernate();
 
     public List<Review> getAllReviews() {
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         return daoReviews.getAll();
     }
 
     public List<Review> getReviewsByCustomer(int customerId){
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         return daoReviews.getByCustomerId(customerId);
     }
 
     public void deleteReview(Review review) {
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         daoReviews.delete(review);
     }
 
     public List<Review> searchByItem(int id) {
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         return daoReviews.getByItemId(id);
     }
 
     public Review addReview(Review review) {
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         return daoReviews.save(review);
     }
 
     public void updateReview(Review review) {
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
         daoReviews.update(review);
     }
 

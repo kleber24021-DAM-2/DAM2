@@ -5,9 +5,9 @@
  */
 package services;
 
-import dao.interfaces.DAOCustomers;
-import dao.interfaces.DAOPurchases;
-import model.Customer;
+import dao.dao_implementations.*;
+import dao.interfaces.*;
+import model.hibernatemodels.EntityCustomers;
 
 import java.util.List;
 
@@ -17,19 +17,21 @@ import java.util.List;
  */
 public class CustomersServices {
 
-    public List<Customer> getAllCustomers() {
-        DAOCustomers dao =  DaoFactory.getInstance().getDaoCustomers();
-        return dao.getAll();
+    DAOItems daoItems = new DaoItemsHibernate();
+    DAOCustomers daoCustomers = new DaoCustomersHibernate();
+    DAOReviews daoReviews = new DaoReviewsHibernate();
+    DAOPurchases daoPurchases = new DaoPurchaseHibernate();
+    DAOUsers daoUsers = new DaoUserHibernate();
+
+    public List<EntityCustomers> getAllCustomers() {
+        return daoCustomers.getAll();
     }
 
-    public Customer searchById(int id) {
-        DAOCustomers dao = DaoFactory.getInstance().getDaoCustomers();
-        return dao.get(id);
+    public EntityCustomers searchById(int id) {
+        return daoCustomers.get(id);
     }
 
-    public boolean deleteCustomer(Customer customer) {
-        DAOCustomers daoCustomers = DaoFactory.getInstance().getDaoCustomers();
-        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
+    public boolean deleteCustomer(EntityCustomers customer) {
         boolean result = false;
         if (daoPurchases.getByCustomerId(customer.getIdCustomer()).isEmpty()){
             daoCustomers.delete(customer);
@@ -38,13 +40,11 @@ public class CustomersServices {
         return result;
     }
 
-    public Customer addCustomer(Customer toAdd) {
-        DAOCustomers dao = DaoFactory.getInstance().getDaoCustomers();
-        return dao.save(toAdd);
+    public EntityCustomers addCustomer(EntityCustomers toAdd) {
+        return daoCustomers.save(toAdd);
     }
 
-    public boolean updateCustomer(Customer updatedCustomer) {
-        DAOCustomers daoCustomers = DaoFactory.getInstance().getDaoCustomers();
+    public boolean updateCustomer(EntityCustomers updatedCustomer) {
          return daoCustomers.update(updatedCustomer);
     }
 }

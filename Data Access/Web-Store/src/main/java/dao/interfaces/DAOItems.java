@@ -5,7 +5,8 @@
  */
 package dao.interfaces;
 
-import model.Item;
+
+import model.hibernatemodels.EntityItems;
 
 import java.util.List;
 
@@ -14,15 +15,15 @@ import java.util.List;
  */
 public interface DAOItems {
 
-    Item get(int id);
+    EntityItems get(int id);
      
-    List<Item> getAll();
+    List<EntityItems> getAll();
+
+    EntityItems save(EntityItems t);
      
-    Item save(Item t);
+    boolean update(EntityItems t);
      
-    boolean update(Item t);
-     
-    boolean delete(Item t);
+    boolean delete(EntityItems t);
 
     void closePool();
 }

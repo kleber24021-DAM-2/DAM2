@@ -11,9 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
-import model.Customer;
-import model.Item;
-import model.Purchase;
+import model.hibernatemodels.EntityCustomers;
+import model.hibernatemodels.EntityItems;
+import model.hibernatemodels.EntityPurchases;
 import services.CustomersServices;
 import services.ItemsServices;
 import services.PurchasesServices;
@@ -31,11 +31,11 @@ public class FXMLAddPurchasesController implements Initializable {
 
 
     @FXML
-    private ComboBox<Customer> customerBox;
+    private ComboBox<EntityCustomers> customerBox;
     @FXML
-    private ComboBox<Item> itemBox;
+    private ComboBox<EntityItems> itemBox;
     @FXML
-    private ListView<Purchase> purchaseList;
+    private ListView<EntityPurchases> purchaseList;
     @FXML
     private DatePicker dateBox;
 
@@ -49,25 +49,25 @@ public class FXMLAddPurchasesController implements Initializable {
     
     public void loadPurchasesList() {
         PurchasesServices services = new PurchasesServices();
-        List<Purchase> purchasesList = services.getAllPurchases();
+        List<EntityPurchases> purchasesList = services.getAllPurchases();
         purchaseList.getItems().setAll(purchasesList);
     }
 
     public void loadItemsList() {
         ItemsServices services = new ItemsServices();
-        List<Item> itemList = services.getAllItems();
+        List<EntityItems> itemList = services.getAllItems();
         itemBox.getItems().setAll(itemList);
     }
 
     public void loadCustomersList() {
         CustomersServices service = new CustomersServices();
-        List<Customer> customerList = service.getAllCustomers();
+        List<EntityCustomers> customerList = service.getAllCustomers();
         customerBox.getItems().setAll(customerList);
     }
 
     public void addPurchase() {
         PurchasesServices service = new PurchasesServices();
-        Purchase addedPurchase = service.addPurchase(customerBox.getSelectionModel().getSelectedItem().getIdCustomer(),
+        EntityPurchases addedPurchase = service.addPurchase(customerBox.getSelectionModel().getSelectedItem().getIdCustomer(),
                 itemBox.getSelectionModel().getSelectedItem().getIdItem(),
                 dateBox.getValue());
         purchaseList.getItems().add(addedPurchase);

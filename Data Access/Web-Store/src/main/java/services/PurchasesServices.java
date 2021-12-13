@@ -5,10 +5,8 @@
  */
 package services;
 
-import dao.interfaces.DAOCustomers;
-import dao.interfaces.DAOItems;
-import dao.interfaces.DAOPurchases;
-import dao.interfaces.DAOReviews;
+import dao.dao_implementations.*;
+import dao.interfaces.*;
 import model.Purchase;
 import model.Review;
 
@@ -21,20 +19,21 @@ import java.util.List;
  */
 public class PurchasesServices {
 
+    DAOItems daoItems = new DaoItemsHibernate();
+    DAOCustomers daoCustomers = new DaoCustomersHibernate();
+    DAOReviews daoReviews = new DaoReviewsHibernate();
+    DAOPurchases daoPurchases = new DaoPurchaseHibernate();
+    DAOUsers daoUsers = new DaoUserHibernate();
+
     public List<Purchase> getAllPurchases() {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-        return dao.getAll();
+        return daoPurchases.getAll();
     }
 
     public List<Purchase> getPurchasesByClientId(int id) {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-        return dao.getByCustomerId(id);
+        return daoPurchases.getByCustomerId(id);
     }
 
     public boolean deletePurchase(Purchase purchase) {
-        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
-
         List<Review> reviewList = daoReviews.getByPurchaseId(purchase.getId());
         if (reviewList.isEmpty()){
             daoPurchases.delete(purchase);
@@ -45,26 +44,20 @@ public class PurchasesServices {
      }
 
     public Purchase addPurchase(int customerId, int itemId, LocalDate date) {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-        DAOCustomers daoCustomers = DaoFactory.getInstance().getDaoCustomers();
-        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
-
         Purchase newPurchase = new Purchase();
         newPurchase.setId(-1);
         newPurchase.setDate(date);
         newPurchase.setCustomer(daoCustomers.get(customerId));
         newPurchase.setItem(daoItems.get(itemId));
 
-        return dao.save(newPurchase);
+        return daoPurchases.save(newPurchase);
     }
 
     public List<Purchase> findByDate(LocalDate selectedDate) {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-            return dao.getByDate(selectedDate);
+            return daoPurchases.getByDate(selectedDate);
     }
 
     public void updatePurchase(Purchase updatedPurchase) {
-        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
         daoPurchases.update(updatedPurchase);
     }
 }

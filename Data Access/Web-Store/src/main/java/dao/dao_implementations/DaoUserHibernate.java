@@ -1,48 +1,38 @@
 package dao.dao_implementations;
 
-import dao.interfaces.DAOReviews;
-import model.Review;
+import dao.interfaces.DAOUsers;
+import model.hibernatemodels.EntityUsers;
 
 import java.util.List;
 
-public class DaoUserHibernate implements DAOReviews {
+public class DaoUserHibernate implements DAOUsers {
     @Override
-    public Review get(int id) {
+    public EntityUsers get(int id) {
         return null;
     }
 
     @Override
-    public List<Review> getAll() {
+    public List<EntityUsers> getAll() {
         return null;
     }
 
     @Override
-    public List<Review> getByCustomerId(int customerId) {
+    public EntityUsers save(EntityUsers t) {
         return null;
     }
 
     @Override
-    public List<Review> getByItemId(int itemId) {
+    public void update(EntityUsers t) {
+
+    }
+
+    @Override
+    public boolean delete(EntityUsers t) {
+        return false;
+    }
+
+    @Override
+    public EntityUsers validateUserPassword(String user, String password) {
         return null;
-    }
-
-    @Override
-    public List<Review> getByPurchaseId(int purchaseId) {
-        return null;
-    }
-
-    @Override
-    public Review save(Review t) {
-        return null;
-    }
-
-    @Override
-    public void update(Review t) {
-
-    }
-
-    @Override
-    public void delete(Review t) {
-
     }
 }

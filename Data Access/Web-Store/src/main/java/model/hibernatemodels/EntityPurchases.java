@@ -9,8 +9,6 @@ import java.util.Collection;
 public class EntityPurchases {
     private int idPurchase;
     private Date date;
-    private int idCustomer;
-    private int idItem;
     private EntityCustomers customersByIdCustomer;
     private EntityItems itemsByIdItem;
     private Collection<EntityReviews> reviewsByIdPurchase;
@@ -35,26 +33,6 @@ public class EntityPurchases {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "ID_CUSTOMER")
-    public int getIdCustomer() {
-        return idCustomer;
-    }
-
-    public void setIdCustomer(int idCustomer) {
-        this.idCustomer = idCustomer;
-    }
-
-    @Basic
-    @Column(name = "ID_ITEM")
-    public int getIdItem() {
-        return idItem;
-    }
-
-    public void setIdItem(int idItem) {
-        this.idItem = idItem;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,8 +41,6 @@ public class EntityPurchases {
         EntityPurchases that = (EntityPurchases) o;
 
         if (idPurchase != that.idPurchase) return false;
-        if (idCustomer != that.idCustomer) return false;
-        if (idItem != that.idItem) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
 
         return true;
@@ -74,8 +50,6 @@ public class EntityPurchases {
     public int hashCode() {
         int result = idPurchase;
         result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + idCustomer;
-        result = 31 * result + idItem;
         return result;
     }
 

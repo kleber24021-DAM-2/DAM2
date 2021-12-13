@@ -5,7 +5,7 @@
  */
 package dao.interfaces;
 
-import model.Review;
+import model.hibernatemodels.EntityReviews;
 
 import java.util.List;
 
@@ -14,19 +14,19 @@ import java.util.List;
  */
 public interface DAOReviews {
 
-    Review get(int id);
+    EntityReviews get(int id);
      
-    List<Review> getAll();
+    List<EntityReviews> getAll();
 
-    List<Review> getByCustomerId(int customerId);
+    List<EntityReviews> getByCustomerId(int customerId);
 
-    List<Review> getByItemId(int itemId);
+    List<EntityReviews> getByItemId(int itemId);
 
-    List<Review> getByPurchaseId(int purchaseId);
+    List<EntityReviews> getByPurchaseId(int purchaseId);
+
+    EntityReviews save(EntityReviews t);
      
-    Review save(Review t);
-     
-    void update(Review t);
+    void update(EntityReviews t);
      
     void delete(Review t);
 }

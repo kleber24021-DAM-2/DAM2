@@ -11,7 +11,6 @@ public class EntityReviews {
     private String title;
     private String description;
     private Date date;
-    private int idPurchase;
     private EntityPurchases purchasesByIdPurchase;
 
     @Id
@@ -64,16 +63,6 @@ public class EntityReviews {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "ID_PURCHASE")
-    public int getIdPurchase() {
-        return idPurchase;
-    }
-
-    public void setIdPurchase(int idPurchase) {
-        this.idPurchase = idPurchase;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,7 +72,6 @@ public class EntityReviews {
 
         if (idReview != that.idReview) return false;
         if (rating != that.rating) return false;
-        if (idPurchase != that.idPurchase) return false;
         if (title != null ? !title.equals(that.title) : that.title != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
@@ -98,7 +86,6 @@ public class EntityReviews {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + idPurchase;
         return result;
     }
 
