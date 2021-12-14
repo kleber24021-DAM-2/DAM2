@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1067.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.gui.controllers.CrudPersonas">
+   <children>
+      <ListView layoutX="78.0" layoutY="51.0" prefHeight="685.0" prefWidth="439.0" fx:id="lvPersonas"/>
+      <TextField layoutX="632.0" layoutY="80.0" promptText="Nombre" fx:id="tfNombre"/>
+      <ComboBox layoutX="632.0" layoutY="135.0" prefWidth="150.0" promptText="Estado Civil" fx:id="cbEstadoCivil"/>
+      <ComboBox layoutX="632.0" layoutY="192.0" prefWidth="150.0" promptText="Sexo" fx:id="cbSexo"/>
+      <DatePicker layoutX="632.0" layoutY="261.0" prefHeight="25.0" prefWidth="150.0" promptText="Fecha Nacimiento" fx:id="dateNacimiento"/>
+      <TextField layoutX="632.0" layoutY="309.0" promptText="Lugar Procedencia" fx:id="tfProcedencia"/>
+      <Button layoutX="606.0" layoutY="436.0" mnemonicParsing="false" text="Añadir" onMouseClicked="#createPersona"/>
+      <Button layoutX="707.0" layoutY="436.0" mnemonicParsing="false" text="Editar" onMouseClicked="#updatePersona"/>
+      <Button layoutX="806.0" layoutY="436.0" mnemonicParsing="false" text="Borrar" onMouseClicked="#erasePersona"/>
+   </children>
+</AnchorPane>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="765.0" prefWidth="1067.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.gui.controllers.NacimientosController">
+   <children>
+      <ListView layoutX="91.0" layoutY="75.0" prefHeight="335.0" prefWidth="251.0" fx:id="lvPersonas1"/>
+      <ListView layoutX="381.0" layoutY="75.0" prefHeight="335.0" prefWidth="251.0" fx:id="lvPersonas2"/>
+      <Button layoutX="400.0" layoutY="558.0" mnemonicParsing="false" text="Registrar hijo" onMouseClicked="#registrarNacimiento"/>
+       <TextField fx:id="tfNombre" layoutX="91.0" layoutY="458.0" promptText="Nombre" />
+       <ComboBox fx:id="cbSexo" layoutX="92.0" layoutY="503.0" prefHeight="25.0" prefWidth="149.0" promptText="Sexo" />
+       <DatePicker fx:id="dateNacimiento" layoutX="92.0" layoutY="558.0" prefHeight="25.0" prefWidth="150.0" promptText="Fecha Nacimiento" />
+      <Label layoutX="91.0" layoutY="52.0" text="Progenitor 1" />
+      <Label layoutX="381.0" layoutY="52.0" text="Progenitor 2" />
+   </children>
+</AnchorPane>
