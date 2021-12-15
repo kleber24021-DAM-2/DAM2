@@ -1,4 +1,4 @@
-package dao.dao_implementations;
+package dao.dao_implementations.hibernate;
 
 import dao.interfaces.DAOItems;
 import model.Item;
@@ -6,7 +6,6 @@ import model.Item;
 import java.util.List;
 
 public class DaoItemsHibernate implements DAOItems {
-
     @Override
     public Item get(int id) {
         return null;

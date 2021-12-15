@@ -1,4 +1,4 @@
-package dao.dao_implementations;
+package dao.dao_implementations.hibernate;
 
 import dao.interfaces.DAOPurchases;
 import model.Purchase;
@@ -6,7 +6,7 @@ import model.Purchase;
 import java.time.LocalDate;
 import java.util.List;
 
-public class DaoPurchaseHibernate implements DAOPurchases {
+public class DaoPurchasesHibernate implements DAOPurchases {
     @Override
     public Purchase get(int id) {
         return null;

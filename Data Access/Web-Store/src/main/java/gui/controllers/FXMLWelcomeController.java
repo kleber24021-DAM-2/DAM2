@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import model.hibernatemodels.EntityUsers;
+import model.user.SafeUser;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,9 +28,9 @@ public class FXMLWelcomeController implements Initializable {
     private AnchorPane fxWelcomePane;
 
     // String con el nombre de usuario que le paso desde el login.
-    private EntityUsers login;
+    private SafeUser login;
     
-    public EntityUsers getLogin() {
+    public SafeUser getLogin() {
         return login;
     }
     
@@ -41,7 +41,7 @@ public class FXMLWelcomeController implements Initializable {
     
     
 
-    public void setLogin(EntityUsers login) {
+    public void setLogin(SafeUser login) {
         this.login = login;
         fxWelcomeTitle.setText("Welcome " + login.getUsername());
     }

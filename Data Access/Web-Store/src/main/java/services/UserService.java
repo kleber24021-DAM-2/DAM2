@@ -1,16 +1,18 @@
 package services;
 
-import dao.dao_implementations.DaoUserHibernate;
+import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOUsers;
-import model.hibernatemodels.EntityUsers;
+import model.user.FullUser;
+import model.user.SafeUser;
 
 public class UserService {
-    DAOUsers daoUsers = new DaoUserHibernate();
-    public EntityUsers checkUserPassword(String user, String password){
-        return daoUsers.validateUserPassword(user, password);
+    public SafeUser checkUserPassword(FullUser fullUser){
+        DAOUsers daoUsers = DaoFactory.getInstance().getDaoUsers();
+        return daoUsers.validateUserPassword(fullUser);
     }
 
-    public void updateUser(EntityUsers updatedUser) {
+    public void updateUser(FullUser updatedUser) {
+        DAOUsers daoUsers = DaoFactory.getInstance().getDaoUsers();
         daoUsers.update(updatedUser);
     }
 }

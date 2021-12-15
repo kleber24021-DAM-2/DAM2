@@ -5,7 +5,7 @@
  */
 package dao.interfaces;
 
-import model.hibernatemodels.EntityCustomers;
+import model.Customer;
 
 import java.util.List;
 
@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface DAOCustomers {
      
-    EntityCustomers get(int id);
+    Customer get(int id);
      
-    List<EntityCustomers> getAll();
-
-    EntityCustomers save(EntityCustomers t);
+    List<Customer> getAll();
      
-    boolean update(EntityCustomers t);
+    Customer save(Customer t);
      
-    boolean delete(EntityCustomers t);
+    boolean update(Customer t);
+     
+    boolean delete(Customer t);
 }

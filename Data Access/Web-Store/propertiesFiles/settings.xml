@@ -15,10 +15,10 @@
 <!--    <entry key="password">root</entry>-->
 
 <!-- Configuration of the type of DAO-->
-    <entry key="daoItems">Spring</entry>
-    <entry key="daoCustomers">Spring</entry>
-    <entry key="daoPurchases">Spring</entry>
-    <entry key="daoReviews">Spring</entry>
-    <entry key="daoUsers">Spring</entry>
+    <entry key="daoItems">Hibernate</entry>
+    <entry key="daoCustomers">Hibernate</entry>
+    <entry key="daoPurchases">Hibernate</entry>
+    <entry key="daoReviews">Hibernate</entry>
+    <entry key="daoUsers">Hibernate</entry>
 
 </properties>

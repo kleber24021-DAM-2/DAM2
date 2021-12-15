@@ -1,4 +1,4 @@
-package dao.dao_implementations;
+package dao.dao_implementations.hibernate;
 
 import dao.interfaces.DAOCustomers;
 import model.Customer;

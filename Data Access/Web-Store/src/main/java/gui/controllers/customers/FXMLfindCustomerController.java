@@ -13,7 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.hibernatemodels.EntityCustomers;
+import model.Customer;
 import services.CustomersServices;
 
 /**
@@ -26,7 +26,7 @@ public class FXMLfindCustomerController implements Initializable {
     @FXML
     private TextField dniBox;
     @FXML
-    private ListView<EntityCustomers> customerList;
+    private ListView<Customer> customerList;
     
      public void searchById() {
          CustomersServices service = new CustomersServices();
@@ -39,7 +39,7 @@ public class FXMLfindCustomerController implements Initializable {
              alert.showAndWait();
              return;
          }
-         EntityCustomers returnedCustomer = service.searchById(customerId);
+         Customer returnedCustomer = service.searchById(customerId);
          if (returnedCustomer == null){
              alert.setContentText("There are no customers with that ID");
              alert.showAndWait();

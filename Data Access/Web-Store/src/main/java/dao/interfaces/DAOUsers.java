@@ -1,20 +1,20 @@
 package dao.interfaces;
 
-
-import model.hibernatemodels.EntityUsers;
+import model.user.FullUser;
+import model.user.SafeUser;
 
 import java.util.List;
 
 public interface DAOUsers {
-    EntityUsers get(int id);
+    SafeUser get(int id);
 
-    List<EntityUsers> getAll();
+    List<SafeUser> getAll();
 
-    EntityUsers save(EntityUsers t);
+    SafeUser save(FullUser t);
 
-    void update(EntityUsers t);
+    void update(FullUser t);
 
-    boolean delete(EntityUsers t);
+    boolean delete(SafeUser t);
 
-    EntityUsers validateUserPassword(String user, String password);
+    SafeUser validateUserPassword(FullUser t);
 }

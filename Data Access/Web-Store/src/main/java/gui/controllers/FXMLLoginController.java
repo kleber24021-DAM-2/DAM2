@@ -9,7 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.hibernatemodels.EntityUsers;
+import model.user.FullUser;
+import model.user.SafeUser;
 import services.UserService;
 
 import java.net.URL;
@@ -42,10 +43,11 @@ public class FXMLLoginController implements Initializable {
     
     public void clickLogin(){
         UserService userService = new UserService();
-        EntityUsers returnedUser = userService.checkUserPassword(fxUser.getText(), passBox.getText());
+        FullUser fullUser = new FullUser(0, fxUser.getText(), passBox.getText());
+        SafeUser returnedUser = userService.checkUserPassword(fullUser);
         if (returnedUser!= null){
             principal.setLoggedUser(returnedUser);
-            if (returnedUser.getUserId() > 0){
+            if (returnedUser.getId() > 0){
                 principal.setForCustomer(true);
             }else {
                 principal.setForAdmin(true);

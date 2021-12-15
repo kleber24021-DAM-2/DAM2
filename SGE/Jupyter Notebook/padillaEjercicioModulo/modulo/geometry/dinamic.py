@@ -1,9 +1,9 @@
+from module.geometry.step import *
 class dinamic:
     def __init__(self):
         self.stepArray = []
     
     def loadStep(self, filePath):
-        limport atom
         text = open(filePath).readlines()
         totalAtoms = int(text[0])
         atomArray = []
@@ -14,8 +14,6 @@ class dinamic:
         stepArray.append(step(atomArray))
     
     def printAllAtoms(self):
-        import atom
-        import step
         for step in self.stepArray:
             for atom in step:
                 print(atom.name + " " + atom.x + " " + atom.y + " " + atom.z)

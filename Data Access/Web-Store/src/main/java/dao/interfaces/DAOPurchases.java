@@ -5,8 +5,7 @@
  */
 package dao.interfaces;
 
-
-import model.hibernatemodels.EntityPurchases;
+import model.Purchase;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,21 +15,21 @@ import java.util.List;
  */
 public interface DAOPurchases {
 
-    EntityPurchases get(int id);
+    Purchase get(int id);
 
-    List<EntityPurchases> getAll();
+    List<Purchase> getAll();
 
-    EntityPurchases save(EntityPurchases t);
+    Purchase save(Purchase t);
 
-    void update(EntityPurchases t);
+    void update(Purchase t);
 
-    void delete(EntityPurchases t);
+    void delete(Purchase t);
 
-    List<EntityPurchases> getByCustomerId(int idCustomer);
+    List<Purchase> getByCustomerId(int idCustomer);
 
-    List<EntityPurchases> getByItemId(int idItem);
+    List<Purchase> getByItemId(int idItem);
 
-    List<EntityPurchases> getByDate(LocalDate selectedDate);
+    List<Purchase> getByDate(LocalDate selectedDate);
 
     void deleteByCustomerId(int idCustomer);
 

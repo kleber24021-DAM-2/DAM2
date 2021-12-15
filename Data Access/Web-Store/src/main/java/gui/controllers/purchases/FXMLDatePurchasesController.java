@@ -10,7 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
-import model.hibernatemodels.EntityPurchases;
+import model.Purchase;
 import services.PurchasesServices;
 
 import java.net.URL;
@@ -30,7 +30,7 @@ public class FXMLDatePurchasesController implements Initializable {
     @FXML
     private DatePicker dateBox;
     @FXML
-    private ListView<EntityPurchases> purchaseList;
+    private ListView<Purchase> purchaseList;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -46,7 +46,7 @@ public class FXMLDatePurchasesController implements Initializable {
             alert.showAndWait();
             return;
         }
-        List<EntityPurchases> list = services.findByDate(selectedDate);
+        List<Purchase> list = services.findByDate(selectedDate);
         if (list.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "No purchases were realized on " + selectedDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             alert.showAndWait();
