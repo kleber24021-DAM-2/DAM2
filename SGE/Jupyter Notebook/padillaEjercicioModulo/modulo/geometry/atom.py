@@ -6,7 +6,7 @@ class atom:
         self.y = y
         self.z = z
     
-    def dist(atom2):
+    def dist(self, atom2):
         totalX = (self.x - atom2.x) ** 2
         totalY = (self.y - atom2.y) ** 2
         totalZ = (self.z - atom2.z) ** 2
