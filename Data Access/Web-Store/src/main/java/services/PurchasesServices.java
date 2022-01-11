@@ -13,6 +13,7 @@ import dao.interfaces.DAOReviews;
 import model.Purchase;
 import model.Review;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class PurchasesServices {
         DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
         DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
 
-        List<Review> reviewList = daoReviews.getByPurchaseId(purchase.getId());
+        List<Review> reviewList = daoReviews.getByPurchaseId(purchase.getIdPurchase());
         if (reviewList.isEmpty()){
             daoPurchases.delete(purchase);
             return true;
@@ -51,10 +52,10 @@ public class PurchasesServices {
         DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
 
         Purchase newPurchase = new Purchase();
-        newPurchase.setId(-1);
-        newPurchase.setDate(date);
-        newPurchase.setCustomer(daoCustomers.get(customerId));
-        newPurchase.setItem(daoItems.get(itemId));
+        newPurchase.setIdPurchase(-1);
+        newPurchase.setDate(Date.valueOf(date));
+        newPurchase.setIdCustomer(daoCustomers.get(customerId).getIdCustomer());
+        newPurchase.setIdItem(daoItems.get(itemId).getIdItem());
 
         return dao.save(newPurchase);
     }

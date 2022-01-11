@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.User;
 import model.user.FullUser;
 import model.user.SafeUser;
 import services.UserService;
@@ -43,11 +44,11 @@ public class FXMLLoginController implements Initializable {
     
     public void clickLogin(){
         UserService userService = new UserService();
-        FullUser fullUser = new FullUser(0, fxUser.getText(), passBox.getText());
-        SafeUser returnedUser = userService.checkUserPassword(fullUser);
+        User fullUser = new User(0, fxUser.getText(), passBox.getText());
+        User returnedUser = userService.checkUserPassword(fullUser);
         if (returnedUser!= null){
             principal.setLoggedUser(returnedUser);
-            if (returnedUser.getId() > 0){
+            if (returnedUser.getUserId() > 0){
                 principal.setForCustomer(true);
             }else {
                 principal.setForAdmin(true);

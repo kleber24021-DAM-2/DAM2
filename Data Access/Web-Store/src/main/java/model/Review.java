@@ -1,49 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-import gui.controllers.reviews.Ratings;
+import lombok.Getter;
 
-import java.time.LocalDate;
+import javax.persistence.*;
+import java.sql.Date;
 
-/**
- *
- * @author dam2
- */
-public class Review  {
-
+@Getter
+@Entity
+@Table(name = "REVIEWS", schema = "andrePadilla_WebStore", catalog = "")
+public class Review {
     private int idReview;
-    private Ratings rating;
+    private int rating;
     private String title;
     private String description;
-    private LocalDate date;
-    private Purchase purchase;
+    private Date date;
+    private int idPurchase;
+    private Purchase purchaseByIdPurchase;
 
-
-    public Review(){
-
-    }
-    public Review(int idReview, Ratings rating, String title, String description, LocalDate date, Purchase purchase) {
-        this.idReview = idReview;
-        this.rating = rating;
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.purchase = purchase;
-    }
-
-    public Review(int idReview, int rating, String title, String description, LocalDate date, Purchase purchase) {
-        this.idReview = idReview;
-        this.rating = Ratings.valueOf(rating);
-        this.title = title;
-        this.description = description;
-        this.date = date;
-        this.purchase = purchase;
-    }
-
+    @Id
+    @Column(name = "ID_REVIEW")
     public int getIdReview() {
         return idReview;
     }
@@ -52,14 +27,18 @@ public class Review  {
         this.idReview = idReview;
     }
 
-    public Ratings getRating() {
+    @Basic
+    @Column(name = "RATING")
+    public int getRating() {
         return rating;
     }
 
     public void setRating(int rating) {
-        this.rating = Ratings.valueOf(rating);
+        this.rating = rating;
     }
 
+    @Basic
+    @Column(name = "TITLE")
     public String getTitle() {
         return title;
     }
@@ -68,6 +47,8 @@ public class Review  {
         this.title = title;
     }
 
+    @Basic
+    @Column(name = "DESCRIPTION")
     public String getDescription() {
         return description;
     }
@@ -76,35 +57,61 @@ public class Review  {
         this.description = description;
     }
 
-    public LocalDate getDate() {
+    @Basic
+    @Column(name = "DATE")
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public Purchase getPurchase() {
-        return purchase;
+    @Basic
+    @Column(name = "ID_PURCHASE")
+    public int getIdPurchase() {
+        return idPurchase;
     }
 
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
+    public void setIdPurchase(int idPurchase) {
+        this.idPurchase = idPurchase;
     }
-
-
 
     @Override
-    public String toString() {
-        return "No. " + idReview + "\nRating: " + rating + "\nTitle: " + title + "\nComment: " + description + "\nDate: " + date + "  Purchase no. " + purchase;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Review that = (Review) o;
+
+        if (idReview != that.idReview) return false;
+        if (rating != that.rating) return false;
+        if (idPurchase != that.idPurchase) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+
+        return true;
     }
 
-    public String toStringVisual() {
-        return "No. " + idReview + "  Rating: " + rating + "\nTitle: " + title + "\nComment: " + description + "\nDate: " + date + "\n____________________________________________________________\n";
+    @Override
+    public int hashCode() {
+        int result = idReview;
+        result = 31 * result + rating;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + idPurchase;
+        return result;
     }
 
-    public String toStringTexto() {
-        return idReview + ":" + rating + ":" + title + ":" + description + ":" + date + ":" + ":" + ":" + purchase;
+    @ManyToOne
+    @JoinColumn(name = "ID_PURCHASE", referencedColumnName = "ID_PURCHASE", nullable = false)
+    public Purchase getPurchasesByIdPurchase() {
+        return purchaseByIdPurchase;
     }
 
+    public void setPurchasesByIdPurchase(Purchase purchaseByIdPurchase) {
+        this.purchaseByIdPurchase = purchaseByIdPurchase;
+    }
 }

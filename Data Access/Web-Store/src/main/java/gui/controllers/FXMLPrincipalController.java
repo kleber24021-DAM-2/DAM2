@@ -27,7 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import model.user.SafeUser;
+import model.User;
 import services.ItemsServices;
 
 import java.io.IOException;
@@ -89,7 +89,7 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private MenuBar fxMenuTop;
     // Get y set of the user to use it wherever we need it
-    private SafeUser loggedUser;
+    private User loggedUser;
     // References to other panes to load them and access their controllers
     private AnchorPane login;
     private FXMLLoginController loginController;
@@ -146,11 +146,11 @@ public class FXMLPrincipalController implements Initializable {
         this.fxRoot = fxRoot;
     }
 
-    public SafeUser getLoggedUser() {
+    public User getLoggedUser() {
         return loggedUser;
     }
 
-    public void setLoggedUser(SafeUser loggedUser) {
+    public void setLoggedUser(User loggedUser) {
         this.loggedUser = loggedUser;
     }
 
@@ -534,7 +534,7 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void showUpdateCustomers() {
-        if (getLoggedUser().getId() > 0){
+        if (getLoggedUser().getUserId() > 0){
             updateCostumerUserController.setParent(this);
             updateCostumerUserController.loadUserInfo();
             fxRoot.setCenter(updateCustomerUserPane);

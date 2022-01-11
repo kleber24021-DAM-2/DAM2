@@ -1,5 +1,0 @@
-1;Ryzen 5600;AMD;289.37
-2;I7 9700;Intel;285.62
-3;Vengeance Pro 16GB;Corsair;90.0
-4;RTX 3060;Nvidia;780.0
-5;RX 6600XT;AMD;599.91

@@ -1,20 +1,21 @@
 package dao.interfaces;
 
-import model.user.FullUser;
-import model.user.SafeUser;
+
+
+import model.User;
 
 import java.util.List;
 
 public interface DAOUsers {
-    SafeUser get(int id);
+    User get(int id);
 
-    List<SafeUser> getAll();
+    List<User> getAll();
 
-    SafeUser save(FullUser t);
+    User save(User t);
 
-    void update(FullUser t);
+    void update(User t);
 
-    boolean delete(SafeUser t);
+    boolean delete(User t);
 
-    SafeUser validateUserPassword(FullUser t);
+    User validateUserPassword(User t);
 }
