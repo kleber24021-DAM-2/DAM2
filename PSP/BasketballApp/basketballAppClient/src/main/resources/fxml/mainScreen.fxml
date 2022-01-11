@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.client.gui.controllers.MainScreenController">
+   <top>
+       <MenuBar visible="false" BorderPane.alignment="CENTER">
+           <Menu mnemonicParsing="false" text="Acciones">
+               <MenuItem mnemonicParsing="false" onAction="#showPartidos" text="Ver partidos" />
+               <MenuItem fx:id="menuBtnEquipo" mnemonicParsing="false" onAction="#showEquiposScreen" text="Ver Equipos" visible="false" />
+               <MenuItem fx:id="menuBtnJornada" mnemonicParsing="false" onAction="#showJornadasScreen" text="Ver Jornadas" visible="false" />
+               <MenuItem fx:id="menuBtnUsuarios" mnemonicParsing="false" onAction="#showUsuarios" text="Ver Usuarios" visible="false" />
+               <MenuItem mnemonicParsing="false" onAction="#doLogout" text="Logout" />
+           </Menu>
+       </MenuBar>
+   </top>
+</BorderPane>

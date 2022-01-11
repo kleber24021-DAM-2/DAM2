@@ -1,0 +1,15 @@
+#Database connection config
+path: jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andrePadilla_LigaBaloncesto?useSSL=false
+user: root
+password: quevedo2dam
+driver: com.mysql.cj.jdbc.Driver
+
+#Mail config
+mail_protocol: smtp
+mail_host: smtp.gmail.com
+mail_user: cuentaalumnoquevedo@gmail.com
+mail_password: quevedo2dam
+mail_content_type: text/html
+mail_smtp_port: '587'
+mail_smtp_auth: 'true'
+mail_smtp_starttls_enable: 'true'

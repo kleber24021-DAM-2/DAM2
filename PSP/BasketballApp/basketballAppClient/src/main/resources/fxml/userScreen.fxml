@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.quevedo.client.gui.controllers.UsuariosController">
+   <children>
+      <ListView fx:id="lvUsers" layoutX="42.0" layoutY="95.0" prefHeight="474.0" prefWidth="361.0" />
+      <TextField fx:id="txCorreo" layoutX="528.0" layoutY="168.0" promptText="Correo" />
+      <PasswordField fx:id="txPassword" layoutX="528.0" layoutY="241.0" promptText="Contraseña" />
+      <PasswordField fx:id="txConfirmationPass" layoutX="528.0" layoutY="307.0" promptText="Confirmación" />
+      <ComboBox fx:id="cbUserType" layoutX="528.0" layoutY="377.0" prefWidth="150.0" promptText="Tipo Usuario" />
+      <Button layoutX="577.0" layoutY="475.0" mnemonicParsing="false" onAction="#addUsuario" text="Añadir" />
+      <Label layoutX="42.0" layoutY="43.0" prefHeight="46.0" prefWidth="361.0" text="Usuarios registrados">
+         <font>
+            <Font name="Open Sans ExtraBold" size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
