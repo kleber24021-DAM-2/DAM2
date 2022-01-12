@@ -1,12 +1,14 @@
 package model;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
 
-@Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "REVIEWS", schema = "andrePadilla_WebStore", catalog = "")
 public class Review {
     private int idReview;
@@ -67,29 +69,19 @@ public class Review {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "ID_PURCHASE")
-    public int getIdPurchase() {
-        return idPurchase;
-    }
-
-    public void setIdPurchase(int idPurchase) {
-        this.idPurchase = idPurchase;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Review that = (Review) o;
+        Review review = (Review) o;
 
-        if (idReview != that.idReview) return false;
-        if (rating != that.rating) return false;
-        if (idPurchase != that.idPurchase) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (idReview != review.idReview) return false;
+        if (rating != review.rating) return false;
+        if (idPurchase != review.idPurchase) return false;
+        if (title != null ? !title.equals(review.title) : review.title != null) return false;
+        if (description != null ? !description.equals(review.description) : review.description != null) return false;
+        if (date != null ? !date.equals(review.date) : review.date != null) return false;
 
         return true;
     }
@@ -113,5 +105,18 @@ public class Review {
 
     public void setPurchasesByIdPurchase(Purchase purchaseByIdPurchase) {
         this.purchaseByIdPurchase = purchaseByIdPurchase;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "idReview=" + idReview +
+                ", rating=" + rating +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", idPurchase=" + idPurchase +
+                ", purchaseByIdPurchase=" + purchaseByIdPurchase +
+                '}';
     }
 }

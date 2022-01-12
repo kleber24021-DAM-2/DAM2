@@ -25,9 +25,9 @@ public class FXMLUpdateCostumerController {
         String address = addressBox.getText();
         Customer selectedCustomer = customerListView.getSelectionModel().getSelectedItem();
 
-        if (!(name.isEmpty() || name.isBlank() || phone.isEmpty() || phone.isBlank() || address.isEmpty() || address.isBlank())) {
+        if (!(name.isEmpty() || phone.isEmpty() || address.isEmpty())) {
             try {
-                Customer updatedCustomer = new Customer(selectedCustomer.getIdCustomer(), name, phone, address);
+                Customer updatedCustomer = new Customer(selectedCustomer.getIdCustomer(), name, phone, address, null);
                 customersServices.updateCustomer(updatedCustomer);
                 loadAllLists();
                 clearTextFields();
@@ -51,7 +51,7 @@ public class FXMLUpdateCostumerController {
         Customer selectedCustomer = customerListView.getSelectionModel().getSelectedItem();
         if (selectedCustomer != null){
             nameBox.setText(selectedCustomer.getName());
-            phoneBox.setText(selectedCustomer.getPhone());
+            phoneBox.setText(selectedCustomer.getTelephone());
             addressBox.setText(selectedCustomer.getAddress());
         }
     }

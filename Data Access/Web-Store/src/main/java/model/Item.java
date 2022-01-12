@@ -1,15 +1,13 @@
 package model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "ITEMS", schema = "andrePadilla_WebStore", catalog = "")
 public class Item {
     private int idItem;
@@ -58,16 +56,26 @@ public class Item {
     }
 
     @Override
+    public String toString() {
+        return "Item{" +
+                "idItem=" + idItem +
+                ", name='" + name + '\'' +
+                ", company='" + company + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Item that = (Item) o;
+        Item item = (Item) o;
 
-        if (idItem != that.idItem) return false;
-        if (Double.compare(that.price, price) != 0) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (company != null ? !company.equals(that.company) : that.company != null) return false;
+        if (idItem != item.idItem) return false;
+        if (Double.compare(item.price, price) != 0) return false;
+        if (name != null ? !name.equals(item.name) : item.name != null) return false;
+        if (company != null ? !company.equals(item.company) : item.company != null) return false;
 
         return true;
     }

@@ -54,8 +54,8 @@ public class PurchasesServices {
         Purchase newPurchase = new Purchase();
         newPurchase.setIdPurchase(-1);
         newPurchase.setDate(Date.valueOf(date));
-        newPurchase.setIdCustomer(daoCustomers.get(customerId).getIdCustomer());
-        newPurchase.setIdItem(daoItems.get(itemId).getIdItem());
+//        newPurchase.setIdCustomer(daoCustomers.get(customerId).getIdCustomer());
+//        newPurchase.setIdItem(daoItems.get(itemId).getIdItem());
 
         return dao.save(newPurchase);
     }

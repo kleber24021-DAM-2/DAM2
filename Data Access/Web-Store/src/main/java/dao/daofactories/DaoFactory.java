@@ -39,7 +39,7 @@ public class DaoFactory {
         DAOCustomers dao = null;
         String sourceProp = daoProps.getProperty(DaoConstants.DAO_CUSTOMER_STRING);
         if (DaoConstants.HIBERNATE_STRING.equals(sourceProp)) {
-            dao = new DaoCustomersHibernate();
+            dao = new DaoHibernateCustomers();
         }
         return dao;
     }
@@ -48,7 +48,7 @@ public class DaoFactory {
         DAOItems dao = null;
         String sourceProp = daoProps.getProperty(DaoConstants.DAO_ITEM_STRING);
         if (DaoConstants.HIBERNATE_STRING.equals(sourceProp)) {
-            dao = new DaoItemsHibernate();
+            dao = new DaoHibernateItems();
         }
         return dao;
     }
@@ -56,7 +56,7 @@ public class DaoFactory {
         DAOPurchases dao = null;
         String sourceProp = daoProps.getProperty(DaoConstants.DAO_PURCHASE_STRING);
         if (DaoConstants.HIBERNATE_STRING.equals(sourceProp)) {
-            dao = new DaoPurchasesHibernate();
+            dao = new DaoHibernatePurchases();
         }
         return dao;
     }
@@ -65,7 +65,7 @@ public class DaoFactory {
         DAOReviews dao = null;
         String sourceProp = daoProps.getProperty(DaoConstants.DAO_REVIEW_STRING);
         if (DaoConstants.HIBERNATE_STRING.equals(sourceProp)) {
-            dao = new DaoReviewsHibernate();
+            dao = new DaoHibernateReviews();
         }
         return dao;
     }
@@ -74,7 +74,7 @@ public class DaoFactory {
         DAOUsers dao = null;
         String sourceProp = daoProps.getProperty(DaoConstants.DAO_USER_STRING);
         if (DaoConstants.HIBERNATE_STRING.equals(sourceProp)) {
-            dao = new DaoUserHibernate();
+            dao = new DaoHibernateUsers();
         }
         return dao;
     }

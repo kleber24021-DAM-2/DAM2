@@ -1,15 +1,8 @@
 package model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
-@Getter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "USERS", schema = "andrePadilla_WebStore", catalog = "")
 public class User {
     private int userId;
@@ -52,11 +45,11 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User that = (User) o;
+        User user = (User) o;
 
-        if (userId != that.userId) return false;
-        if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (password != null ? !password.equals(that.password) : that.password != null) return false;
+        if (userId != user.userId) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
 
         return true;
     }
@@ -76,5 +69,14 @@ public class User {
 
     public void setCustomersByUserId(Customer customerByUserId) {
         this.customerByUserId = customerByUserId;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

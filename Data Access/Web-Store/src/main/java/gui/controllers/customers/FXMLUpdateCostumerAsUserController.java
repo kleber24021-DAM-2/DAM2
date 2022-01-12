@@ -24,7 +24,7 @@ public class FXMLUpdateCostumerAsUserController {
         String name = nameBox.getText();
         String phone = phoneBox.getText();
         String address = addressBox.getText();
-        Customer customer = new Customer(parent.getLoggedUser().getUserId(), name, phone, address);
+        Customer customer = new Customer(parent.getLoggedUser().getUserId(), name, phone, address, parent.getLoggedUser());
 
         if (customersServices.updateCustomer(customer)){
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your information has been updated");

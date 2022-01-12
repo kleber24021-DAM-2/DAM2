@@ -1,12 +1,14 @@
 package model;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
 
-@Getter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "PURCHASES", schema = "andrePadilla_WebStore", catalog = "")
 public class Purchase {
     private int idPurchase;
@@ -36,37 +38,17 @@ public class Purchase {
         this.date = date;
     }
 
-    @Basic
-    @Column(name = "ID_CUSTOMER")
-    public int getIdCustomer() {
-        return idCustomer;
-    }
-
-    public void setIdCustomer(int idCustomer) {
-        this.idCustomer = idCustomer;
-    }
-
-    @Basic
-    @Column(name = "ID_ITEM")
-    public int getIdItem() {
-        return idItem;
-    }
-
-    public void setIdItem(int idItem) {
-        this.idItem = idItem;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Purchase that = (Purchase) o;
+        Purchase purchase = (Purchase) o;
 
-        if (idPurchase != that.idPurchase) return false;
-        if (idCustomer != that.idCustomer) return false;
-        if (idItem != that.idItem) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (idPurchase != purchase.idPurchase) return false;
+        if (idCustomer != purchase.idCustomer) return false;
+        if (idItem != purchase.idItem) return false;
+        if (date != null ? !date.equals(purchase.date) : purchase.date != null) return false;
 
         return true;
     }
@@ -98,5 +80,17 @@ public class Purchase {
 
     public void setItemsByIdItem(Item itemByIdItem) {
         this.itemByIdItem = itemByIdItem;
+    }
+
+    @Override
+    public String toString() {
+        return "Purchase{" +
+                "idPurchase=" + idPurchase +
+                ", date=" + date +
+                ", idCustomer=" + idCustomer +
+                ", idItem=" + idItem +
+                ", customerByIdCustomer=" + customerByIdCustomer +
+                ", itemByIdItem=" + itemByIdItem +
+                '}';
     }
 }

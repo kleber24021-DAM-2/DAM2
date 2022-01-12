@@ -1,17 +1,33 @@
 package model;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "CUSTOMERS", schema = "andrePadilla_WebStore", catalog = "")
 public class Customer {
     private int idCustomer;
     private String name;
     private String telephone;
     private String address;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "idCustomer=" + idCustomer +
+                ", name='" + name + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", address='" + address + '\'' +
+                ", userByIdCustomer=" + userByIdCustomer +
+                '}';
+    }
+
+    private User userByIdCustomer;
 
     @Id
     @Column(name = "ID_CUSTOMER")
@@ -58,12 +74,12 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Customer that = (Customer) o;
+        Customer customer = (Customer) o;
 
-        if (idCustomer != that.idCustomer) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (telephone != null ? !telephone.equals(that.telephone) : that.telephone != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (idCustomer != customer.idCustomer) return false;
+        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
+        if (telephone != null ? !telephone.equals(customer.telephone) : customer.telephone != null) return false;
+        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
 
         return true;
     }
@@ -75,5 +91,15 @@ public class Customer {
         result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "ID_CUSTOMER", referencedColumnName = "USER_ID", nullable = false)
+    public User getUsersByIdCustomer() {
+        return userByIdCustomer;
+    }
+
+    public void setUsersByIdCustomer(User userByIdCustomer) {
+        this.userByIdCustomer = userByIdCustomer;
     }
 }
