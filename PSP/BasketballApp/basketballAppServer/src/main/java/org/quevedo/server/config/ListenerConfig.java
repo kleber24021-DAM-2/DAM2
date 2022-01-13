@@ -3,17 +3,14 @@ package org.quevedo.server.config;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
-import org.quevedo.server.dao.utils.DBConnectionPool;
 
 @WebListener
 public class ListenerConfig implements ServletContextListener{
     private final Configuration config;
-    private final DBConnectionPool dbConnectionPool;
 
     @Inject
-    public ListenerConfig(Configuration config, DBConnectionPool dbConnectionPool) {
+    public ListenerConfig(Configuration config) {
         this.config = config;
-        this.dbConnectionPool = dbConnectionPool;
     }
 
     @Override
@@ -25,6 +22,5 @@ public class ListenerConfig implements ServletContextListener{
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         /* This method is called when the servlet Context is undeployed or Application Server shuts down. */
-        dbConnectionPool.closePool();
     }
 }

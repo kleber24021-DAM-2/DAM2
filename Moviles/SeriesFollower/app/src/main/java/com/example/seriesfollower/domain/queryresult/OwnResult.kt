@@ -6,5 +6,6 @@ data class OwnResult(
     val popularity:Double,
     val voteAverage:Double,
     val resultType: ResultType,
-    val mainImage:String
+    val mainImage:String,
+    val isFavorite:Boolean
 )

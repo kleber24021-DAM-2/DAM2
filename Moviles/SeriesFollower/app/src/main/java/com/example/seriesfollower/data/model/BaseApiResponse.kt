@@ -1,7 +1,9 @@
 package com.example.seriesfollower.data.model
 
+import android.util.Log
 import com.example.seriesfollower.data.utils.NetworkResult
 import retrofit2.Response
+import kotlin.math.log
 
 abstract class BaseApiResponse {
     suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): NetworkResult<T> {
@@ -15,6 +17,7 @@ abstract class BaseApiResponse {
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
+            Log.e("myError", e.message.toString())
             return error(e.message ?: e.toString())
         }
     }

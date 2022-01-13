@@ -1,15 +1,19 @@
 package com.example.seriesfollower.data.sources.remote.di
 
+import com.example.seriesfollower.data.DataConsts
 import com.example.seriesfollower.data.sources.remote.ServiceInterceptor
 import com.example.seriesfollower.data.sources.remote.TMDBService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -41,7 +45,7 @@ object NetworkModule {
         moshiConverterFactory: MoshiConverterFactory
     ): Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3")
+            .baseUrl("https://api.themoviedb.org/3/")
             .client(okHttpClient)
             .addConverterFactory(moshiConverterFactory)
             .build()
@@ -52,5 +56,7 @@ object NetworkModule {
     fun provideTMDBService(retrofit: Retrofit): TMDBService =
         retrofit.create(TMDBService::class.java)
 
-
+    @Named(DataConsts.IO_DISPATCHER)
+    @Provides
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

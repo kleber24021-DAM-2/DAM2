@@ -14,27 +14,32 @@ class MoviesSeriesRepository @Inject constructor(
     @Named(DataConsts.IO_DISPATCHER)
     private val ioDispatcher: CoroutineDispatcher
 ) {
-    suspend fun getMovieById(movieId:Int){
-        withContext(ioDispatcher){
+    suspend fun getMovieById(movieId: Int) =
+        withContext(ioDispatcher) {
             remoteDataSource.getMovieById(movieId)
         }
-    }
 
-    suspend fun getMultiByQuery(queryTerm:String, pageNum:Int){
-        withContext(ioDispatcher){
+
+    suspend fun getMultiByQuery(queryTerm: String, pageNum: Int) =
+        withContext(ioDispatcher) {
             remoteDataSource.getMultiByQuery(queryTerm, pageNum)
-        }
-    }
 
-    suspend fun getSeriesById(seriesId:Int){
-        withContext(ioDispatcher){
+        }
+
+    suspend fun getSeriesById(seriesId: Int) =
+        withContext(ioDispatcher) {
             remoteDataSource.getSeriesById(seriesId)
-        }
-    }
 
-    suspend fun getEpisodeById(seriesId:Int, seasonNum:Int, episodeNum:Int){
-        withContext(ioDispatcher){
-            remoteDataSource.getEpisodeById(seriesId,seasonNum, episodeNum)
         }
-    }
+
+    suspend fun getEpisodeById(seriesId: Int, seasonNum: Int, episodeNum: Int) =
+        withContext(ioDispatcher) {
+            remoteDataSource.getEpisodeById(seriesId, seasonNum, episodeNum)
+
+        }
+
+    suspend fun getTrendingResults(page: Int) =
+        withContext(ioDispatcher) {
+            remoteDataSource.getTrendingResults(page)
+        }
 }

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SeriesFollower</string>
+    <string name="favorite_button_description">Favorite Button</string>
+    <string name="loremipsum">LoremIpsum</string>
+    <string name="imageview_movie_description">Cartel principal de la película</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="popular">Popular</string>
+    <string name="buscar">Buscar</string>
+    <string name="favoritos">Favoritos</string>
 </resources>

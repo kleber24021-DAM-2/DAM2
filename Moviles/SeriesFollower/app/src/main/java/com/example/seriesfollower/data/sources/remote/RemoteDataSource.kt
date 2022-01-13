@@ -8,4 +8,5 @@ class RemoteDataSource @Inject constructor(private val moviesService:TMDBService
     suspend fun getMultiByQuery(queryTerm:String, pageNum:Int) = safeApiCall { moviesService.getMultiByQuery(queryTerm, pageNum) }
     suspend fun getSeriesById(seriesId:Int) = safeApiCall { moviesService.getSeriesById(seriesId) }
     suspend fun getEpisodeById(seriesId: Int, numSeason: Int, numEpisode:Int) = safeApiCall { moviesService.getEpisodeById(seriesId, numSeason, numEpisode) }
+    suspend fun getTrendingResults(page:Int) = safeApiCall { moviesService.getTrendingResults(page) }
 }

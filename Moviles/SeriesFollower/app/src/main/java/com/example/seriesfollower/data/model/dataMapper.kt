@@ -1,5 +1,6 @@
-package com.example.seriesfollower.data
+package com.example.seriesfollower.data.model
 
+import com.example.seriesfollower.data.DataConsts
 import com.example.seriesfollower.data.model.movie.FullMovies
 import com.example.seriesfollower.data.model.query.QueryResult
 import com.example.seriesfollower.data.model.series.general.SeriesFull
@@ -10,7 +11,7 @@ import com.example.seriesfollower.domain.queryresult.ResultType
 import com.example.seriesfollower.domain.series.general.OwnSeries
 import java.time.LocalDate
 
-class DataMappers {
+
     fun FullMovies.toOwnModel(): OwnMovie{
         return OwnMovie(
             id,
@@ -36,20 +37,32 @@ class DataMappers {
         )
     }
 
-    fun QueryResult.toOwnResult(): QueryInfo{
+    fun QueryResult.toQueryInfo(): QueryInfo{
         return QueryInfo(
             page,
             totalPages,
             totalResults,
             results.map {
+                val mediaType:ResultType
+                val title:String
+                if (it.mediaType == "tv"){
+                    mediaType = ResultType.TV
+                    title = it.name?:"Not found"
+                }else{
+                    mediaType = ResultType.MOVIE
+                    title = it.title?:"Not found"
+                }
+
                 OwnResult(
                     it.id,
-                    it.title,
-                    it.popularity,
-                    it.voteAverage,
-                    ResultType.valueOf(it.mediaType),
-                    getImageUrl(it.posterPath)
+                    title,
+                    it.popularity?:-1.0,
+                    it.voteAverage?:-1.0,
+                    mediaType,
+                    getImageUrl(it.posterPath),
+                    false
                 )
+//                TODO("Need to implement to check if is favorite")
             }
         )
     }
@@ -76,4 +89,3 @@ class DataMappers {
     private fun getImageUrl(path: String): String{
         return DataConsts.IMAGE_URL + path
     }
-}
