@@ -5,6 +5,7 @@
  */
 package dao.interfaces;
 
+
 import model.Customer;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface DAOCustomers {
     Customer get(int id);
      
     List<Customer> getAll();
-     
+
     Customer save(Customer t);
      
     boolean update(Customer t);

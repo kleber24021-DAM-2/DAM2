@@ -1,38 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * @author dam2
- */
+import javax.persistence.*;
 
-
-public class Customer implements Comparable<Customer> {
-
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "CUSTOMERS", schema = "andrePadilla_WebStore", catalog = "")
+public class Customer {
     private int idCustomer;
     private String name;
-    private String phone;
+    private String telephone;
     private String address;
-    private List<Review> reviews;
 
-    public Customer(){
-
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "idCustomer=" + idCustomer +
+                ", name='" + name + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", address='" + address + '\'' +
+                ", userByIdCustomer=" + userByIdCustomer +
+                '}';
     }
-    public Customer(int idCustomer, String name, String phone, String address) {
-        this.idCustomer = idCustomer;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        reviews = new ArrayList<>();
-    }
 
+    private User userByIdCustomer;
+
+    @Id
+    @Column(name = "ID_CUSTOMER")
     public int getIdCustomer() {
         return idCustomer;
     }
@@ -41,6 +39,8 @@ public class Customer implements Comparable<Customer> {
         this.idCustomer = idCustomer;
     }
 
+    @Basic
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }
@@ -49,22 +49,18 @@ public class Customer implements Comparable<Customer> {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    @Basic
+    @Column(name = "TELEPHONE")
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
+    @Basic
+    @Column(name = "ADDRESS")
     public String getAddress() {
         return address;
     }
@@ -73,64 +69,37 @@ public class Customer implements Comparable<Customer> {
         this.address = address;
     }
 
-    public void addReview(Review review) {
-        reviews.add(review);
-    }
-
-    public String toStringShort() {
-        return idCustomer + " - " + name;
-    }
-
-    public String toStringTexto() {
-        return idCustomer + "/" + name + "/" + phone + "/" + address + "/" + reviews;
-    }
-
-    public String toStringReviews() {
-        List<String> rev = new ArrayList<>();
-
-        if (reviews != null) {
-            for (int i = 0; i < reviews.size(); i++) {
-                rev.add(reviews.get(i).toStringVisual());
-            }
-        }
-
-
-        return "ID: " + idCustomer + "  Name: " + name
-                + "\nPhone: " + phone + "  Address: " + address
-                + "\n\n======       Reviews done by this client:      ======\n\n" + rev;
-    }
-
     @Override
-    public String toString() {
-        return "ID: " + idCustomer + "  Name: " + name + "  Phone: " + phone + "  Address: " + address;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Customer customer = (Customer) o;
+
+        if (idCustomer != customer.idCustomer) return false;
+        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
+        if (telephone != null ? !telephone.equals(customer.telephone) : customer.telephone != null) return false;
+        if (address != null ? !address.equals(customer.address) : customer.address != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return -1;
+        int result = idCustomer;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        return result;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Customer other = (Customer) obj;
-        if (this.idCustomer != other.idCustomer) {
-            return false;
-        }
-        return Objects.equals(this.name, other.name);
+    @OneToOne
+    @JoinColumn(name = "ID_CUSTOMER", referencedColumnName = "USER_ID", nullable = false)
+    public User getUsersByIdCustomer() {
+        return userByIdCustomer;
     }
 
-
-    @Override
-    public int compareTo(Customer o) {
-        return Integer.compare((this.idCustomer), o.getIdCustomer());
+    public void setUsersByIdCustomer(User userByIdCustomer) {
+        this.userByIdCustomer = userByIdCustomer;
     }
 }

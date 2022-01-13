@@ -6,7 +6,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import model.Item;
 import services.ItemsServices;
-import services.PurchasesServices;
 
 import java.util.Optional;
 import java.util.logging.Level;

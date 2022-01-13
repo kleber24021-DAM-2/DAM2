@@ -31,9 +31,9 @@ public class FXMLUpdateReviewControllers {
         Ratings rating = ratingBox.getSelectionModel().getSelectedItem();
         Review review = reviewsBox.getSelectionModel().getSelectedItem();
 
-        if (!(comment.isEmpty() || comment.isBlank() || title.isEmpty() || title.isBlank())){
+        if (!(comment.isEmpty() || title.isEmpty())){
             if (purchase != null && rating != null && review != null){
-                reviewsServices.updateReview(new Review(review.getIdReview(),rating,title, comment,review.getDate(), purchase));
+                reviewsServices.updateReview(new Review(review.getIdReview(),rating.getValue(),title, comment,review.getDate(), purchase.getIdPurchase(), purchase));
                 loadAllLists();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Update review");
                 alert.showAndWait();
@@ -51,8 +51,8 @@ public class FXMLUpdateReviewControllers {
         ReviewsServices reviewsServices = new ReviewsServices();
         PurchasesServices purchasesServices = new PurchasesServices();
 
-        reviewsBox.getItems().setAll(reviewsServices.getReviewsByCustomer(parent.getLoggedUser().getId()));
-        purchaseBox.getItems().setAll(purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getId()));
+        reviewsBox.getItems().setAll(reviewsServices.getReviewsByCustomer(parent.getLoggedUser().getUserId()));
+        purchaseBox.getItems().setAll(purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getUserId()));
         ratingBox.getItems().setAll(Ratings.values());
     }
 

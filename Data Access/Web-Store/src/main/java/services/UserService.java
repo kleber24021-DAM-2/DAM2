@@ -2,16 +2,16 @@ package services;
 
 import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOUsers;
-import model.user.FullUser;
-import model.user.SafeUser;
+import model.User;
+
 
 public class UserService {
-    public SafeUser checkUserPassword(FullUser fullUser){
+    public User checkUserPassword(User fullUser){
         DAOUsers daoUsers = DaoFactory.getInstance().getDaoUsers();
         return daoUsers.validateUserPassword(fullUser);
     }
 
-    public void updateUser(FullUser updatedUser) {
+    public void updateUser(User updatedUser) {
         DAOUsers daoUsers = DaoFactory.getInstance().getDaoUsers();
         daoUsers.update(updatedUser);
     }

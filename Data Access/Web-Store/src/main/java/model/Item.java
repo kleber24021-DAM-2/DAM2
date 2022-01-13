@@ -1,42 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-/**
- *
- * @author Laura
- */
-public class Item implements Comparable<Item> {
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "ITEMS", schema = "andrePadilla_WebStore", catalog = "")
+public class Item {
     private int idItem;
     private String name;
     private String company;
     private double price;
 
-    public Item(){
-
-    }
-
-    public Item(int idItem, String name, String company, double price) {
-        this.idItem = idItem;
-        this.name = name;
-        this.company = company;
-        this.price = price;
-    }
-
-    public Item(String stringFromFile){
-        String[] elementsOfItem = stringFromFile.split(";");
-            this.idItem = Integer.parseInt(elementsOfItem[0]);
-            this.name = elementsOfItem[1];
-            this.company = elementsOfItem[2];
-            this.price = Double.parseDouble(elementsOfItem[3]);
-    }
-
-    
-
+    @Id
+    @Column(name = "ID_ITEM")
     public int getIdItem() {
         return idItem;
     }
@@ -45,6 +25,8 @@ public class Item implements Comparable<Item> {
         this.idItem = idItem;
     }
 
+    @Basic
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }
@@ -53,6 +35,8 @@ public class Item implements Comparable<Item> {
         this.name = name;
     }
 
+    @Basic
+    @Column(name = "COMPANY")
     public String getCompany() {
         return company;
     }
@@ -61,6 +45,8 @@ public class Item implements Comparable<Item> {
         this.company = company;
     }
 
+    @Basic
+    @Column(name = "PRICE")
     public double getPrice() {
         return price;
     }
@@ -71,15 +57,12 @@ public class Item implements Comparable<Item> {
 
     @Override
     public String toString() {
-        return idItem + " " + name + " " + company + " " + price + "€";
-    }
-    
-    public String toStringTextFile() {
-        return idItem + ";" + name + ";" + company + ";" + price;
-    }
-
-    public String toStringVisual() {
-        return "ID: " + idItem + "  Name: " + name + "  Company: " + company + " Price: " + price;
+        return "Item{" +
+                "idItem=" + idItem +
+                ", name='" + name + '\'' +
+                ", company='" + company + '\'' +
+                ", price=" + price +
+                '}';
     }
 
     @Override
@@ -89,13 +72,23 @@ public class Item implements Comparable<Item> {
 
         Item item = (Item) o;
 
-        return idItem == item.idItem;
+        if (idItem != item.idItem) return false;
+        if (Double.compare(item.price, price) != 0) return false;
+        if (name != null ? !name.equals(item.name) : item.name != null) return false;
+        if (company != null ? !company.equals(item.company) : item.company != null) return false;
+
+        return true;
     }
 
-
-
     @Override
-    public int compareTo(Item o) {
-        return Integer.compare(this.idItem, o.getIdItem());
+    public int hashCode() {
+        int result;
+        long temp;
+        result = idItem;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (company != null ? company.hashCode() : 0);
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

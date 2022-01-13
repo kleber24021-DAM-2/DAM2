@@ -15,6 +15,7 @@ import services.PurchasesServices;
 import services.ReviewsServices;
 
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -39,7 +40,7 @@ public class FXMLAddReviewController implements Initializable {
 
     public void loadPurchases() {
         PurchasesServices purchasesServices = new PurchasesServices();
-        purchaseBox.getItems().setAll(purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getId()));
+        purchaseBox.getItems().setAll(purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getUserId()));
     }
 
     @FXML
@@ -48,7 +49,7 @@ public class FXMLAddReviewController implements Initializable {
         Purchase purchase = purchaseBox.getSelectionModel().getSelectedItem();
         Ratings rating = ratingBox.getSelectionModel().getSelectedItem();
         if (purchase != null && rating != null){
-            Review review = new Review(-1, rating, titleBox.getText(), textBox.getText(), LocalDate.now(), purchase);
+            Review review = new Review(-1, rating.getValue(), titleBox.getText(), textBox.getText(), Date.valueOf(LocalDate.now()), purchase.getIdPurchase(), purchase);
             reviewsServices.addReview(review);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Added review");
             alert.showAndWait();

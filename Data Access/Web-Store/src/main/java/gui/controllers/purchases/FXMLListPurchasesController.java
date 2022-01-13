@@ -15,7 +15,7 @@ public class FXMLListPurchasesController {
 
     public void chargeList() {
         PurchasesServices purchasesServices = new PurchasesServices();
-        int loggedUserId = parent.getLoggedUser().getId();
+        int loggedUserId = parent.getLoggedUser().getUserId();
         List<Purchase> purchases;
         if (loggedUserId <= 0) {
             purchases = purchasesServices.getAllPurchases();

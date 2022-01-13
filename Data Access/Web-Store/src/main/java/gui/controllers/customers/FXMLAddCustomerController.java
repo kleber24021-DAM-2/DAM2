@@ -43,7 +43,7 @@ public class FXMLAddCustomerController implements Initializable {
         String name = nameBox.getText();
         String phone = phoneBox.getText();
         String address = addressBox.getText();
-        Customer savedCustomer = services.addCustomer(new Customer(-1, name, phone, address));
+        Customer savedCustomer = services.addCustomer(new Customer(-1, name, phone, address, null));
         if (savedCustomer != null && savedCustomer.getIdCustomer()!= -1){
             customerListView.getItems().add(savedCustomer);
             clearAll();

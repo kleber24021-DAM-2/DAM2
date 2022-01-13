@@ -12,6 +12,7 @@ import services.CustomersServices;
 import services.ItemsServices;
 import services.PurchasesServices;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class FXMLUpdatePurchasesController {
@@ -34,7 +35,7 @@ public class FXMLUpdatePurchasesController {
         Customer customer = customerBox.getSelectionModel().getSelectedItem();
 
         if (purchaseToUpdate != null && itemToPurchase != null && localDate != null && customer != null){
-            Purchase updatedPurchase = new Purchase(purchaseToUpdate.getId(), localDate, customer,itemToPurchase);
+            Purchase updatedPurchase = new Purchase(purchaseToUpdate.getIdPurchase(), Date.valueOf(localDate), customer.getIdCustomer(),itemToPurchase.getIdItem(), customer, itemToPurchase);
             purchasesServices .updatePurchase(updatedPurchase);
             loadAllLists();
         }else {

@@ -39,7 +39,7 @@ public class FXMLAddItemController implements Initializable {
             String itemCompany = companyBox.getText();
             double itemPrice = Double.parseDouble(priceBox.getText().replace(",","."));
 
-            if (!(itemName.isEmpty() || itemName.isBlank() || itemCompany.isBlank() || itemCompany.isEmpty())) {
+            if (!(itemName.isEmpty() ||itemCompany.isEmpty())) {
                 Item addedItem = itemsServices.addItem(itemName, itemCompany, itemPrice);
                 itemList.getItems().add(addedItem);
                 clearAll();

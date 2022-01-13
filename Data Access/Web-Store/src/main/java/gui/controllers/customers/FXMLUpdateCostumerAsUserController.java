@@ -24,7 +24,7 @@ public class FXMLUpdateCostumerAsUserController {
         String name = nameBox.getText();
         String phone = phoneBox.getText();
         String address = addressBox.getText();
-        Customer customer = new Customer(parent.getLoggedUser().getId(), name, phone, address);
+        Customer customer = new Customer(parent.getLoggedUser().getUserId(), name, phone, address, parent.getLoggedUser());
 
         if (customersServices.updateCustomer(customer)){
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your information has been updated");
@@ -37,9 +37,9 @@ public class FXMLUpdateCostumerAsUserController {
 
     public void loadUserInfo(){
         CustomersServices customersServices = new CustomersServices();
-        Customer loggedCustomer = customersServices.searchById(parent.getLoggedUser().getId());
+        Customer loggedCustomer = customersServices.searchById(parent.getLoggedUser().getUserId());
         nameBox.setText(loggedCustomer.getName());
-        phoneBox.setText(loggedCustomer.getPhone());
+        phoneBox.setText(loggedCustomer.getTelephone());
         addressBox.setText(loggedCustomer.getAddress());
     }
 

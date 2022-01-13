@@ -4,8 +4,6 @@ import gui.controllers.FXMLPrincipalController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.user.FullUser;
-import services.UserService;
 
 public class FXMLUpdatePassword {
 
@@ -20,15 +18,7 @@ public class FXMLUpdatePassword {
 
     @FXML
     private void updatePassword() {
-        UserService userService = new UserService();
-        FullUser previousUser = new FullUser(parent.getLoggedUser().getId(), parent.getLoggedUser().getUsername(), previousePassword.getText());
-        if (userService.checkUserPassword(previousUser) != null){
-            FullUser updatedUser = new FullUser(parent.getLoggedUser().getId(), parent.getLoggedUser().getUsername(), newPassword.getText());
-            userService.updateUser(updatedUser);
-            errorBox.setText("Password updated");
-        }else {
-            errorBox.setText("The actual password doesnt match");
-        }
+        //TODO
     }
 
     public void setParent(FXMLPrincipalController parent) {
