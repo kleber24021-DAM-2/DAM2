@@ -9,7 +9,7 @@ import com.example.seriesfollower.databinding.FragmentFavoritesBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentFavorites : Fragment() {
+class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null
     private val binding get() = _binding!!

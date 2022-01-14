@@ -1,4 +1,4 @@
-package com.example.seriesfollower.data.model.series.episode
+package com.example.seriesfollower.data.model.series.season
 
 
 import com.squareup.moshi.Json
@@ -6,6 +6,6 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Images(
-    @Json(name = "stills")
-    val stills: List<Still>
+    @Json(name = "posters")
+    val posters: List<Poster>
 )

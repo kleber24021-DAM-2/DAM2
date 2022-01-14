@@ -8,4 +8,6 @@
     <string name="popular">Popular</string>
     <string name="buscar">Buscar</string>
     <string name="favoritos">Favoritos</string>
+    <string name="title">Title</string>
+    <string name="sinopsis">Sinopsis</string>
 </resources>

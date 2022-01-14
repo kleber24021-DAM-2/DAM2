@@ -1,11 +1,11 @@
-package com.example.seriesfollower.data.model.series.episode
+package com.example.seriesfollower.data.model.series.season
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Still(
+data class Poster(
     @Json(name = "aspect_ratio")
     val aspectRatio: Double,
     @Json(name = "file_path")
@@ -13,7 +13,7 @@ data class Still(
     @Json(name = "height")
     val height: Int,
     @Json(name = "iso_639_1")
-    val iso6391: Any,
+    val iso6391: String,
     @Json(name = "vote_average")
     val voteAverage: Double,
     @Json(name = "vote_count")

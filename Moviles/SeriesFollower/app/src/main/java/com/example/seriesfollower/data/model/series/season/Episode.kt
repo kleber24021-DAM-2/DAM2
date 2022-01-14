@@ -1,11 +1,11 @@
-package com.example.seriesfollower.data.model.series.episode
+package com.example.seriesfollower.data.model.series.season
 
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SeriesEpisodeFull(
+data class Episode(
     @Json(name = "air_date")
     val airDate: String,
     @Json(name = "crew")
@@ -16,8 +16,6 @@ data class SeriesEpisodeFull(
     val guestStars: List<GuestStar>,
     @Json(name = "id")
     val id: Int,
-    @Json(name = "images")
-    val images: Images,
     @Json(name = "name")
     val name: String,
     @Json(name = "overview")
@@ -28,8 +26,6 @@ data class SeriesEpisodeFull(
     val seasonNumber: Int,
     @Json(name = "still_path")
     val stillPath: String,
-    @Json(name = "videos")
-    val videos: Videos,
     @Json(name = "vote_average")
     val voteAverage: Double,
     @Json(name = "vote_count")

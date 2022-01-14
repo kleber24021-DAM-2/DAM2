@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.seriesfollower.databinding.FragmentPopularBinding
+import com.example.seriesfollower.domain.queryresult.OwnResult
+import com.example.seriesfollower.domain.queryresult.ResultType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +42,10 @@ class PopularFragment : Fragment() {
                 override fun makeFavorite(movieId: Int) {
                     TODO("Not yet implemented")
                 }
+
+                override fun showResultDetails(item: OwnResult) {
+                    showItemDetails(item)
+                }
             })
         with(binding.rvMovies) {
             layoutManager = GridLayoutManager(activity, 2)
@@ -55,7 +63,7 @@ class PopularFragment : Fragment() {
             Toast.makeText(binding.root.context, error, Toast.LENGTH_SHORT).show()
         })
         viewModel.getTrendingResults(1)
-        binding.rvMovies.addOnScrollListener(object: RVPseudoPaginator(binding.rvMovies){
+        binding.rvMovies.addOnScrollListener(object : RVPseudoPaginator(binding.rvMovies) {
             override val isLastPage: Boolean
                 get() = actualPage == limite
 
@@ -64,6 +72,15 @@ class PopularFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun showItemDetails(item: OwnResult) {
+        val action = if (item.resultType == ResultType.MOVIE) {
+            PopularFragmentDirections.actionPopularFragmentToMovieDetailFragment(item.id)
+        } else {
+            PopularFragmentDirections.actionPopularFragmentToSeriesDetailFragment(item.id)
+        }
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

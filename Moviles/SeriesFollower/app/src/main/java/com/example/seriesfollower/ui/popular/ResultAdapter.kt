@@ -15,15 +15,16 @@ import com.example.seriesfollower.domain.queryresult.OwnResult
 
 class ResultAdapter(
     val context:Context,
-    val actions: OwnResultActions
+    private val actions: OwnResultActions
 ) : ListAdapter<OwnResult, ResultAdapter.ResultViewHolder>(DiffCallback()){
     interface OwnResultActions{
         fun makeFavorite(movieId:Int)
+        fun showResultDetails(item: OwnResult)
     }
     inner class ResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ViewResultBinding.bind(itemView)
 
-        fun bind(item: OwnResult) {
+        fun bind(item: OwnResult, actions: OwnResultActions) {
             with(binding) {
                 Glide.with(itemView)
                     .load(item.mainImage)
@@ -32,6 +33,12 @@ class ResultAdapter(
                     .error(R.drawable.outline_error_outline_24)
                     .into(imageViewMainImage)
                 tvTitle.text = item.title
+                imageButton.setOnClickListener{
+                    actions.makeFavorite(item.id)
+                }
+                imageViewMainImage.setOnClickListener{
+                    actions.showResultDetails(item)
+                }
             }
         }
     }
@@ -46,7 +53,7 @@ class ResultAdapter(
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
         with(holder){
             val item = getItem(position)
-            bind(item)
+            bind(item, actions)
         }
     }
 

@@ -32,12 +32,6 @@ class MoviesSeriesRepository @Inject constructor(
 
         }
 
-    suspend fun getEpisodeById(seriesId: Int, seasonNum: Int, episodeNum: Int) =
-        withContext(ioDispatcher) {
-            remoteDataSource.getEpisodeById(seriesId, seasonNum, episodeNum)
-
-        }
-
     suspend fun getTrendingResults(page: Int) =
         withContext(ioDispatcher) {
             remoteDataSource.getTrendingResults(page)
