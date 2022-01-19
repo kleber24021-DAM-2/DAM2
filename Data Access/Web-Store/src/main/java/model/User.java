@@ -1,6 +1,15 @@
 package model;
 
+import dao.dao_implementations.SqlQueries;
+
 import javax.persistence.*;
+
+
+@NamedQuery(
+        name = "get_user_by_username",
+        query = "select c from User c where c.username = :username"
+)
+
 
 @Entity
 @Table(name = "USERS", schema = "andrePadilla_WebStore", catalog = "")
@@ -49,9 +58,7 @@ public class User {
 
         if (userId != user.userId) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-
-        return true;
+        return password != null ? password.equals(user.password) : user.password == null;
     }
 
     @Override

@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_popular">
         <action
             android:id="@+id/action_popularFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_popularFragment_to_fragmentFavorites"
             app:destination="@id/fragmentFavorites" />
@@ -21,7 +22,7 @@
             app:destination="@id/seriesDetailFragment" />
         <action
             android:id="@+id/action_popularFragment_to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            app:destination="@id/movieDetailFragment"/>
         <action
             android:id="@+id/action_popularFragment_to_fragmentFavorites2"
             app:destination="@id/fragmentFavorites" />
@@ -53,7 +54,7 @@
         android:name="com.example.seriesfollower.ui.movie.MovieDetailFragment"
         android:label="fragment_movie_detail"
         tools:layout="@layout/fragment_movie_detail" >
-        <argument android:name="MovieId"
+        <argument android:name="movieId"
             app:argType="integer" />
     </fragment>
     <fragment
@@ -62,7 +63,7 @@
         android:label="fragment_series_detail"
         tools:layout="@layout/fragment_series_detail" >
         <argument
-            android:name="SeriesId"
+            android:name="seriesId"
             app:argType="integer" />
     </fragment>
 </navigation>

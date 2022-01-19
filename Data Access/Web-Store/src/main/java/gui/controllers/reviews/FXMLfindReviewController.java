@@ -5,18 +5,15 @@
  */
 package gui.controllers.reviews;
 
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import model.Item;
 import model.Review;
-import services.ItemsServices;
-import services.ReviewsServices;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -31,20 +28,20 @@ public class FXMLfindReviewController implements Initializable {
     private ComboBox<Item> itemBox;
 
     public void loadItems() {
-        ItemsServices itemsServices = new ItemsServices();
-        itemBox.getItems().setAll(itemsServices.getAllItems());
+//        ItemsServices itemsServices = new ItemsServices();
+//        itemBox.getItems().setAll(itemsServices.getAllItems());
     }
 
     public void searchByItem() {
-        ReviewsServices reviewsServices = new ReviewsServices();
-        Item itemToSearch = itemBox.getSelectionModel().getSelectedItem();
-        if (itemToSearch != null){
-            List<Review> searchResult = reviewsServices.searchByItem(itemToSearch.getIdItem());
-            reviewList.getItems().setAll(searchResult);
-        }else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please, select an item to run the search");
-            alert.showAndWait();
-        }
+//        ReviewsServices reviewsServices = new ReviewsServices();
+//        Item itemToSearch = itemBox.getSelectionModel().getSelectedItem();
+//        if (itemToSearch != null){
+//            List<Review> searchResult = reviewsServices.searchByItem(itemToSearch.getIdItem());
+//            reviewList.getItems().setAll(searchResult);
+//        }else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR, "Please, select an item to run the search");
+//            alert.showAndWait();
+//        }
     }
 
     /**
@@ -52,7 +49,6 @@ public class FXMLfindReviewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadItems();
     }
 
 }

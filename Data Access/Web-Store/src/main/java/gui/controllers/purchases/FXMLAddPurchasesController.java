@@ -14,12 +14,8 @@ import javafx.scene.control.ListView;
 import model.Customer;
 import model.Item;
 import model.Purchase;
-import services.CustomersServices;
-import services.ItemsServices;
-import services.PurchasesServices;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -42,35 +38,35 @@ public class FXMLAddPurchasesController implements Initializable {
     
     public void load()
     {
-        loadCustomersList();
-        loadItemsList();
-        loadPurchasesList();
+//        loadCustomersList();
+//        loadItemsList();
+//        loadPurchasesList();
     }
     
     public void loadPurchasesList() {
-        PurchasesServices services = new PurchasesServices();
-        List<Purchase> purchasesList = services.getAllPurchases();
-        purchaseList.getItems().setAll(purchasesList);
+//        PurchasesServices services = new PurchasesServices();
+//        List<Purchase> purchasesList = services.getAllPurchases();
+//        purchaseList.getItems().setAll(purchasesList);
     }
 
     public void loadItemsList() {
-        ItemsServices services = new ItemsServices();
-        List<Item> itemList = services.getAllItems();
-        itemBox.getItems().setAll(itemList);
+//        ItemsServices services = new ItemsServices();
+//        List<Item> itemList = services.getAllItems();
+//        itemBox.getItems().setAll(itemList);
     }
 
     public void loadCustomersList() {
-        CustomersServices service = new CustomersServices();
-        List<Customer> customerList = service.getAllCustomers();
-        customerBox.getItems().setAll(customerList);
+//        CustomersServices service = new CustomersServices();
+//        List<Customer> customerList = service.getAllCustomers();
+//        customerBox.getItems().setAll(customerList);
     }
 
     public void addPurchase() {
-        PurchasesServices service = new PurchasesServices();
-        Purchase addedPurchase = service.addPurchase(customerBox.getSelectionModel().getSelectedItem().getIdCustomer(),
-                itemBox.getSelectionModel().getSelectedItem().getIdItem(),
-                dateBox.getValue());
-        purchaseList.getItems().add(addedPurchase);
+//        PurchasesServices service = new PurchasesServices();
+//        Purchase addedPurchase = service.addPurchase(customerBox.getSelectionModel().getSelectedItem().getIdCustomer(),
+//                itemBox.getSelectionModel().getSelectedItem().getIdItem(),
+//                dateBox.getValue());
+//        purchaseList.getItems().add(addedPurchase);
     }
 
     /**
@@ -78,6 +74,5 @@ public class FXMLAddPurchasesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Not needed. Imposed by exercise
     }
 }

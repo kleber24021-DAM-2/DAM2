@@ -21,11 +21,11 @@ import javax.inject.Singleton
 object NetworkModule {
     @Singleton
     @Provides
-    fun provideServiceInterceptor() : ServiceInterceptor = ServiceInterceptor()
+    fun provideServiceInterceptor(): ServiceInterceptor = ServiceInterceptor()
 
     @Singleton
     @Provides
-    fun provideHttpClient(serviceInterceptor: ServiceInterceptor): OkHttpClient{
+    fun provideHttpClient(serviceInterceptor: ServiceInterceptor): OkHttpClient {
         return OkHttpClient
             .Builder()
             .readTimeout(15, TimeUnit.SECONDS)
@@ -43,9 +43,9 @@ object NetworkModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         moshiConverterFactory: MoshiConverterFactory
-    ): Retrofit{
+    ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(DataConsts.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(moshiConverterFactory)
             .build()

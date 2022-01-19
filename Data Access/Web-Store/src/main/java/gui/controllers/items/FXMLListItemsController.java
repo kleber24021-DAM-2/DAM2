@@ -24,7 +24,7 @@ public class FXMLListItemsController implements Initializable {
     private ListView<Item> itemsList;
 
     public void loadItemsList() {
-        itemsList.getItems().setAll(itemsService.getAllItems());
+//        itemsList.getItems().setAll(itemsService.getAllItems());
     }
 
     /**

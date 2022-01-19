@@ -10,9 +10,4 @@ public class UserService {
         DAOUsers daoUsers = DaoFactory.getInstance().getDaoUsers();
         return daoUsers.validateUserPassword(fullUser);
     }
-
-    public void updateUser(User updatedUser) {
-        DAOUsers daoUsers = DaoFactory.getInstance().getDaoUsers();
-        daoUsers.update(updatedUser);
-    }
 }

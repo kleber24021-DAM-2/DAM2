@@ -4,17 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.seriesfollower.data.model.toQueryInfo
 import com.example.seriesfollower.data.utils.NetworkResult
-import com.example.seriesfollower.domain.queryresult.QueryInfo
+import com.example.seriesfollower.domain.model.queryresult.QueryInfo
+import com.example.seriesfollower.domain.usecases.GetTrendingResults
 import com.example.seriesfollower.ui.UserMessages
-import com.example.seriesfollower.usecases.GetTrendingResults
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TrendingViewModel @Inject constructor(private val getTrendingResults: GetTrendingResults) :
+class TrendingViewModel @Inject constructor(
+    private val getTrendingResults: GetTrendingResults
+) :
     ViewModel() {
     private val _results = MutableLiveData<QueryInfo>()
     val results: LiveData<QueryInfo> get() = _results
@@ -24,16 +25,19 @@ class TrendingViewModel @Inject constructor(private val getTrendingResults: GetT
 
     fun getTrendingResults(page: Int) {
         viewModelScope.launch {
-            val result = getTrendingResults.invoke(page)
 
-            when (result) {
+            when (val result = getTrendingResults.invoke(page)) {
                 is NetworkResult.Error -> _error.postValue(
                     result.message ?: UserMessages.UNEXPECTED_DB_ERROR
                 )
-                is NetworkResult.Success -> _results.postValue(
-                    result.data!!.toQueryInfo()
-                )
-                is NetworkResult.Loading -> _error.postValue(result.message?:"Loading")
+                is NetworkResult.Success -> result.data.let { queryInfo ->
+                    if (queryInfo == null) {
+                        _error.postValue(UserMessages.UNEXPECTED_DB_ERROR)
+                    } else {
+                        _results.postValue(queryInfo)
+                    }
+                }
+                is NetworkResult.Loading -> _error.postValue(result.message ?: UserMessages.LOADING)
             }
         }
     }

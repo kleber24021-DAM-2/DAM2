@@ -91,7 +91,7 @@ public class FXMLPrincipalController implements Initializable {
     // Get y set of the user to use it wherever we need it
     private User loggedUser;
     // References to other panes to load them and access their controllers
-    private AnchorPane login;
+    private AnchorPane loginPane;
     private FXMLLoginController loginController;
     private AnchorPane welcome;
     private FXMLWelcomeController welcomeController;
@@ -159,7 +159,7 @@ public class FXMLPrincipalController implements Initializable {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource(
                             "/fxml/users/FXMLLogin.fxml"));
-            login = loaderMenu.load();
+            loginPane = loaderMenu.load();
             loginController
                     = loaderMenu.getController();
 
@@ -458,7 +458,7 @@ public class FXMLPrincipalController implements Initializable {
         loggedUser = null;
         setForAdmin(false);
         setForCustomer(false);
-        fxRoot.setCenter(login);
+        fxRoot.setCenter(loginPane);
         fxMenuTop.setVisible(false);
     }
 
@@ -637,7 +637,6 @@ public class FXMLPrincipalController implements Initializable {
         menuPurchaseDelete.setDisable(isCustomer);
         menuPurchaseUpdate.setDisable(isCustomer);
         menuReviewDelete.setDisable(isCustomer);
-        //TODO
     }
 
     public void setForAdmin(boolean isAdmin){

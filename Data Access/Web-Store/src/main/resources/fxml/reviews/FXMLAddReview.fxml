@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.review.FXMLAddReviewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.reviews.FXMLAddReviewController">
    <children>
       <Button layoutX="327.0" layoutY="350.0" mnemonicParsing="false" onAction="#addReview" prefHeight="25.0" prefWidth="181.0" text="Send review" />
       <Label layoutX="330.0" layoutY="93.0" text="Item rating (*)" />

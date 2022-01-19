@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customer.FXMLAddCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customers.FXMLAddCustomerController">
    <children>
       <ListView fx:id="customerListView" layoutX="29.0" layoutY="89.0" prefHeight="280.0" prefWidth="370.0" />
       <TextField fx:id="nameBox" layoutX="425.0" layoutY="113.0" />

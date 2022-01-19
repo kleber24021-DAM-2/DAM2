@@ -5,16 +5,14 @@
  */
 package gui.controllers.reviews;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import gui.controllers.FXMLPrincipalController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import model.Review;
-import services.ReviewsServices;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -29,19 +27,19 @@ public class FXMLdeleteReviewController implements Initializable {
     private FXMLPrincipalController parent;
 
     public void loadReviewsList() {
-        ReviewsServices reviewsServices = new ReviewsServices();
-        reviewBox.getItems().setAll(reviewsServices.getAllReviews());
+//        ReviewsServices reviewsServices = new ReviewsServices();
+//        reviewBox.getItems().setAll(reviewsServices.getAllReviews());
      }
 
     public void deleteReview() {
-        ReviewsServices reviewsServices = new ReviewsServices();
-        Review toDelete = reviewBox.getSelectionModel().getSelectedItem();
-        if (toDelete != null){
-            reviewsServices.deleteReview(toDelete);
-        }else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please, select a review to delete it");
-            alert.showAndWait();
-        }
+//        ReviewsServices reviewsServices = new ReviewsServices();
+//        Review toDelete = reviewBox.getSelectionModel().getSelectedItem();
+//        if (toDelete != null){
+//            reviewsServices.deleteReview(toDelete);
+//        }else {
+//            Alert alert = new Alert(Alert.AlertType.ERROR, "Please, select a review to delete it");
+//            alert.showAndWait();
+//        }
     }
 
     /**
@@ -52,6 +50,6 @@ public class FXMLdeleteReviewController implements Initializable {
     }
 
     public void setParent(FXMLPrincipalController parent) {
-        this.parent = parent;
+//        this.parent = parent;
     }
 }

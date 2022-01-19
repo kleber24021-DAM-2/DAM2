@@ -7,11 +7,8 @@ package gui.controllers.purchases;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import model.Purchase;
-import services.PurchasesServices;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,25 +25,25 @@ public class FXMLDeleteController implements Initializable {
 
 
     public void loadPurchases() {
-        PurchasesServices services = new PurchasesServices();
-        purchaseBox.getItems().setAll(services.getAllPurchases());
+//        PurchasesServices services = new PurchasesServices();
+//        purchaseBox.getItems().setAll(services.getAllPurchases());
     }
     
     public void deletePurchase(){
-        PurchasesServices services = new PurchasesServices();
-        Purchase selectedPurchase;
-        selectedPurchase = purchaseBox.getSelectionModel().getSelectedItem();
-        if (selectedPurchase == null){
-            Alert alert = new Alert(AlertType.WARNING, "Please select a purchase to delete");
-            alert.showAndWait();
-            return;
-        }
-        if (!services.deletePurchase(selectedPurchase)){
-            Alert alert = new Alert(AlertType.WARNING, "This purchase has an associated review. It can't be deleted");
-            alert.showAndWait();
-            return;
-        }
-        loadPurchases();
+//        PurchasesServices services = new PurchasesServices();
+//        Purchase selectedPurchase;
+//        selectedPurchase = purchaseBox.getSelectionModel().getSelectedItem();
+//        if (selectedPurchase == null){
+//            Alert alert = new Alert(AlertType.WARNING, "Please select a purchase to delete");
+//            alert.showAndWait();
+//            return;
+//        }
+//        if (!services.deletePurchase(selectedPurchase)){
+//            Alert alert = new Alert(AlertType.WARNING, "This purchase has an associated review. It can't be deleted");
+//            alert.showAndWait();
+//            return;
+//        }
+//        loadPurchases();
     }
     
     @Override

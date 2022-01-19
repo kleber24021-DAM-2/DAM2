@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.User;
+import services.UserService;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +31,8 @@ public class FXMLLoginController implements Initializable {
     private TextField passBox;
     @FXML
     private Label errorBox;
+
+    private UserService userService = new UserService();
     
     //Referencia al controlador principal para poder acceder a él, junto con su set para poder cambiarlo.
     private FXMLPrincipalController principal;
@@ -39,7 +43,22 @@ public class FXMLLoginController implements Initializable {
     
     
     public void clickLogin(){
-        //TODO
+        User inputUser = new User();
+        inputUser.setUsername(fxUser.getText());
+        inputUser.setPassword(passBox.getText());
+        if (userService.checkUserPassword(inputUser) != null){
+            principal.setLoggedUser(inputUser);
+            if (inputUser.getUserId() == 0){
+                principal.setForAdmin(true);
+                principal.setForCustomer(false);
+            }else{
+                principal.setForAdmin(false);
+                principal.setForCustomer(true);
+            }
+            principal.chargeWelcome();
+        }else {
+            errorBox.setText("El usuario o contraseña introducidos son incorrectos");
+        }
     }
     /**
      * Initializes the controller class.

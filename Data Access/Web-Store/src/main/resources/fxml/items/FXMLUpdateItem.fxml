@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.item.FXMLUpdateItemController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.items.FXMLUpdateItemController">
     <children>
         <ListView fx:id="itemList" layoutX="29.0" layoutY="89.0" onMouseClicked="#setItemInfo" prefHeight="280.0" prefWidth="370.0" />
         <TextField fx:id="nameBox" layoutX="428.0" layoutY="104.0" />
