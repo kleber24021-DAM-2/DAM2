@@ -5,11 +5,14 @@
  */
 package gui.controllers.customers;
 
+import gui.controllers.UiUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import model.Customer;
+import services.CustomersServices;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,30 +33,34 @@ public class FXMLAddCustomerController implements Initializable {
     private ListView<Customer> customerListView;
 
     public void loadCustomersList() {
-//        CustomersServices services = new CustomersServices();
-//        List<Customer> customersList = services.getAllCustomers();
-//        customerListView.getItems().setAll(customersList);
+        CustomersServices services = new CustomersServices();
+        services.getAllCustomers()
+                        .peek(customers -> customerListView.getItems().setAll(customers))
+                        .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+
      }
 
     public void addCustomer() {
-//        CustomersServices services = new CustomersServices();
-//        String name = nameBox.getText();
-//        String phone = phoneBox.getText();
-//        String address = addressBox.getText();
-//        Customer savedCustomer = services.addCustomer(new Customer(-1, name, phone, address, null));
-//        if (savedCustomer != null && savedCustomer.getIdCustomer()!= -1){
-//            customerListView.getItems().add(savedCustomer);
-//            clearAll();
-//        }else {
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setContentText("Customer not added to the database. Internal error");
-//            alert.showAndWait();
-//        }
+        CustomersServices services = new CustomersServices();
+        String name = nameBox.getText();
+        String phone = phoneBox.getText();
+        String address = addressBox.getText();
+        Customer toSaveCustomer = new Customer();
+        toSaveCustomer.setName(name);
+        toSaveCustomer.setTelephone(phone);
+        toSaveCustomer.setAddress(address);
+
+        services.addCustomer(toSaveCustomer)
+                .peek(customer -> {
+                    customerListView.getItems().add(customer);
+                    clearAll();
+                })
+                .peekLeft(error -> new Alert(Alert.AlertType.ERROR, error).showAndWait());
     }
     private void clearAll(){
-//        nameBox.clear();
-//        phoneBox.clear();
-//        addressBox.clear();
+        nameBox.clear();
+        phoneBox.clear();
+        addressBox.clear();
     }
     /**
      * Initializes the controller class.

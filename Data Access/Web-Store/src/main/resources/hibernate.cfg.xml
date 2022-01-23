@@ -14,10 +14,5 @@
         <mapping class="model.Purchase"/>
         <mapping class="model.Review"/>
         <mapping class="model.User"/>
-        <!-- <property name="connection.username"/> -->
-        <!-- <property name="connection.password"/> -->
-
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>

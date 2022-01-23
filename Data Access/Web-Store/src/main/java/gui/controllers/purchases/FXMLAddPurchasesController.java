@@ -6,14 +6,19 @@
 package gui.controllers.purchases;
 
 
+import gui.controllers.UiUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import model.Customer;
 import model.Item;
 import model.Purchase;
+import services.CustomersServices;
+import services.ItemsServices;
+import services.PurchasesServices;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,38 +40,48 @@ public class FXMLAddPurchasesController implements Initializable {
     @FXML
     private DatePicker dateBox;
 
-    
-    public void load()
-    {
-//        loadCustomersList();
-//        loadItemsList();
-//        loadPurchasesList();
+
+    public void load() {
+        loadCustomersList();
+        loadItemsList();
+        loadPurchasesList();
     }
-    
+
     public void loadPurchasesList() {
-//        PurchasesServices services = new PurchasesServices();
-//        List<Purchase> purchasesList = services.getAllPurchases();
-//        purchaseList.getItems().setAll(purchasesList);
+        PurchasesServices services = new PurchasesServices();
+        services.getAllPurchases()
+                .peek(purchases -> purchaseList.getItems().setAll(purchases))
+                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+
     }
 
     public void loadItemsList() {
-//        ItemsServices services = new ItemsServices();
-//        List<Item> itemList = services.getAllItems();
-//        itemBox.getItems().setAll(itemList);
+        ItemsServices services = new ItemsServices();
+        services.getAllItems()
+                .peek(items -> itemBox.getItems().setAll(items))
+                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
 
     public void loadCustomersList() {
-//        CustomersServices service = new CustomersServices();
-//        List<Customer> customerList = service.getAllCustomers();
-//        customerBox.getItems().setAll(customerList);
+        CustomersServices service = new CustomersServices();
+        service.getAllCustomers()
+                .peek(customers -> customerBox.getItems().setAll(customers))
+                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
 
     public void addPurchase() {
-//        PurchasesServices service = new PurchasesServices();
-//        Purchase addedPurchase = service.addPurchase(customerBox.getSelectionModel().getSelectedItem().getIdCustomer(),
-//                itemBox.getSelectionModel().getSelectedItem().getIdItem(),
-//                dateBox.getValue());
-//        purchaseList.getItems().add(addedPurchase);
+        PurchasesServices service = new PurchasesServices();
+        Purchase toAddPurchase = new Purchase();
+        if (!customerBox.getSelectionModel().isEmpty() && dateBox.getValue() != null && !itemBox.getSelectionModel().isEmpty()) {
+            toAddPurchase.setCustomersByIdCustomer(customerBox.getSelectionModel().getSelectedItem());
+            toAddPurchase.setDate(dateBox.getValue());
+            toAddPurchase.setItemsByIdItem(itemBox.getSelectionModel().getSelectedItem());
+            service.addPurchase(toAddPurchase)
+                    .peek(purchase -> purchaseList.getItems().add(purchase))
+                    .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+        }else {
+            UiUtils.showAlert("Please, check all fields are complete", Alert.AlertType.WARNING);
+        }
     }
 
     /**

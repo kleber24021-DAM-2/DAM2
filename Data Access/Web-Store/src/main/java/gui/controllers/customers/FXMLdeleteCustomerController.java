@@ -5,10 +5,13 @@
  */
 package gui.controllers.customers;
 
+import gui.controllers.UiUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import model.Customer;
+import services.CustomersServices;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,25 +27,19 @@ public class FXMLdeleteCustomerController implements Initializable {
     private ListView<Customer> customerBox;
 
     public void loadCustomersList() {
-//        CustomersServices services = new CustomersServices();
-//        customerBox.getItems().setAll(services.getAllCustomers());
+        CustomersServices services = new CustomersServices();
+        services.getAllCustomers()
+                .peek(customers -> customerBox.getItems().setAll(customers))
+                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
     
     public void deleteCustomer() {
-//        CustomersServices customersServices = new CustomersServices();
-//        Customer toDelete = customerBox.getSelectionModel().getSelectedItem();
-//        Alert alert = new Alert(AlertType.ERROR);
-//        if (toDelete == null){
-//            alert.setContentText("Please, select customer to delete");
-//            alert.showAndWait();
-//            return;
-//        }
-//        if (!customersServices.deleteCustomer(toDelete)){
-//            alert.setAlertType(AlertType.ERROR);
-//            alert.setContentText("There are purchases related to this customer. You can't delete it");
-//            alert.showAndWait();
-//        }
-//        loadCustomersList();
+        CustomersServices customersServices = new CustomersServices();
+        Customer toDelete = customerBox.getSelectionModel().getSelectedItem();
+
+        customersServices.deleteCustomer(toDelete)
+                .peek(__ -> customerBox.getItems().remove(toDelete))
+                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
 
     /**
@@ -50,7 +47,7 @@ public class FXMLdeleteCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadCustomersList();
+
     }
 
 }

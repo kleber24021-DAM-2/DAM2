@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.reviews.FXMLReviewInfoModalWindow">
+   <children>
+      <TextField fx:id="tfId" editable="false" layoutX="57.0" layoutY="93.0" />
+      <TextField fx:id="tfRating" editable="false" layoutX="57.0" layoutY="154.0" />
+      <TextField fx:id="tfTitle" editable="false" layoutX="57.0" layoutY="217.0" />
+      <TextArea fx:id="tfComment" editable="false" layoutX="57.0" layoutY="286.0" prefHeight="337.0" prefWidth="290.0" />
+      <DatePicker fx:id="datePicker" disable="true" editable="false" layoutX="519.0" layoutY="154.0" />
+      <Label layoutX="57.0" layoutY="76.0" text="ID" />
+      <Label layoutX="55.0" layoutY="137.0" text="Rating" />
+      <Label layoutX="59.0" layoutY="200.0" text="Title" />
+      <Label layoutX="58.0" layoutY="269.0" text="Comment" />
+      <Label layoutX="519.0" layoutY="137.0" text="Review posted in:" />
+      <TextArea fx:id="tfPurchase" editable="false" layoutX="467.0" layoutY="286.0" prefHeight="337.0" prefWidth="406.0" />
+      <Label layoutX="466.0" layoutY="269.0" text="Purchased reviewed" />
+   </children>
+</AnchorPane>

@@ -4,23 +4,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.reviews.FXMLdeleteReviewController">
+<AnchorPane id="AnchorPane" prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.reviews.FXMLdeleteReviewController">
    <children>
-      <Label layoutX="228.0" layoutY="30.0" text="Delete Review" textFill="#000000b9">
+      <Label layoutX="414.0" layoutY="26.0" text="Delete Review" textFill="#000000b9">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="97.0" layoutY="65.0" text="Please, select the review you want to remove from the database (*)" textFill="#000000be">
+      <Label layoutX="283.0" layoutY="61.0" text="Please, select the review you want to remove from the database (*)" textFill="#000000be">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="43.0" layoutY="340.0" mnemonicParsing="false" onAction="#deleteReview" prefHeight="25.0" prefWidth="519.0" text="DELETE" textFill="#a41818">
+      <Button layoutX="249.0" layoutY="592.0" mnemonicParsing="false" onAction="#deleteReview" prefHeight="25.0" prefWidth="519.0" text="DELETE" textFill="#a41818">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <ListView fx:id="reviewBox" layoutX="43.0" layoutY="90.0" prefHeight="245.0" prefWidth="519.0" />
+      <ListView fx:id="reviewBox" layoutX="43.0" layoutY="90.0" prefHeight="484.0" prefWidth="890.0" />
    </children>
 </AnchorPane>

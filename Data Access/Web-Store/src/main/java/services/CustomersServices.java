@@ -7,7 +7,7 @@ package services;
 
 import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOCustomers;
-import dao.interfaces.DAOPurchases;
+import io.vavr.control.Either;
 import model.Customer;
 
 import java.util.List;
@@ -18,33 +18,39 @@ import java.util.List;
  */
 public class CustomersServices {
 
-    public List<Customer> getAllCustomers() {
+    public Either<String, List<Customer>> getAllCustomers() {
         DAOCustomers dao =  DaoFactory.getInstance().getDaoCustomers();
         return dao.getAll();
     }
 
-    public Customer searchById(int id) {
+    public Either<String, Customer> searchById(int id) {
         DAOCustomers dao = DaoFactory.getInstance().getDaoCustomers();
         return dao.get(id);
     }
 
-    public boolean deleteCustomer(Customer customer) {
+    public Either<String, Void> deleteCustomer(Customer customer) {
         DAOCustomers daoCustomers = DaoFactory.getInstance().getDaoCustomers();
-        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
-        boolean result = false;
-        if (daoPurchases.getByCustomerId(customer.getIdCustomer()).isEmpty()){
-            daoCustomers.delete(customer);
-            result = true;
+        Either<String, Customer> customerCheck = daoCustomers.get(customer.getIdCustomer());
+        Either<String, Void> deleteResult;
+        if (customerCheck.isRight()){
+            if (customerCheck.get().getPurchasesByIdCustomer().isEmpty()){
+                daoCustomers.delete(customer);
+                deleteResult = Either.right(null);
+            }else {
+                deleteResult = Either.left("This customer can't be deleted. It has purchases associated");
+            }
+        }else {
+            deleteResult = Either.left(customerCheck.getLeft());
         }
-        return result;
+        return deleteResult;
     }
 
-    public Customer addCustomer(Customer toAdd) {
+    public Either<String, Customer> addCustomer(Customer toAdd) {
         DAOCustomers dao = DaoFactory.getInstance().getDaoCustomers();
         return dao.save(toAdd);
     }
 
-    public boolean updateCustomer(Customer updatedCustomer) {
+    public Either<String, Customer> updateCustomer(Customer updatedCustomer) {
         DAOCustomers daoCustomers = DaoFactory.getInstance().getDaoCustomers();
          return daoCustomers.update(updatedCustomer);
     }

@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.items.FXMLListItemsController">
+<AnchorPane id="AnchorPane" prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.items.FXMLListItemsController">
    <children>
-      <ListView fx:id="itemsList" layoutX="29.0" layoutY="89.0" prefHeight="280.0" prefWidth="370.0" />
-      <Label layoutX="29.0" layoutY="73.0" text="Item list:" />
-      <Label layoutX="29.0" layoutY="38.0" text="ACME WEB STORE" textFill="#000000bb">
+      <ListView fx:id="itemsList" layoutX="42.0" layoutY="140.0" prefHeight="490.0" prefWidth="368.0" onMouseClicked="#showItemInfo"/>
+      <Label layoutX="68.0" layoutY="100.0" text="Item list:" />
+      <Label layoutX="68.0" layoutY="65.0" text="ACME WEB STORE" textFill="#000000bb">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label layoutX="604.0" layoutY="102.0" text="Price">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="604.0" layoutY="189.0" text="Average Rating">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="604.0" layoutY="345.0" text="Reviews">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+      <ListView fx:id="reviewListView" layoutX="604.0" layoutY="397.0" onMouseClicked="#showReviewInfo" prefHeight="232.0" prefWidth="354.0" />
+      <Label layoutX="425.0" layoutY="496.0" text="Order by:" />
+      <ComboBox fx:id="comboOrderBy" layoutX="423.0" layoutY="520.0" onAction="#changeOrderBy" prefWidth="150.0" />
+      <TextField fx:id="tfPrice" layoutX="604.0" layoutY="140.0" />
+      <TextField fx:id="tfRating" layoutX="606.0" layoutY="227.0" />
    </children>
 </AnchorPane>

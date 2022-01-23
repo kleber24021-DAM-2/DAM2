@@ -5,6 +5,7 @@
  */
 package dao.interfaces;
 
+import io.vavr.control.Either;
 import model.Item;
 
 import java.util.List;
@@ -14,15 +15,15 @@ import java.util.List;
  */
 public interface DAOItems {
 
-    Item get(int id);
+    Either<String, Item> get(int id);
      
-    List<Item> getAll();
+    Either<String, List<Item>> getAll();
 
-    Item save(Item t);
-     
-    boolean update(Item t);
-     
-    boolean delete(Item t);
+    Either<String, Item> save(Item t);
 
-    void closePool();
+    Either<String, Item> update(Item t);
+     
+    Either<String, Void> deleteWithoutPurchases(Item t);
+
+    Either<String, Void> deleteWithPurchases(Item t);
 }

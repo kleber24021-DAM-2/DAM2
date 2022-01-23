@@ -4,21 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customers.FXMLUpdateCostumerController">
+<AnchorPane prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customers.FXMLUpdateCostumerController">
     <children>
-        <ListView fx:id="customerListView" layoutX="29.0" layoutY="89.0" onMouseClicked="#showCustomerInfo" prefHeight="280.0" prefWidth="370.0" />
-        <TextField fx:id="nameBox" layoutX="425.0" layoutY="113.0" />
-        <Button layoutX="441.0" layoutY="320.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update customer" />
-        <Label layoutX="425.0" layoutY="90.0" text="Name" />
-        <Label layoutX="421.0" layoutY="145.0" text="Telephone" />
+        <ListView fx:id="customerListView" layoutX="29.0" layoutY="89.0" onMouseClicked="#showCustomerInfo" prefHeight="570.0" prefWidth="528.0" />
+        <TextField fx:id="nameBox" layoutX="775.0" layoutY="241.0" />
+        <Button layoutX="791.0" layoutY="448.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update customer" />
+        <Label layoutX="775.0" layoutY="218.0" text="Name" />
+        <Label layoutX="771.0" layoutY="273.0" text="Telephone" />
         <Label layoutX="29.0" layoutY="73.0" text="Customer list:" />
         <Label layoutX="29.0" layoutY="38.0" text="UPDATE CUSTOMER" textFill="#000000bb">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <TextField fx:id="phoneBox" layoutX="425.0" layoutY="162.0" />
-        <Label layoutX="420.0" layoutY="192.0" text="Address" />
-        <TextField fx:id="addressBox" layoutX="425.0" layoutY="217.0" />
+        <TextField fx:id="phoneBox" layoutX="775.0" layoutY="290.0" />
+        <Label layoutX="770.0" layoutY="320.0" text="Address" />
+        <TextField fx:id="addressBox" layoutX="775.0" layoutY="345.0" />
     </children>
 </AnchorPane>

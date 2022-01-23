@@ -6,6 +6,7 @@
 package dao.interfaces;
 
 
+import io.vavr.control.Either;
 import model.Customer;
 
 import java.util.List;
@@ -15,13 +16,13 @@ import java.util.List;
  */
 public interface DAOCustomers {
      
-    Customer get(int id);
-     
-    List<Customer> getAll();
+    Either<String, Customer> get(int id);
 
-    Customer save(Customer t);
+    Either<String, List<Customer>> getAll();
+
+    Either<String, Customer> save(Customer t);
+
+    Either<String, Customer> update(Customer t);
      
-    boolean update(Customer t);
-     
-    boolean delete(Customer t);
+    Either<String, Void> delete(Customer t);
 }

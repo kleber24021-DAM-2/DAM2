@@ -46,14 +46,16 @@ public class FXMLLoginController implements Initializable {
         User inputUser = new User();
         inputUser.setUsername(fxUser.getText());
         inputUser.setPassword(passBox.getText());
-        if (userService.checkUserPassword(inputUser) != null){
-            principal.setLoggedUser(inputUser);
-            if (inputUser.getUserId() == 0){
-                principal.setForAdmin(true);
-                principal.setForCustomer(false);
-            }else{
+        User fetchedUser = userService.checkUserPassword(inputUser);
+        if (fetchedUser != null){
+
+            principal.setLoggedUser(fetchedUser);
+            if (fetchedUser.getUserId() == 0){
                 principal.setForAdmin(false);
                 principal.setForCustomer(true);
+            }else{
+                principal.setForAdmin(true);
+                principal.setForCustomer(false);
             }
             principal.chargeWelcome();
         }else {

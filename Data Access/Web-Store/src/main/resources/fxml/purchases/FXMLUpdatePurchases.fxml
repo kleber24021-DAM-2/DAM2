@@ -4,21 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.purchases.FXMLUpdatePurchasesController">
+<AnchorPane prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.purchases.FXMLUpdatePurchasesController">
     <children>
-        <ListView fx:id="purchaseList" layoutX="28.0" layoutY="89.0" prefHeight="280.0" prefWidth="370.0" />
-        <ComboBox fx:id="itemBox" layoutX="423.0" layoutY="167.0" prefWidth="150.0" />
-        <Button layoutX="452.0" layoutY="277.0" mnemonicParsing="false" onAction="#updatePurchase" text="Edit purchase" />
-        <Label layoutX="423.0" layoutY="93.0" text="Customer" />
-        <Label layoutX="423.0" layoutY="149.0" text="Item" />
+        <ListView fx:id="purchaseList" layoutX="28.0" layoutY="89.0" onMouseClicked="#showPurchaseInfo" prefHeight="552.0" prefWidth="634.0" />
+        <ComboBox fx:id="itemBox" layoutX="781.0" layoutY="339.0" prefWidth="150.0" />
+        <Button layoutX="810.0" layoutY="449.0" mnemonicParsing="false" onAction="#updatePurchase" text="Edit purchase" />
+        <Label layoutX="781.0" layoutY="265.0" text="Customer" />
+        <Label layoutX="781.0" layoutY="321.0" text="Item" />
         <Label layoutX="28.0" layoutY="73.0" text="Purchase list:" />
-        <DatePicker fx:id="dateBox" layoutX="423.0" layoutY="224.0" prefHeight="25.0" prefWidth="149.0" />
-        <Label layoutX="423.0" layoutY="205.0" text="Date of the purchase" />
+        <DatePicker fx:id="dateBox" layoutX="781.0" layoutY="396.0" prefHeight="25.0" prefWidth="149.0" />
+        <Label layoutX="781.0" layoutY="377.0" text="Date of the purchase" />
         <Label layoutX="28.0" layoutY="38.0" text="EDIT PURCHASES" textFill="#000000bb">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <ComboBox fx:id="customerBox" layoutX="423.0" layoutY="117.0" prefWidth="150.0" />
+        <ComboBox fx:id="customerBox" layoutX="781.0" layoutY="289.0" prefWidth="150.0" />
     </children>
 </AnchorPane>

@@ -1,7 +1,7 @@
 package dao.dao_implementations.hibernate;
 
 import dao.interfaces.DAOUsers;
-import dao.utils.HibernateUtils;
+import dao.utils.HibernateSessionFactory;
 import model.User;
 import org.hibernate.Session;
 
@@ -37,7 +37,7 @@ public class DaoHibernateUsers implements DAOUsers {
 
     @Override
     public User validateUserPassword(User toValidate) {
-        session = HibernateUtils.getSession();
+        session = HibernateSessionFactory.getSession();
         User fetchedUser;
         try {
             fetchedUser = session

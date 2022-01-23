@@ -5,6 +5,7 @@
  */
 package dao.interfaces;
 
+import io.vavr.control.Either;
 import model.Purchase;
 
 import java.time.LocalDate;
@@ -15,23 +16,25 @@ import java.util.List;
  */
 public interface DAOPurchases {
 
-    Purchase get(int id);
+    Either<String, Purchase> get(int id);
 
-    List<Purchase> getAll();
+    Either<String, List<Purchase>> getAll();
 
-    Purchase save(Purchase t);
+    Either<String, Purchase> save(Purchase t);
 
-    void update(Purchase t);
+    Either<String, Purchase> update(Purchase t);
 
-    void delete(Purchase t);
+    Either<String, Void> delete(Purchase t);
 
-    List<Purchase> getByCustomerId(int idCustomer);
+    Either<String, List<Purchase>> getByCustomerId(int idCustomer);
 
-    List<Purchase> getByItemId(int idItem);
+    Either<String, List<Purchase>> getByItemId(int idItem);
 
-    List<Purchase> getByDate(LocalDate selectedDate);
+    Either<String, List<Purchase>> getByDate(LocalDate selectedDate);
 
-    void deleteByCustomerId(int idCustomer);
+    Either<String, List<Purchase>> getSortedByItem();
 
-    void deleteByItemId(int idItem);
+    Either<String, List<Purchase>> getSortedByCustomer();
+
+    Either<String, List<Purchase>> getInDateRange(LocalDate initialDate, LocalDate finalDate);
 }

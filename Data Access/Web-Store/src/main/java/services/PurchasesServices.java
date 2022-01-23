@@ -6,14 +6,10 @@
 package services;
 
 import dao.daofactories.DaoFactory;
-import dao.interfaces.DAOCustomers;
-import dao.interfaces.DAOItems;
 import dao.interfaces.DAOPurchases;
-import dao.interfaces.DAOReviews;
+import io.vavr.control.Either;
 import model.Purchase;
-import model.Review;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,50 +19,54 @@ import java.util.List;
  */
 public class PurchasesServices {
 
-    public List<Purchase> getAllPurchases() {
+    public Either<String, List<Purchase>> getAllPurchases() {
         DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
         return dao.getAll();
     }
 
-    public List<Purchase> getPurchasesByClientId(int id) {
+    public Either<String, List<Purchase>> getPurchasesByClientId(int id) {
         DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
         return dao.getByCustomerId(id);
     }
 
-    public boolean deletePurchase(Purchase purchase) {
+    public Either<String, Void> deletePurchase(Purchase purchase) {
         DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
-        DAOReviews daoReviews = DaoFactory.getInstance().getDaoReviews();
-
-        List<Review> reviewList = daoReviews.getByPurchaseId(purchase.getIdPurchase());
-        if (reviewList.isEmpty()){
-            daoPurchases.delete(purchase);
-            return true;
+        Either<String, Void> deleteResult;
+        if (purchase.getReviewsByIdPurchase().isEmpty()){
+            deleteResult = daoPurchases.delete(purchase);
         }else {
-            return false;
+            deleteResult = Either.left("Purchase couldn't be deleted. There are reviews associated");
         }
+        return deleteResult;
      }
 
-    public Purchase addPurchase(int customerId, int itemId, LocalDate date) {
-        DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
-        DAOCustomers daoCustomers = DaoFactory.getInstance().getDaoCustomers();
-        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
-
-        Purchase newPurchase = new Purchase();
-        newPurchase.setIdPurchase(-1);
-        newPurchase.setDate(Date.valueOf(date));
-//        newPurchase.setIdCustomer(daoCustomers.get(customerId).getIdCustomer());
-//        newPurchase.setIdItem(daoItems.get(itemId).getIdItem());
-
-        return dao.save(newPurchase);
+    public Either<String, Purchase> addPurchase(Purchase toAdd) {
+        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
+       return daoPurchases.save(toAdd);
     }
 
-    public List<Purchase> findByDate(LocalDate selectedDate) {
+    public Either<String, List<Purchase>> findByDate(LocalDate selectedDate) {
         DAOPurchases dao = DaoFactory.getInstance().getDaoPurchases();
             return dao.getByDate(selectedDate);
     }
 
-    public void updatePurchase(Purchase updatedPurchase) {
+    public Either<String, Purchase> updatePurchase(Purchase updatedPurchase) {
         DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
-        daoPurchases.update(updatedPurchase);
+        return daoPurchases.update(updatedPurchase);
+    }
+
+    public Either<String, List<Purchase>> getPurchasesSortedByItem() {
+        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
+        return daoPurchases.getSortedByItem();
+    }
+
+    public Either<String, List<Purchase>> getPurchasesSortedByCustomer() {
+        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
+        return daoPurchases.getSortedByCustomer();
+    }
+
+    public Either<String, List<Purchase>> getInDateRange(LocalDate initialDate, LocalDate finalDate){
+        DAOPurchases daoPurchases = DaoFactory.getInstance().getDaoPurchases();
+        return daoPurchases.getInDateRange(initialDate, finalDate);
     }
 }

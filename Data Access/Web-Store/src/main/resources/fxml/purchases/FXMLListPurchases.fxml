@@ -4,14 +4,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.purchases.FXMLListPurchasesController">
+<AnchorPane id="AnchorPane" prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.purchases.FXMLListPurchasesController">
    <children>
       <Label layoutX="27.0" layoutY="65.0" text="Purchases list:" />
-      <ListView fx:id="purchaseList" layoutX="27.0" layoutY="82.0" prefHeight="288.0" prefWidth="542.0" />
+      <ListView fx:id="purchaseList" layoutX="27.0" layoutY="82.0" prefHeight="575.0" prefWidth="425.0" />
       <Label layoutX="27.0" layoutY="29.0" text="FIND PURCHASE BY DATE" textFill="#000000c0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label layoutX="616.0" layoutY="82.0" text="List by:">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboListBy" layoutX="616.0" layoutY="124.0" onAction="#changeListBy" prefWidth="150.0" />
+      <DatePicker fx:id="datePickerInitial" layoutX="544.0" layoutY="315.0" visible="false" promptText="Initial Date"/>
+      <DatePicker fx:id="datePickerFinal" layoutX="752.0" layoutY="315.0" visible="false" promptText="Final Date"/>
+      <Button fx:id="btnFilterDate" layoutX="547.0" layoutY="397.0" mnemonicParsing="false" text="Filter" visible="false" onAction="#filterByDate"/>
    </children>
 </AnchorPane>

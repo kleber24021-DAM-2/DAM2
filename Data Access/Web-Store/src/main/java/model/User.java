@@ -1,7 +1,5 @@
 package model;
 
-import dao.dao_implementations.SqlQueries;
-
 import javax.persistence.*;
 
 
@@ -10,16 +8,15 @@ import javax.persistence.*;
         query = "select c from User c where c.username = :username"
 )
 
-
 @Entity
 @Table(name = "USERS", schema = "andrePadilla_WebStore", catalog = "")
 public class User {
     private int userId;
     private String username;
     private String password;
-    private Customer customerByUserId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
     public int getUserId() {
         return userId;
@@ -67,23 +64,5 @@ public class User {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
-    }
-
-    @OneToOne(mappedBy = "usersByIdCustomer")
-    public Customer getCustomersByUserId() {
-        return customerByUserId;
-    }
-
-    public void setCustomersByUserId(Customer customerByUserId) {
-        this.customerByUserId = customerByUserId;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

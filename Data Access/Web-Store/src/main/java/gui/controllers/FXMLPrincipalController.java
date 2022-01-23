@@ -28,7 +28,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import model.User;
-import services.ItemsServices;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,8 +49,6 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private MenuItem menuItemList;
     @FXML
-    private MenuItem menuItemFind;
-    @FXML
     private MenuItem menuItemDelete;
     @FXML
     private MenuItem menuItemUpdate;
@@ -60,13 +57,10 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private MenuItem menuCustomerList;
     @FXML
-    private MenuItem menuCustomerFind;
-    @FXML
     private MenuItem menuCustomerDelete;
     @FXML
     private MenuItem menuPurchaseAdd;
-    @FXML
-    private MenuItem menuPurchaseFindDate;
+
     @FXML
     private MenuItem menuPurchaseDelete;
     @FXML
@@ -79,10 +73,6 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private MenuItem menuReviewUpdate;
     //Vista mixta
-    @FXML
-    private MenuItem menuCustomerUpdate;
-    @FXML
-    private MenuItem menuReviewFind;
     //Reference to the top menu to change its visibility when needed.
     @FXML
     private BorderPane fxRoot;
@@ -376,7 +366,7 @@ public class FXMLPrincipalController implements Initializable {
         }
     }
 
-    public void preloadUpdateCustomerAsUser(){
+    public void preloadUpdateCustomerAsUser() {
         try {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource(
@@ -412,43 +402,44 @@ public class FXMLPrincipalController implements Initializable {
         }
     }
 
-    public void preloadListCustomer(){
+    public void preloadListCustomer() {
         try {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource("/fxml/customers/FXMLListCustomers.fxml")
             );
             listCustomerPane = loaderMenu.load();
             listCustomerController = loaderMenu.getController();
-        }catch (IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void preloadUpdatePassword(){
+    public void preloadUpdatePassword() {
         try {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource("/fxml/users/FXMLUpdatePassword.fxml")
             );
             updatePasswordPane = loaderMenu.load();
             updatePasswordController = loaderMenu.getController();
-        }catch (IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
-    public void preloadListPurchase(){
+
+    public void preloadListPurchase() {
         try {
             FXMLLoader loaderMenu = new FXMLLoader(
                     getClass().getResource("/fxml/purchases/FXMLListPurchases.fxml")
             );
             listPurchasesPane = loaderMenu.load();
             listPurchasesController = loaderMenu.getController();
-        }catch (IOException ex){
+        } catch (IOException ex) {
             Logger.getLogger(FXMLPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void chargeListPurchase(){
+    public void chargeListPurchase() {
         listPurchasesController.setParent(this);
         listPurchasesController.chargeList();
         fxRoot.setCenter(listPurchasesPane);
@@ -534,11 +525,11 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void showUpdateCustomers() {
-        if (getLoggedUser().getUserId() > 0){
+        if (getLoggedUser().getUserId() > 0) {
             updateCostumerUserController.setParent(this);
             updateCostumerUserController.loadUserInfo();
             fxRoot.setCenter(updateCustomerUserPane);
-        }else {
+        } else {
             updateCostumerController.loadAllLists();
             fxRoot.setCenter(updateCustomerPane);
         }
@@ -561,7 +552,7 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void chargeListCustomer() {
-        listCustomerController.loadList();
+        listCustomerController.onStart();
         fxRoot.setCenter(listCustomerPane);
     }
 
@@ -604,15 +595,10 @@ public class FXMLPrincipalController implements Initializable {
 
 
     public void closeApplication(WindowEvent event) {
-        ItemsServices services = new ItemsServices();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to close the application?");
         Optional<ButtonType> answer = alert.showAndWait();
-        if (answer.isPresent()) {
-            if (answer.get().equals(ButtonType.OK)) {
-                services.onCloseApplication();
-            } else if (answer.get().equals(ButtonType.CANCEL)) {
-                event.consume();
-            }
+        if (answer.isPresent() && answer.get().equals(ButtonType.CANCEL)) {
+            event.consume();
         }
     }
 
@@ -622,26 +608,23 @@ public class FXMLPrincipalController implements Initializable {
         window.fireEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
-    public void setForCustomer(boolean isCustomer){
-        menuItemAdd.setDisable(isCustomer);
-        menuItemList.setDisable(isCustomer);
-        menuItemFind.setDisable(isCustomer);
-        menuItemDelete.setDisable(isCustomer);
-        menuItemUpdate.setDisable(isCustomer);
-        menuCustomerAdd.setDisable(isCustomer);
-        menuCustomerList.setDisable(isCustomer);
-        menuCustomerFind.setDisable(isCustomer);
-        menuCustomerDelete.setDisable(isCustomer);
-        menuPurchaseAdd.setDisable(isCustomer);
-        menuPurchaseFindDate.setDisable(isCustomer);
-        menuPurchaseDelete.setDisable(isCustomer);
-        menuPurchaseUpdate.setDisable(isCustomer);
-        menuReviewDelete.setDisable(isCustomer);
+    public void setForCustomer(boolean isCustomer) {
+        menuItemAdd.setVisible(isCustomer);
+        menuItemList.setVisible(isCustomer);
+        menuItemDelete.setVisible(isCustomer);
+        menuItemUpdate.setVisible(isCustomer);
+        menuCustomerAdd.setVisible(isCustomer);
+        menuCustomerList.setVisible(isCustomer);
+        menuCustomerDelete.setVisible(isCustomer);
+        menuPurchaseAdd.setVisible(isCustomer);
+        menuPurchaseDelete.setVisible(isCustomer);
+        menuPurchaseUpdate.setVisible(isCustomer);
+        menuReviewDelete.setVisible(isCustomer);
     }
 
-    public void setForAdmin(boolean isAdmin){
-        menuReviewAdd.setDisable(isAdmin);
-        menuReviewUpdate.setDisable(isAdmin);
+    public void setForAdmin(boolean isAdmin) {
+        menuReviewAdd.setVisible(isAdmin);
+        menuReviewUpdate.setVisible(isAdmin);
     }
 
 }

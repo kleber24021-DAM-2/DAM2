@@ -4,21 +4,21 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.items.FXMLUpdateItemController">
+<AnchorPane prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.items.FXMLUpdateItemController">
     <children>
-        <ListView fx:id="itemList" layoutX="29.0" layoutY="89.0" onMouseClicked="#setItemInfo" prefHeight="280.0" prefWidth="370.0" />
-        <TextField fx:id="nameBox" layoutX="428.0" layoutY="104.0" />
-        <Button layoutX="442.0" layoutY="254.0" mnemonicParsing="false" onAction="#updateItem" text="Update item" />
-        <Label layoutX="428.0" layoutY="82.0" text="Name" />
-        <Label layoutX="428.0" layoutY="138.0" text="Company" />
+        <ListView fx:id="itemList" layoutX="29.0" layoutY="89.0" onMouseClicked="#setItemInfo" prefHeight="557.0" prefWidth="637.0" />
+        <TextField fx:id="nameBox" layoutX="782.0" layoutY="269.0" />
+        <Button layoutX="796.0" layoutY="419.0" mnemonicParsing="false" onAction="#updateItem" text="Update item" />
+        <Label layoutX="782.0" layoutY="247.0" text="Name" />
+        <Label layoutX="782.0" layoutY="303.0" text="Company" />
         <Label layoutX="29.0" layoutY="73.0" text="Item list:" />
         <Label layoutX="29.0" layoutY="38.0" text="UPDATE ITEM" textFill="#000000bb">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <TextField fx:id="companyBox" layoutX="427.0" layoutY="159.0" />
-        <Label layoutX="428.0" layoutY="190.0" text="Price" />
-        <TextField fx:id="priceBox" layoutX="427.0" layoutY="211.0" />
+        <TextField fx:id="companyBox" layoutX="781.0" layoutY="324.0" />
+        <Label layoutX="782.0" layoutY="355.0" text="Price" />
+        <TextField fx:id="priceBox" layoutX="781.0" layoutY="376.0" />
     </children>
 </AnchorPane>
