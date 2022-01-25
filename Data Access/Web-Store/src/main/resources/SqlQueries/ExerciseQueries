@@ -1,12 +1,12 @@
-select * from CUSTOMERS
+select if(count(*)>= 2, NAME, '') as 'Usuarios con más de dos reviews máximas' from CUSTOMERS
 join PURCHASES P on CUSTOMERS.ID_CUSTOMER = P.ID_CUSTOMER
 join REVIEWS R on P.ID_PURCHASE = R.ID_PURCHASE
-where RATING = 5
+where RATING = 5 group by P.ID_CUSTOMER;
 
-select C.ID_CUSTOMER from CUSTOMERS C
-                  join PURCHASES P on C.ID_CUSTOMER = P.ID_CUSTOMER
-                  join REVIEWS R on P.ID_PURCHASE = R.ID_PURCHASE
-where RATING >= 3;
+select C.ID_CUSTOMER, count(*) from CUSTOMERS C
+                                join PURCHASES P on C.ID_CUSTOMER = P.ID_CUSTOMER
+                                join REVIEWS R on P.ID_PURCHASE = R.ID_PURCHASE
+where RATING >= 3 group by C.ID_CUSTOMER;
 
 select count(*) from CUSTOMERS C
 join PURCHASES P on C.ID_CUSTOMER = P.ID_CUSTOMER
