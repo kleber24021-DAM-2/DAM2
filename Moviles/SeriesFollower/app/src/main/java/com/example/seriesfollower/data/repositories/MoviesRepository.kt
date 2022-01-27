@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @ActivityRetainedScoped
-class MoviesSeriesRepository @Inject constructor(
+class MoviesRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     @Named(DataConsts.IO_DISPATCHER)
     private val ioDispatcher: CoroutineDispatcher,
@@ -23,44 +23,15 @@ class MoviesSeriesRepository @Inject constructor(
             remoteDataSource.getMovieById(movieId)
         }
 
-
-    suspend fun getMultiByQuery(queryTerm: String, pageNum: Int) =
-        withContext(ioDispatcher) {
-            remoteDataSource.getMultiByQuery(queryTerm, pageNum)
-
-        }
-
-    suspend fun getOnlineSeriesById(seriesId: Int) =
-        withContext(ioDispatcher) {
-            remoteDataSource.getSeriesById(seriesId)
-
-        }
-
-    suspend fun getTrendingResults(page: Int) =
-        withContext(ioDispatcher) {
-            remoteDataSource.getTrendingResults(page)
-        }
-
     suspend fun insertFavoriteMovie(toInsert: MovieEntity) =
         withContext(ioDispatcher) {
             daoFav.insertFavoriteMovie(toInsert)
         }
 
 
-    suspend fun insertFavoriteSeries(toInsert: SeriesEntity) =
-        withContext(ioDispatcher) {
-            daoFav.insertFavoriteSeries(toInsert)
-        }
-
     suspend fun getAllFavMovies() =
         withContext(ioDispatcher) {
             daoFav.getAllMovies()
-        }
-
-
-    suspend fun getAllFavSeries() =
-        withContext(ioDispatcher) {
-            daoFav.getAllSeries()
         }
 
 
@@ -70,21 +41,10 @@ class MoviesSeriesRepository @Inject constructor(
         }
 
 
-    suspend fun getFavSeriesById(seriesId: Int) =
-        withContext(ioDispatcher) {
-            daoFav.getSeriesById(seriesId)
-        }
-
-
     suspend fun isMovieFavorite(movieId: Int) =
         withContext(ioDispatcher) {
+
             daoFav.favoriteMovieExists(movieId)
-        }
-
-
-    suspend fun isSeriesFavorite(seriesId: Int) =
-        withContext(ioDispatcher) {
-            daoFav.favoriteSeriesExists(seriesId)
         }
 
 
@@ -93,10 +53,5 @@ class MoviesSeriesRepository @Inject constructor(
             daoFav.deleteMovie(toDelete)
         }
 
-
-    suspend fun deleteFavSeries(toDelete: SeriesEntity) =
-        withContext(ioDispatcher) {
-            daoFav.deleteSeries(toDelete)
-        }
 
 }

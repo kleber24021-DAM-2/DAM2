@@ -1,4 +1,4 @@
-package model.robopojo.item;
+package model.item;
 
 import lombok.Data;
 

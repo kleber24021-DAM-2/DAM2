@@ -21,7 +21,7 @@ data class LastEpisodeToAir(
     @Json(name = "season_number")
     val seasonNumber: Int,
     @Json(name = "still_path")
-    val stillPath: String,
+    val stillPath: String?,
     @Json(name = "vote_average")
     val voteAverage: Double,
     @Json(name = "vote_count")

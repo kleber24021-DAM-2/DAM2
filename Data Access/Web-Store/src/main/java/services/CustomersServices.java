@@ -8,7 +8,7 @@ package services;
 import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOCustomers;
 import io.vavr.control.Either;
-import model.Customer;
+import model.customer.Customer;
 
 import java.util.List;
 
