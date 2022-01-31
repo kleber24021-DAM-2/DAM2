@@ -27,10 +27,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
-import model.User;
+import model.user.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -525,7 +526,7 @@ public class FXMLPrincipalController implements Initializable {
     }
 
     public void showUpdateCustomers() {
-        if (getLoggedUser().getUserId() > 0) {
+        if (Objects.equals(getLoggedUser().getUserType(), "ADMIN")) {
             updateCostumerUserController.setParent(this);
             updateCostumerUserController.loadUserInfo();
             fxRoot.setCenter(updateCustomerUserPane);

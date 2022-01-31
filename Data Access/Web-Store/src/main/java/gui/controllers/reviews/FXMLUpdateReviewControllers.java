@@ -4,8 +4,8 @@ import gui.controllers.FXMLPrincipalController;
 import gui.controllers.UiUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import model.Purchase;
-import model.Review;
+import model.customer.Purchase;
+import model.item.Review;
 import services.PurchasesServices;
 import services.ReviewsServices;
 
@@ -40,8 +40,8 @@ public class FXMLUpdateReviewControllers {
                 toUpdateReview.setRating(rating.getValue());
                 toUpdateReview.setTitle(title);
                 toUpdateReview.setDescription(comment);
-                toUpdateReview.setDate(LocalDate.now());
-                toUpdateReview.setPurchasesByIdPurchases(purchase);
+                toUpdateReview.setDate(LocalDate.now().toString());
+//                toUpdateReview.setPurchasesByIdPurchases(purchase);
                 reviewsServices.updateReview(toUpdateReview)
                         .peek(updatedReview -> {
                             reviewsBox.getItems().remove(selectedReviewIndex);
@@ -63,10 +63,10 @@ public class FXMLUpdateReviewControllers {
         ReviewsServices reviewsServices = new ReviewsServices();
         PurchasesServices purchasesServices = new PurchasesServices();
 
-        reviewsServices.getReviewsByCustomer(parent.getLoggedUser().getUserId())
+        reviewsServices.getReviewsByCustomer(parent.getLoggedUser().getId())
                 .peek(reviews -> reviewsBox.getItems().setAll(reviews))
                 .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
-        purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getUserId())
+        purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getId())
                 .peek(purchases -> purchaseBox.getItems().setAll(purchases))
                 .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
         ratingBox.getItems().setAll(Ratings.values());

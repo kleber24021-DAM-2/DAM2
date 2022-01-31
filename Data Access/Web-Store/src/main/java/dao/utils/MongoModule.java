@@ -18,7 +18,7 @@ public class MongoModule {
         if (mongoClient == null) {
             String mongoPath = properties.getProperty("urlDB");
             mongoClient = MongoClients.create(mongoPath);
-            db = mongoClient.getDatabase("lucia");
+            db = mongoClient.getDatabase("andre");
         }
         return db;
     }

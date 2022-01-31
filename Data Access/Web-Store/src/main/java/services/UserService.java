@@ -1,13 +1,13 @@
 package services;
 
-import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOUsers;
-import model.User;
+import dao.mongo.DaoUsersMongo;
+import model.user.User;
 
 
 public class UserService {
     public User checkUserPassword(User fullUser){
-        DAOUsers daoUsers = DaoFactory.getInstance().getDaoUsers();
+        DAOUsers daoUsers = new DaoUsersMongo();
         return daoUsers.validateUserPassword(fullUser);
     }
 }

@@ -6,7 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import model.DeleteItemResults;
-import model.Item;
+import model.item.Item;
 import services.ItemsServices;
 
 import java.util.Optional;

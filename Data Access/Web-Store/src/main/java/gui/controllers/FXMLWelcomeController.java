@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import model.User;
+import model.user.User;
 
 import java.net.URL;
 import java.util.ResourceBundle;

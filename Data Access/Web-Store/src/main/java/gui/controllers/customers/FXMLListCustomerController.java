@@ -6,8 +6,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.Customer;
-import model.Purchase;
+import model.customer.Customer;
+import model.customer.Purchase;
 import services.CustomersServices;
 
 public class FXMLListCustomerController{
@@ -41,7 +41,7 @@ public class FXMLListCustomerController{
                 if (empty || customer == null){
                     setText(null);
                 }else {
-                    setText("ID: " + customer.getIdCustomer() + " NAME: " + customer.getName());
+                    setText("ID: " + customer.getId() + " NAME: " + customer.getName());
                 }
             }
         });
@@ -52,7 +52,7 @@ public class FXMLListCustomerController{
                 if (empty || purchase == null){
                     setText(null);
                 }else {
-                    setText("ITEM: " + purchase.getItemsByIdItem().getName() + " DATE: " + purchase.getDate().toString());
+                    setText("ITEM: " + purchase.getIdItem() + " DATE: " + purchase.getDate().toString());
                 }
             }
         });
@@ -63,8 +63,8 @@ public class FXMLListCustomerController{
         Customer selectedCustomer = customersList.getSelectionModel().getSelectedItem();
         if (selectedCustomer != null){
             phoneTv.setText(selectedCustomer.getTelephone());
-            addressTv.setText(selectedCustomer.getAddress());
-            purchasesListView.getItems().setAll(selectedCustomer.getPurchasesByIdCustomer());
+            addressTv.setText(selectedCustomer.getAddress().getCalle());
+            purchasesListView.getItems().setAll(selectedCustomer.getPurchases());
         }
     }
 }

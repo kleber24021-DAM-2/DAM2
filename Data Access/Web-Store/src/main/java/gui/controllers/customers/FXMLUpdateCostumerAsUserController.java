@@ -6,7 +6,8 @@ import io.vavr.control.Either;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import model.Customer;
+import model.customer.Address;
+import model.customer.Customer;
 import services.CustomersServices;
 
 public class FXMLUpdateCostumerAsUserController {
@@ -27,12 +28,15 @@ public class FXMLUpdateCostumerAsUserController {
         String phone = phoneBox.getText();
         String address = addressBox.getText();
 
-        Either<String, Customer> checkResult = customersServices.searchById(parent.getLoggedUser().getUserId());
+        Address addressObject = new Address();
+        addressObject.setCalle(address);
+
+        Either<String, Customer> checkResult = customersServices.searchById(parent.getLoggedUser().getId());
         if (checkResult.isRight()) {
             Customer toUpdate = checkResult.get();
             toUpdate.setName(name);
             toUpdate.setTelephone(phone);
-            toUpdate.setAddress(address);
+            toUpdate.setAddress(addressObject);
             customersServices.updateCustomer(toUpdate)
                     .peek(__ -> UiUtils.showAlert("Your information has been updated", Alert.AlertType.INFORMATION))
                     .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
@@ -43,11 +47,11 @@ public class FXMLUpdateCostumerAsUserController {
 
     public void loadUserInfo() {
         CustomersServices customersServices = new CustomersServices();
-        customersServices.searchById(parent.getLoggedUser().getUserId())
+        customersServices.searchById(parent.getLoggedUser().getId())
                 .peek(loggedCustomer -> {
                     nameBox.setText(loggedCustomer.getName());
                     phoneBox.setText(loggedCustomer.getTelephone());
-                    addressBox.setText(loggedCustomer.getAddress());
+                    addressBox.setText(loggedCustomer.getAddress().getCalle());
                 })
                 .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
 

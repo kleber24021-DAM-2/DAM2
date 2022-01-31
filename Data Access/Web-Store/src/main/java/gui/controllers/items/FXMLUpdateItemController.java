@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.Item;
+import model.item.Item;
 import services.ItemsServices;
 
 import java.util.regex.Matcher;

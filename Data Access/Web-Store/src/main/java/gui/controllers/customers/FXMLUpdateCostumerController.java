@@ -5,7 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.Customer;
+import model.customer.Address;
+import model.customer.Customer;
 import services.CustomersServices;
 
 public class FXMLUpdateCostumerController {
@@ -24,13 +25,15 @@ public class FXMLUpdateCostumerController {
         String name = nameBox.getText();
         String phone = phoneBox.getText();
         String address = addressBox.getText();
+        Address addressObject = new Address();
+        addressObject.setCalle(address);
         Customer selectedCustomer = customerListView.getSelectionModel().getSelectedItem();
 
         if (!(name.isEmpty() || phone.isEmpty() || address.isEmpty())) {
             try {
                 selectedCustomer.setName(name);
                 selectedCustomer.setTelephone(phone);
-                selectedCustomer.setAddress(address);
+                selectedCustomer.setAddress(addressObject);
                 customersServices.updateCustomer(selectedCustomer)
                         .peek(__ -> {
                             loadAllLists();
@@ -62,7 +65,7 @@ public class FXMLUpdateCostumerController {
         if (selectedCustomer != null){
             nameBox.setText(selectedCustomer.getName());
             phoneBox.setText(selectedCustomer.getTelephone());
-            addressBox.setText(selectedCustomer.getAddress());
+            addressBox.setText(selectedCustomer.getAddress().getCalle());
         }
     }
 
