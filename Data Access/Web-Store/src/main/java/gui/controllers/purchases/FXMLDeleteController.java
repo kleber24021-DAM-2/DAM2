@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
-import model.Purchase;
+import model.customer.Purchase;
 import services.PurchasesServices;
 
 import java.net.URL;

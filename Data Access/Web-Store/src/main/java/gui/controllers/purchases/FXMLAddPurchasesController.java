@@ -13,9 +13,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
-import model.Customer;
-import model.Item;
-import model.Purchase;
+import model.customer.Customer;
+import model.customer.Purchase;
+import model.item.Item;
 import services.CustomersServices;
 import services.ItemsServices;
 import services.PurchasesServices;
@@ -73,9 +73,9 @@ public class FXMLAddPurchasesController implements Initializable {
         PurchasesServices service = new PurchasesServices();
         Purchase toAddPurchase = new Purchase();
         if (!customerBox.getSelectionModel().isEmpty() && dateBox.getValue() != null && !itemBox.getSelectionModel().isEmpty()) {
-            toAddPurchase.setCustomersByIdCustomer(customerBox.getSelectionModel().getSelectedItem());
-            toAddPurchase.setDate(dateBox.getValue());
-            toAddPurchase.setItemsByIdItem(itemBox.getSelectionModel().getSelectedItem());
+//            toAddPurchase.setCustomersByIdCustomer(customerBox.getSelectionModel().getSelectedItem());
+            toAddPurchase.setDate(dateBox.getValue().toString());
+            toAddPurchase.setIdItem(itemBox.getSelectionModel().getSelectedItem().getIdItem());
             service.addPurchase(toAddPurchase)
                     .peek(purchase -> purchaseList.getItems().add(purchase))
                     .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));

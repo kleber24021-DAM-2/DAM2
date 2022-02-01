@@ -17,9 +17,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
-import model.Customer;
-import model.Item;
-import model.Review;
+import model.customer.Customer;
+import model.item.Item;
+import model.item.Review;
 import services.CustomersServices;
 import services.ItemsServices;
 import services.ReviewsServices;
@@ -54,11 +54,12 @@ public class FXMLfindReviewController implements Initializable {
                     @Override
                     protected void updateItem(Review review, boolean empty) {
                         super.updateItem(review, empty);
-                        if (empty || review == null) {
-                            setText(null);
-                        } else {
-                            setText("ITEM: " + review.getPurchasesByIdPurchases().getItemsByIdItem().getName() + " CUSTOMER: " + review.getPurchasesByIdPurchases().getCustomersByIdCustomer().getName() + " RATING: " + review.getRating());
-                        }
+                        //TODO
+//                        if (empty || review == null) {
+//                            setText(null);
+//                        } else {
+//                            setText("ITEM: " + review + " CUSTOMER: " + review.getPurchasesByIdPurchases().getCustomersByIdCustomer().getName() + " RATING: " + review.getRating());
+//                        }
                     }
                 }
         );
@@ -133,27 +134,27 @@ public class FXMLfindReviewController implements Initializable {
     private void changeComboItem() {
         ReviewsServices services = new ReviewsServices();
         Item selectedItem = comboItem.getSelectionModel().getSelectedItem();
-        services.getReviewsByItem(selectedItem)
-                .peek(reviews -> lvReviews.getItems().setAll(reviews))
-                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+//        services.getReviewsByItem(selectedItem)
+//                .peek(reviews -> lvReviews.getItems().setAll(reviews))
+//                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
 
     @FXML
     private void changeComboCustomer() {
         ReviewsServices services = new ReviewsServices();
         Customer selectedCustomer = comboCustomer.getSelectionModel().getSelectedItem();
-        services.getReviewsByCustomer(selectedCustomer.getIdCustomer())
-                .peek(reviews -> lvReviews.getItems().setAll(reviews))
-                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+//        services.getReviewsByCustomer(selectedCustomer.getIdCustomer())
+//                .peek(reviews -> lvReviews.getItems().setAll(reviews))
+//                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
 
     @FXML
     private void changeComboRating() {
         ReviewsServices services = new ReviewsServices();
         Ratings selectedRating = comboRating.getSelectionModel().getSelectedItem();
-        services.getReviewsByRating(selectedRating)
-                .peek(reviews -> lvReviews.getItems().setAll(reviews))
-                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+//        services.getReviewsByRating(selectedRating)
+//                .peek(reviews -> lvReviews.getItems().setAll(reviews))
+//                .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
 
     public void loadItems(){

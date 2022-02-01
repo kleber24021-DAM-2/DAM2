@@ -21,12 +21,12 @@ public class DaoItemsMongo implements DAOItems {
     }
 
     @Override
-    public Either<String, Item> save(Item t) {
+    public Either<String, Item> saveItem(Item t) {
         return null;
     }
 
     @Override
-    public Either<String, Item> update(Item t) {
+    public Either<String, Item> updateItem(Item t) {
         return null;
     }
 
@@ -57,6 +57,31 @@ public class DaoItemsMongo implements DAOItems {
 
     @Override
     public Either<String, Void> deleteReview(Review review) {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Review>> getAllReviews() {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Review>> getReviewByCustomerId(String customerId) {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Review>> getReviewByItemId(String id) {
+        return null;
+    }
+
+    @Override
+    public Either<String, Review> saveReview(Review review) {
+        return null;
+    }
+
+    @Override
+    public Either<String, Review> updateReview(Review review) {
         return null;
     }
 }

@@ -15,17 +15,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
-import model.Item;
-import model.Review;
+import model.item.Item;
+import model.item.Review;
 import services.ItemsServices;
 import services.ReviewsServices;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 /**
  * FXML Controller class
@@ -66,7 +64,7 @@ public class FXMLListItemsController implements Initializable {
             stage.show();
             stage.setResizable(false);
             controller.loadData(reviewListView.getSelectionModel().getSelectedItem());
-        }catch (IOException ioException){
+        } catch (IOException ioException) {
             log.error(ioException.getMessage(), ioException);
         }
     }
@@ -76,15 +74,15 @@ public class FXMLListItemsController implements Initializable {
         ReviewsServices services = new ReviewsServices();
         Item selectedItem = itemsList.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
-            if (comboOrderBy.getSelectionModel().getSelectedItem().equals(ListByItemsType.DATE)) {
-                services.getReviewsSortedByDateItem(selectedItem)
-                        .peek(reviews -> reviewListView.getItems().setAll(reviews))
-                        .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
-            } else {
-                services.getReviewsSortedByRatingItem(selectedItem)
-                        .peek(reviews -> reviewListView.getItems().setAll(reviews))
-                        .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
-            }
+//            if (comboOrderBy.getSelectionModel().getSelectedItem().equals(ListByItemsType.DATE)) {
+//                services.getReviewsSortedByDateItem(selectedItem)
+//                        .peek(reviews -> reviewListView.getItems().setAll(reviews))
+//                        .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+//            } else {
+//                services.getReviewsSortedByRatingItem(selectedItem)
+//                        .peek(reviews -> reviewListView.getItems().setAll(reviews))
+//                        .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
+//            }
         }
     }
 
@@ -92,22 +90,22 @@ public class FXMLListItemsController implements Initializable {
     private void showItemInfo() {
         Item selectedItem = itemsList.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
-            tfPrice.setText(Double.toString(selectedItem.getPrice()));
-            double averageRating = selectedItem.getPurchasesByIdItem()
-                    .stream()
-                    .flatMap(purchase -> purchase.getReviewsByIdPurchase().stream())
-                    .mapToInt(Review::getRating)
-                    .average().orElse(-1.);
-            if (averageRating == -1) {
-                tfRating.setText("N/A");
-            } else {
-                tfRating.setText(Double.toString(averageRating));
-            }
-            List<Review> reviewList = selectedItem.getPurchasesByIdItem()
-                    .stream()
-                    .flatMap(purchase -> purchase.getReviewsByIdPurchase().stream())
-                    .collect(Collectors.toList());
-            reviewListView.getItems().setAll(reviewList);
+//            tfPrice.setText(Double.toString(selectedItem.getPrice()));
+//            double averageRating = selectedItem.getPurchasesByIdItem()
+//                    .stream()
+//                    .flatMap(purchase -> purchase.getReviewsByIdPurchase().stream())
+//                    .mapToInt(Review::getRating)
+//                    .average().orElse(-1.);
+//            if (averageRating == -1) {
+//                tfRating.setText("N/A");
+//            } else {
+//                tfRating.setText(Double.toString(averageRating));
+//            }
+//            List<Review> reviewList = selectedItem.getPurchasesByIdItem()
+//                    .stream()
+//                    .flatMap(purchase -> purchase.getReviewsByIdPurchase().stream())
+//                    .collect(Collectors.toList());
+//            reviewListView.getItems().setAll(reviewList);
         }
     }
 

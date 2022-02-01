@@ -11,7 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
-import model.Review;
+import model.item.Review;
 import services.ReviewsServices;
 
 import java.net.URL;

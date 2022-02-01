@@ -11,7 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.Customer;
+import model.customer.Customer;
 import services.CustomersServices;
 
 import java.net.URL;
@@ -31,10 +31,10 @@ public class FXMLfindCustomerController implements Initializable {
     
      public void searchById() {
          CustomersServices service = new CustomersServices();
-         int customerId;
+         String customerDni;
          try{
-            customerId = Integer.parseInt(dniBox.getText());
-            service.searchById(customerId)
+            customerDni = dniBox.getText();
+            service.searchById(customerDni)
                     .peek(customer -> customerList.getItems().setAll(customer))
                     .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
          }catch (NumberFormatException e){

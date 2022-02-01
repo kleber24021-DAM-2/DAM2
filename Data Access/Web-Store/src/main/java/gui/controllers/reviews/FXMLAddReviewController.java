@@ -10,8 +10,8 @@ import gui.controllers.UiUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.Purchase;
-import model.Review;
+import model.customer.Purchase;
+import model.item.Review;
 import services.PurchasesServices;
 import services.ReviewsServices;
 
@@ -40,7 +40,7 @@ public class FXMLAddReviewController implements Initializable {
 
     public void loadPurchases() {
         PurchasesServices purchasesServices = new PurchasesServices();
-        purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getUserId())
+        purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getId())
                 .peek(purchases -> purchaseBox.getItems().setAll(purchases))
                 .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
@@ -54,8 +54,8 @@ public class FXMLAddReviewController implements Initializable {
             Review review = new Review();
             review.setRating(rating.getValue());
             review.setTitle(titleBox.getText());
-            review.setDate(LocalDate.now());
-            review.setPurchasesByIdPurchases(purchase);
+            review.setDate(LocalDate.now().toString());
+//            review.setPurchasesByIdPurchases(purchase);
 
             reviewsServices.addReview(review)
                     .peek(__ -> {

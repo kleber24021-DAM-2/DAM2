@@ -5,12 +5,13 @@
  */
 package services;
 
-import dao.daofactories.DaoFactory;
 import dao.interfaces.DAOItems;
+import dao.mongo.DaoItemsMongo;
 import io.vavr.control.Either;
 import model.DeleteItemResults;
-import model.Item;
-import model.Review;
+import model.customer.Purchase;
+import model.item.Item;
+import model.item.Review;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,35 +22,35 @@ import java.util.stream.Collectors;
 public class ItemsServices {
 
     public Either<String, Item> getItemById(int itemId){
-        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
+        DAOItems daoItems = new DaoItemsMongo();
         return daoItems.get(itemId);
     }
 
     public Either<String, List<Item>> getAllItems() {
-        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
+        DAOItems daoItems = new DaoItemsMongo();
         return daoItems.getAll();
     }
 
     public Either<String, Item> addItem(String itemName, String itemCompany, double price) {
-        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
+        DAOItems daoItems = new DaoItemsMongo();
         Item it = new Item();
         it.setName(itemName);
         it.setCompany(itemCompany);
         it.setPrice(price);
-        return daoItems.save(it);
+        return daoItems.saveItem(it);
     }
 
     public Either<DeleteItemResults,Void> deleteItem(Item toDelete, boolean userHasConfirmed) {
-        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
+        DAOItems daoItems = new DaoItemsMongo();
         Either<DeleteItemResults, Void> deleteResult;
-        if (toDelete.getPurchasesByIdItem().isEmpty()){
+        if (toDelete.getPurchases().isEmpty()){
             if (daoItems.deleteWithoutPurchases(toDelete).isRight()){
                 deleteResult = Either.right(null);
             }else {
                 deleteResult = Either.left(DeleteItemResults.DB_ERROR);
             }
         }else {
-            List<Review> associatedReviews = toDelete.getPurchasesByIdItem().stream().flatMap(purchase -> purchase.getReviewsByIdPurchase().stream()).collect(Collectors.toList());
+            List<Review> associatedReviews = toDelete.getPurchases().stream().map(Purchase::getReview).collect(Collectors.toList());
             if (associatedReviews.isEmpty()){
                 if (userHasConfirmed){
                     if (daoItems.deleteWithPurchases(toDelete).isRight()){
@@ -68,7 +69,7 @@ public class ItemsServices {
     }
 
     public Either<String, Item> updateItem(Item updatedCustomer) {
-        DAOItems daoItems = DaoFactory.getInstance().getDaoItems();
-        return daoItems.update(updatedCustomer);
+        DAOItems daoItems = new DaoItemsMongo();
+        return daoItems.updateItem(updatedCustomer);
     }
 }

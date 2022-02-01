@@ -22,9 +22,9 @@ public interface DAOItems {
      
     Either<String, List<Item>> getAll();
 
-    Either<String, Item> save(Item t);
+    Either<String, Item> saveItem(Item t);
 
-    Either<String, Item> update(Item t);
+    Either<String, Item> updateItem(Item t);
      
     Either<String, Void> deleteWithoutPurchases(Item t);
 
@@ -37,4 +37,14 @@ public interface DAOItems {
     Either<String, Review> addReview(Review review, Purchase referenciaPurchase);
 
     Either<String, Void> deleteReview(Review review);
+
+    Either<String, List<Review>> getAllReviews();
+
+    Either<String, List<Review>> getReviewByCustomerId(String customerId);
+
+    Either<String, List<Review>> getReviewByItemId(String id);
+
+    Either<String, Review> saveReview(Review review);
+
+    Either<String, Review> updateReview(Review review);
 }

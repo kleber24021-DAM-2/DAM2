@@ -11,6 +11,7 @@ import model.customer.Customer;
 import model.customer.Purchase;
 import model.item.Review;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public interface DAOCustomers {
      
-    Either<String, Customer> getCustomers(int id);
+    Either<String, Customer> getCustomerById(String id);
 
     Either<String, List<Customer>> getAllCustomers();
 
@@ -35,4 +36,20 @@ public interface DAOCustomers {
     Either<String, Review> addReview(Review review, Purchase referenciaPurchase);
 
     Either<String, Void> deleteReview(Review review);
+
+    Either<String, List<Purchase>> getAllPurchases();
+
+    Either<String, List<Purchase>> getPurchaseByClient(String clientId);
+
+    Either<String, Purchase> savePurchase(Purchase toAdd);
+
+    Either<String, List<Purchase>> getPurchaseByDate(LocalDate selectedDate);
+
+    Either<String, Purchase> updatePurchase(Purchase updatedPurchase);
+
+    Either<String, List<Purchase>> getSortedByItem();
+
+    Either<String, List<Purchase>> getSortedByCustomer();
+
+    Either<String, List<Purchase>> getInDateRange(LocalDate initialDate, LocalDate finalDate);
 }

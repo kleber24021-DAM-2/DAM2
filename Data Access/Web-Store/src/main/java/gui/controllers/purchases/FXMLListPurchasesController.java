@@ -5,7 +5,7 @@ import gui.controllers.UiUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.Purchase;
+import model.customer.Purchase;
 import services.PurchasesServices;
 
 import java.net.URL;
@@ -65,11 +65,11 @@ public class FXMLListPurchasesController implements Initializable {
             @Override
             protected void updateItem(Purchase purchase, boolean empty) {
                 super.updateItem(purchase, empty);
-                if (empty || purchase == null){
-                    setText(null);
-                }else {
-                    setText("ITEM: " + purchase.getItemsByIdItem().getName() + " CUSTOMER: " + purchase.getCustomersByIdCustomer().getName() + " DATE: " + purchase.getDate().toString());
-                }
+//                if (empty || purchase == null){
+//                    setText(null);
+//                }else {
+//                    setText("ITEM: " + purchase.getIdItem() + " CUSTOMER: " + purchase.getCustomersByIdCustomer().getName() + " DATE: " + purchase.getDate().toString());
+//                }
             }
         });
     }

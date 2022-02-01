@@ -3,13 +3,12 @@ package dao.utils;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-
-import java.util.Properties;
+import configuration.ConfigProperties;
 
 public class MongoModule {
     private static MongoClient mongoClient = null;
     private static MongoDatabase db = null;
-    private static Properties properties = new Properties();
+    private static ConfigProperties properties = ConfigProperties.getInstance();
 
     private MongoModule() {
     }
@@ -18,7 +17,7 @@ public class MongoModule {
         if (mongoClient == null) {
             String mongoPath = properties.getProperty("urlDB");
             mongoClient = MongoClients.create(mongoPath);
-            db = mongoClient.getDatabase("lucia");
+            db = mongoClient.getDatabase("andre");
         }
         return db;
     }

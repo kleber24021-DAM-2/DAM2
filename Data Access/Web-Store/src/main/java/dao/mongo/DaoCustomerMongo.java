@@ -6,12 +6,13 @@ import model.customer.Customer;
 import model.customer.Purchase;
 import model.item.Review;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class DaoCustomerMongo implements DAOCustomers {
 
     @Override
-    public Either<String, Customer> getCustomers(int id) {
+    public Either<String, Customer> getCustomerById(String id) {
         return null;
     }
 
@@ -52,6 +53,46 @@ public class DaoCustomerMongo implements DAOCustomers {
 
     @Override
     public Either<String, Void> deleteReview(Review review) {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Purchase>> getAllPurchases() {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Purchase>> getPurchaseByClient(String clientId) {
+        return null;
+    }
+
+    @Override
+    public Either<String, Purchase> savePurchase(Purchase toAdd) {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Purchase>> getPurchaseByDate(LocalDate selectedDate) {
+        return null;
+    }
+
+    @Override
+    public Either<String, Purchase> updatePurchase(Purchase updatedPurchase) {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Purchase>> getSortedByItem() {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Purchase>> getSortedByCustomer() {
+        return null;
+    }
+
+    @Override
+    public Either<String, List<Purchase>> getInDateRange(LocalDate initialDate, LocalDate finalDate) {
         return null;
     }
 }
