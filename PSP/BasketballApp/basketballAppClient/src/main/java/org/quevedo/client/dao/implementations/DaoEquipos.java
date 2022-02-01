@@ -1,6 +1,7 @@
 package org.quevedo.client.dao.implementations;
 
 import com.google.gson.Gson;
+import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
 import org.quevedo.client.dao.retrofit.interfaces.EquipoApi;
 import org.quevedo.sharedmodels.Equipo;
@@ -18,11 +19,11 @@ public class DaoEquipos extends DaoGeneric {
         this.gson = gson;
     }
 
-    public Either<String, List<Equipo>> getAllEquipos() {
-        return safeApiCall(equipoApi.getAllEquipos(), gson);
+    public Single<Either<String, List<Equipo>>> getAllEquipos() {
+        return safeSingleApiCall(equipoApi.getAllEquipos(), gson);
     }
 
-    public Either<String, Equipo> registerEquipo(String nombreEquipo) {
-        return safeApiCall(equipoApi.addEquipo(nombreEquipo), gson);
+    public Single<Either<String , Equipo>> registerEquipo(String nombreEquipo) {
+        return safeSingleApiCall(equipoApi.addEquipo(nombreEquipo), gson);
     }
 }

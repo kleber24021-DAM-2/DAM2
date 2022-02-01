@@ -1,5 +1,7 @@
 package org.quevedo.server.ee.utils;
 
+import org.quevedo.sharedmodels.usuario.TipoUsuario;
+
 public class EEConst {
     public static final String PARAM_PASSWORD_CONFIRM = "paramPasswordConfirm";
     public static final String PARAM_PASSWORD = "paramPassword";
@@ -51,6 +53,22 @@ public class EEConst {
     public static final String MSG_NOT_AUTHORIZED_ADMIN_USERS = "No tienes autorización para registrar usuarios admin";
     public static final String SERVLET_LOGOUT_NAME = "ServletLogout";
     public static final String SERVLET_LOGOUT_PATH = "/basketball/servletlogout";
+    public static final String EMPTY_SPACE = " ";
+    public static final String BASIC = "Basic";
+    public static final String USER_PASS_SPLIT = ":";
+    public static final String JWT = "JWT";
+    public static final String ALGORITHM = "SHA-512";
+    public static final String ADMIN = "ADMIN";
+    public static final String NORMAL = "NORMAL";
+    public static final String USER = "user";
+    public static final String GROUP = "group";
+    public static final String TOKEN_EXPIRADO = "Token expirado";
+    public static final String TOKEN_SIGNATURE_INCORRECT = "Firma de token incorrecta";
+    public static final String LOGUEADO_CORRECTAMENTE = "Logueado correctamente";
+    public static final String LOGIN_PATH = "/login";
+    public static final String CLAVE = "clave";
+    public static final String JWT_SUBJECT = "BasketApp Authentication";
+    public static final String JWT_ISSUER = "org.quevedo";
 
 
     private EEConst() {

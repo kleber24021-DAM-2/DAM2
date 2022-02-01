@@ -3,10 +3,10 @@ package org.quevedo.server.dao.implementations;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
-import org.quevedo.sharedmodels.servererror.ServerError;
-import org.quevedo.sharedmodels.servererror.TipoError;
 import org.quevedo.server.dao.utils.DaoConstants;
 import org.quevedo.sharedmodels.Equipo;
+import org.quevedo.sharedmodels.servererror.ServerError;
+import org.quevedo.sharedmodels.servererror.TipoError;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,23 +21,24 @@ import java.util.Objects;
 @Log4j2
 public class DaoEquipos {
     private final JdbcTemplate template;
+
     @Inject
-    public DaoEquipos(JdbcTemplate template){
+    public DaoEquipos(JdbcTemplate template) {
         this.template = template;
     }
 
-    public Either<ServerError, List<Equipo>> getAllEquipos(){
+    public Either<ServerError, List<Equipo>> getAllEquipos() {
         Either<ServerError, List<Equipo>> result;
         try {
             result = Either.right(template.query(DaoConstants.SELECT_ALL_EQUIPOS, new BeanPropertyRowMapper<>(Equipo.class)));
-        }catch (DataAccessException dataAccessException){
+        } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getMessage(), dataAccessException);
             result = Either.left(new ServerError(DaoConstants.MSG_DB_FAILED, TipoError.DB_ERROR));
         }
         return result;
     }
 
-    public Either<ServerError, Equipo> addEquipo(String nombreEquipo){
+    public Either<ServerError, Equipo> addEquipo(String nombreEquipo) {
         Either<ServerError, Equipo> result;
         try {
             KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -48,7 +49,7 @@ public class DaoEquipos {
                 return ps;
             }, keyHolder);
             result = Either.right(new Equipo(Objects.requireNonNull(keyHolder.getKey()).intValue(), nombreEquipo));
-        }catch (DataAccessException dataAccessException){
+        } catch (DataAccessException dataAccessException) {
             log.error(dataAccessException.getMessage(), dataAccessException);
             result = Either.left(new ServerError(DaoConstants.MSG_DB_FAILED, TipoError.DB_ERROR));
         }

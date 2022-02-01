@@ -168,6 +168,7 @@ public class MainScreenController implements Initializable {
         if (loggedUser.getNivelAcceso().equals(TipoUsuario.ADMIN)) {
             showPartidosAdmin();
         } else {
+            partidosUserController.chargeAllLists();
             root.setCenter(partidosRegularPane);
         }
     }

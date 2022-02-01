@@ -10,4 +10,5 @@ module basketballAppServer {
     requires com.google.gson;
     requires com.zaxxer.hikari;
     requires org.apache.logging.log4j;
+    requires jjwt.api;
 }

@@ -1,6 +1,7 @@
 package org.quevedo.client.dao.implementations;
 
 import com.google.gson.Gson;
+import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
 import org.quevedo.client.dao.retrofit.interfaces.JornadaApi;
 import org.quevedo.sharedmodels.Jornada;
@@ -18,11 +19,11 @@ public class DaoJornada extends DaoGeneric {
         this.gson = gson;
     }
 
-    public Either<String, List<Jornada>> getAllJornadas() {
-        return safeApiCall(jornadaApi.getAllJornadas(), gson);
+    public Single<Either<String, List<Jornada>>> getAllJornadas() {
+        return safeSingleApiCall(jornadaApi.getAllJornadas(), gson);
     }
 
-    public Either<String, Jornada> addJornada(String date) {
-        return safeApiCall(jornadaApi.addNewJornada(date), gson);
+    public Single<Either<String, Jornada>> addJornada(String date) {
+        return safeSingleApiCall(jornadaApi.addNewJornada(date), gson);
     }
 }

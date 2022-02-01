@@ -11,9 +11,11 @@ import org.quevedo.client.dao.retrofit.interfaces.UsersApi;
 import org.quevedo.client.dao.utils.OwnCookies;
 import org.quevedo.client.dao.utils.StringConstants;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.net.CookieManager;
@@ -26,6 +28,13 @@ import java.util.List;
 
 public class RetrofitProducers {
 
+    private final AuthInterceptor authInterceptor;
+
+    @Inject
+    public RetrofitProducers(AuthInterceptor authInterceptor) {
+        this.authInterceptor = authInterceptor;
+    }
+
     @Produces
     @Singleton
     public OkHttpClient getOkHttp() {
@@ -34,6 +43,7 @@ public class RetrofitProducers {
                 .readTimeout(Duration.of(3, ChronoUnit.MINUTES))
                 .callTimeout(Duration.of(3, ChronoUnit.MINUTES))
                 .connectTimeout(Duration.of(3, ChronoUnit.MINUTES))
+                .addInterceptor(authInterceptor)
                 .cookieJar(new OwnCookies(getCookieManager()))
                 .build();
     }
@@ -74,6 +84,7 @@ public class RetrofitProducers {
         return new Retrofit.Builder()
                 .baseUrl(pathBase)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .client(httpClient)
                 .build();
     }

@@ -1,11 +1,12 @@
 package org.quevedo.server.config;
 
 import jakarta.inject.Inject;
-import jakarta.servlet.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
+import jakarta.servlet.annotation.WebListener;
 
 @WebListener
-public class ListenerConfig implements ServletContextListener{
+public class ListenerConfig implements ServletContextListener {
     private final Configuration config;
 
     @Inject

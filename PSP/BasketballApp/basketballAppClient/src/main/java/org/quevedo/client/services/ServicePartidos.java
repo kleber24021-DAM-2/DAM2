@@ -1,6 +1,8 @@
 package org.quevedo.client.services;
 
+import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
+import org.pdfsam.rxjavafx.schedulers.JavaFxScheduler;
 import org.quevedo.client.dao.implementations.DaoPartidos;
 import org.quevedo.sharedmodels.partido.Partido;
 import org.quevedo.sharedmodels.partido.RegisterPartidoDTO;
@@ -17,25 +19,28 @@ public class ServicePartidos {
         this.daoPartidos = daoPartidos;
     }
 
-    public Either<String, List<Partido>> getAllPartidos() {
-        return daoPartidos.getAllPartidos();
+    public Single<Either<String, List<Partido>>> getAllPartidos() {
+        return daoPartidos.getAllPartidos().observeOn(JavaFxScheduler.platform());
     }
 
-    public Either<String, List<Partido>> getFilteredPartidos(String nombreEquipo, Integer numeroJornada) {
+    public Single<Either<String, List<Partido>>> getFilteredPartidos(String nombreEquipo, Integer numeroJornada) {
         String numJornada;
         if (numeroJornada == null) {
-            numJornada = "";
+            numJornada = ServiceConstants.EMPTY_STRING;
         } else {
             numJornada = numeroJornada.toString();
         }
-        return daoPartidos.getFilteredPartidos(nombreEquipo, numJornada);
+        if (nombreEquipo == null){
+            nombreEquipo = ServiceConstants.EMPTY_STRING;
+        }
+        return daoPartidos.getFilteredPartidos(nombreEquipo, numJornada).observeOn(JavaFxScheduler.platform());
     }
 
-    public Either<String, Partido> addPartido(RegisterPartidoDTO partidoToRegister) {
-        return daoPartidos.addPartido(partidoToRegister);
+    public Single<Either<String, Partido>> addPartido(RegisterPartidoDTO partidoToRegister) {
+        return daoPartidos.addPartido(partidoToRegister).observeOn(JavaFxScheduler.platform());
     }
 
-    public Either<String, Partido> registerResult(UpdateResultPartidoDTO partidoResult) {
-        return daoPartidos.registerResult(partidoResult);
+    public Single<Either<String, Partido>> registerResult(UpdateResultPartidoDTO partidoResult) {
+        return daoPartidos.registerResult(partidoResult).observeOn(JavaFxScheduler.platform());
     }
 }

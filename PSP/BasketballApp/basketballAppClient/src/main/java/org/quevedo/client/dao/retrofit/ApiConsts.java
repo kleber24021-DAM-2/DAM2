@@ -6,7 +6,7 @@ public class ApiConsts {
     public static final String PATH_PASSWORDCHANGE = "/passwordchange";
     public static final String PARAM_CORREO = "correo";
     public static final String PATH_REGULAR = "regular";
-    public static final String PATH_PARTIDOS = "/partidos";
+    public static final String PATH_PARTIDOS = "partidos";
     public static final String PATH_FILTER = "/filter";
     public static final String PATH_ADD = "/add";
     public static final String PATH_RESULT = "/result";
@@ -14,7 +14,7 @@ public class ApiConsts {
     public static final String PARAM_NOMBRE = "nombre";
     public static final String PATH_JORNADAS = "/jornadas";
     public static final String PARAM_FECHA = "fecha";
-    public static final String PATH_LOGIN = "ServletLogin";
+    public static final String PATH_LOGIN = "/login";
     public static final String PARAM_PASS = "pass";
     public static final String PATH_LOGOUT = "servletlogout";
     public static final String QUERY_PARAM_EQUIPO = "equipo";

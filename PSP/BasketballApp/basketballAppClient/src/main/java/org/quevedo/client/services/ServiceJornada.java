@@ -1,6 +1,8 @@
 package org.quevedo.client.services;
 
+import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
+import org.pdfsam.rxjavafx.schedulers.JavaFxScheduler;
 import org.quevedo.client.dao.implementations.DaoJornada;
 import org.quevedo.sharedmodels.Jornada;
 
@@ -16,12 +18,12 @@ public class ServiceJornada {
         this.daoJornada = daoJornada;
     }
 
-    public Either<String, List<Jornada>> getAllJornadas() {
-        return daoJornada.getAllJornadas();
+    public Single<Either<String, List<Jornada>>> getAllJornadas() {
+        return daoJornada.getAllJornadas().observeOn(JavaFxScheduler.platform());
     }
 
-    public Either<String, Jornada> addJornada(LocalDate jornadaDate) {
+    public Single<Either<String, Jornada>> addJornada(LocalDate jornadaDate) {
         String stringDate = jornadaDate.format(ServiceConstants.dateTimeFormatter);
-        return daoJornada.addJornada(stringDate);
+        return daoJornada.addJornada(stringDate).observeOn(JavaFxScheduler.platform());
     }
 }

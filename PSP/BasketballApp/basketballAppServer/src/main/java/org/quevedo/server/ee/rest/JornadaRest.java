@@ -1,6 +1,7 @@
 package org.quevedo.server.ee.rest;
 
 import io.vavr.control.Either;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,7 +18,6 @@ import java.util.List;
 @Path(EEConst.PATH_ADMIN_USERS + EEConst.PATH_REST_JORNADAS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@AdminFilt
 public class JornadaRest {
     private final ServiceJornada serviceJornada;
 
@@ -27,6 +27,7 @@ public class JornadaRest {
     }
 
     @GET
+    @RolesAllowed({EEConst.ADMIN, EEConst.NORMAL})
     public Response getAllJornadas() {
         Either<ServerError, List<Jornada>> result = serviceJornada.getAllJornadas();
         Response response;
@@ -44,6 +45,7 @@ public class JornadaRest {
     }
 
     @POST
+    @RolesAllowed({EEConst.ADMIN})
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response addJornada(@FormParam(EEConst.PARAM_FECHA) String fecha) {
         Either<ServerError, Jornada> result = serviceJornada.addJornada(fecha);

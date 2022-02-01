@@ -4,8 +4,13 @@ import com.example.seriesfollower.data.DataConsts
 import com.example.seriesfollower.data.models.localmodels.SeriesEntity
 import com.example.seriesfollower.data.sources.local.FavoritesDao
 import com.example.seriesfollower.data.sources.remote.RemoteDataSource
+import com.example.seriesfollower.data.utils.NetworkResult
+import com.example.seriesfollower.domain.model.series.general.OwnSeries
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
@@ -17,22 +22,22 @@ class SeriesRepository @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
     private val daoFav: FavoritesDao
 ) {
-    suspend fun getOnlineSeriesById(seriesId: Int) =
-        withContext(ioDispatcher) {
-            remoteDataSource.getSeriesById(seriesId)
-
-        }
+    suspend fun getOnlineSeriesById(seriesId: Int) : Flow<NetworkResult<OwnSeries>> {
+        return flow {
+            emit(NetworkResult.Loading())
+            val result = remoteDataSource.getSeriesById(seriesId)
+            emit(result)
+        }.flowOn(ioDispatcher)
+    }
 
     suspend fun insertFavoriteSeries(toInsert: SeriesEntity) =
         withContext(ioDispatcher) {
             daoFav.insertFavoriteSeries(toInsert)
         }
 
-    suspend fun getAllFavSeries() =
-        withContext(ioDispatcher) {
-            daoFav.getAllSeries()
-        }
-
+    suspend fun getAllFavSeries() = withContext(ioDispatcher){
+        daoFav.getAllSeries()
+    }
     suspend fun getFavSeriesById(seriesId: Int) =
         withContext(ioDispatcher) {
             daoFav.getSeriesById(seriesId)

@@ -21,6 +21,7 @@ public class ServiceMandarMail {
     Configuration generalConfig;
     Session getMailSession;
     MimeMessage generateMailMessage;
+
     @Inject
     public ServiceMandarMail(Configuration generalConfig) {
         this.generalConfig = generalConfig;
@@ -59,7 +60,7 @@ public class ServiceMandarMail {
 
     public void sendConfirmationMail(String correo, String codigoActivacion) {
         try {
-            String mensaje = ServicesConsts.CONFIRMACION_MENSAJE + EEConst.PATH_ACTIVATE + "?" + EEConst.COD_ACTIVACION + "=" + codigoActivacion + ServicesConsts.CONFIRMACION_MENSAJE_2;
+            String mensaje = ServicesConsts.CONFIRMACION_MENSAJE + EEConst.PATH_ACTIVATE + ServicesConsts.QUESTION_MARK + EEConst.COD_ACTIVACION + ServicesConsts.EQUALS + codigoActivacion + ServicesConsts.CONFIRMACION_MENSAJE_2;
             generateAndSendEmail(correo, mensaje, ServicesConsts.MAIL_CONFIRMATION_SUBJECT);
         } catch (MessagingException messagingException) {
             log.error(messagingException.getMessage(), messagingException);
@@ -69,8 +70,8 @@ public class ServiceMandarMail {
     public void sendChangePasswordMail(String changePasswordEmail, String codCambio) {
         try {
             String mensaje =
-                    "<html><h1>Se ha solicitado un cambio de contraseña con este correo</h1><br> Para realizar el cambio pulse en el siguiente enlace <a href=\"http://localhost:8080/basketballAppServer-1.0-SNAPSHOT" +
-                            EEConst.CHANGE_PASS_JSP + "?" + EEConst.COD_PASS + "=" + codCambio + "\">Aqui</a></html>";
+                    ServicesConsts.CORREO_PARTE1 +
+                            EEConst.CHANGE_PASS_JSP + ServicesConsts.QUESTION_MARK + EEConst.COD_PASS + ServicesConsts.EQUALS + codCambio + ServicesConsts.CORREO_PARTE2;
             generateAndSendEmail(changePasswordEmail, mensaje, ServicesConsts.SUBJECT_PASSWORD_CHANGE);
         } catch (MessagingException messagingException) {
             log.error(messagingException.getMessage(), messagingException);

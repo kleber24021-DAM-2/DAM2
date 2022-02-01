@@ -1,12 +1,9 @@
 package org.quevedo.client.gui.controllers;
 
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.vavr.control.Either;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import org.pdfsam.rxjavafx.schedulers.JavaFxScheduler;
+import lombok.extern.log4j.Log4j2;
 import org.quevedo.client.services.ServicesUsuarios;
 import org.quevedo.sharedmodels.usuario.TipoUsuario;
 import org.quevedo.sharedmodels.usuario.UsuarioGetDTO;
@@ -14,8 +11,8 @@ import org.quevedo.sharedmodels.usuario.UsuarioRegisterDTO;
 import retrofit2.HttpException;
 
 import javax.inject.Inject;
-import java.util.List;
 
+@Log4j2
 public class UsuariosController {
     private final ServicesUsuarios servicesUsuarios;
     private final Alert alertError = new Alert(Alert.AlertType.ERROR);
@@ -51,55 +48,50 @@ public class UsuariosController {
             userToRegister.setPasswordConfirmation(txPassword.getText());
             userToRegister.setTipoUsuario(cbUserType.getSelectionModel().getSelectedItem());
 
-
-            Single<Either<String, UsuarioGetDTO>> single = Single.fromCallable(() -> servicesUsuarios.registrarUsuarioAdmin(userToRegister))
-                    .observeOn(JavaFxScheduler.platform())
-                    .subscribeOn(Schedulers.io())
-                    .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
-
-            single.subscribe(result -> result
-                            .peek(user -> {
-                                lvUsers.getItems().add(user);
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION, UserMessages.MSG_EMAIL_SENDED);
-                                alert.showAndWait();
-                            })
-                            .peekLeft(errorMensaje -> {
-                                alertError.setContentText(errorMensaje);
+            servicesUsuarios.registrarUsuarioAdmin(userToRegister)
+                    .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                    .subscribe(result -> result
+                                    .peek(user -> {
+                                        lvUsers.getItems().add(user);
+                                        Alert alert = new Alert(Alert.AlertType.INFORMATION, UserMessages.MSG_EMAIL_SENDED);
+                                        alert.showAndWait();
+                                    })
+                                    .peekLeft(errorMensaje -> {
+                                        alertError.setContentText(errorMensaje);
+                                        alertError.showAndWait();
+                                    }),
+                            throwable -> {
+                                if (throwable instanceof HttpException) {
+                                    alertError.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                                } else {
+                                    alertError.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                                }
+                                log.error(throwable.getMessage(), throwable);
                                 alertError.showAndWait();
-                            }),
-                    throwable -> {
-                        if (throwable instanceof HttpException) {
-                            alertError.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                        } else {
-                            alertError.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                        }
-                        alertError.showAndWait();
-                    });
+                            });
             mainController.getPantallaPrincipal().setCursor(Cursor.WAIT);
         }
     }
 
     public void loadUsersList() {
-        Single<Either<String, List<UsuarioGetDTO>>> single = Single
-                .fromCallable(servicesUsuarios::getAllUsers)
-                .subscribeOn(Schedulers.io())
-                .observeOn(JavaFxScheduler.platform())
-                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
 
-        single.subscribe(result -> result
-                        .peek(userList -> lvUsers.getItems().setAll(userList))
-                        .peekLeft(errorMensaje -> {
-                            alertError.setContentText(errorMensaje);
+        servicesUsuarios.getAllUsers()
+                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                .subscribe(result -> result
+                                .peek(userList -> lvUsers.getItems().setAll(userList))
+                                .peekLeft(errorMensaje -> {
+                                    alertError.setContentText(errorMensaje);
+                                    alertError.showAndWait();
+                                }),
+                        throwable -> {
+                            if (throwable instanceof HttpException) {
+                                alertError.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                            } else {
+                                alertError.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                            }
+                            log.error(throwable.getMessage(), throwable);
                             alertError.showAndWait();
-                        }),
-                throwable -> {
-                    if (throwable instanceof HttpException) {
-                        alertError.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                    } else {
-                        alertError.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                    }
-                    alertError.showAndWait();
-                });
+                        });
         mainController.getPantallaPrincipal().setCursor(Cursor.WAIT);
 
         cbUserType.getItems().setAll(TipoUsuario.values());

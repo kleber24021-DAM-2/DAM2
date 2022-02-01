@@ -8,6 +8,6 @@ import com.example.seriesfollower.domain.model.queryresult.QueryInfo
 import javax.inject.Inject
 
 class GetTrendingResults @Inject constructor(private val repository: MultiResultRepository) {
-    suspend fun invoke(page: Int): NetworkResult<QueryInfo> = repository.getTrendingResults(page)
+    suspend fun invoke(page: Int) = repository.getTrendingResults(page)
 }
 

@@ -1,6 +1,8 @@
 package org.quevedo.client.services;
 
+import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
+import org.pdfsam.rxjavafx.schedulers.JavaFxScheduler;
 import org.quevedo.client.dao.implementations.DaoEquipos;
 import org.quevedo.sharedmodels.Equipo;
 
@@ -15,12 +17,12 @@ public class ServiceEquipos {
         this.daoEquipos = daoEquipos;
     }
 
-    public Either<String, List<Equipo>> getAllEquipos() {
-        return daoEquipos.getAllEquipos();
+    public Single<Either<String, List<Equipo>>> getAllEquipos() {
+        return daoEquipos.getAllEquipos().observeOn(JavaFxScheduler.platform());
     }
 
-    public Either<String, Equipo> registerEquipo(String nombreEquipo) {
-        return daoEquipos.registerEquipo(nombreEquipo);
+    public Single<Either<String, Equipo>> registerEquipo(String nombreEquipo) {
+        return daoEquipos.registerEquipo(nombreEquipo).observeOn(JavaFxScheduler.platform());
     }
 
 }

@@ -2,11 +2,15 @@ package com.example.seriesfollower.data.repositories
 
 import com.example.seriesfollower.data.DataConsts
 import com.example.seriesfollower.data.models.localmodels.MovieEntity
-import com.example.seriesfollower.data.models.localmodels.SeriesEntity
 import com.example.seriesfollower.data.sources.local.FavoritesDao
 import com.example.seriesfollower.data.sources.remote.RemoteDataSource
+import com.example.seriesfollower.data.utils.NetworkResult
+import com.example.seriesfollower.domain.model.movies.OwnMovie
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
@@ -18,10 +22,13 @@ class MoviesRepository @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,
     private val daoFav: FavoritesDao
 ) {
-    suspend fun getOnlineMovieById(movieId: Int) =
-        withContext(ioDispatcher) {
-            remoteDataSource.getMovieById(movieId)
-        }
+    suspend fun getOnlineMovieById(movieId: Int): Flow<NetworkResult<OwnMovie>> {
+        return flow {
+            emit(NetworkResult.Loading())
+            val result = remoteDataSource.getMovieById(movieId)
+            emit(result)
+        }.flowOn(ioDispatcher)
+    }
 
     suspend fun insertFavoriteMovie(toInsert: MovieEntity) =
         withContext(ioDispatcher) {
@@ -29,21 +36,16 @@ class MoviesRepository @Inject constructor(
         }
 
 
-    suspend fun getAllFavMovies() =
-        withContext(ioDispatcher) {
-            daoFav.getAllMovies()
-        }
+    fun getAllFavMovies() = daoFav.getAllMovies()
 
 
-    suspend fun getFavMovieById(movieId: Int) =
-        withContext(ioDispatcher) {
-            daoFav.getMovieById(movieId)
-        }
+    suspend fun getFavMovieById(movieId: Int) = withContext(ioDispatcher) {
+        daoFav.getMovieById(movieId)
+    }
 
 
     suspend fun isMovieFavorite(movieId: Int) =
         withContext(ioDispatcher) {
-
             daoFav.favoriteMovieExists(movieId)
         }
 

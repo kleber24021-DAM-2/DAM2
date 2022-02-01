@@ -1,21 +1,18 @@
 package org.quevedo.client.gui.controllers;
 
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.vavr.control.Either;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import org.pdfsam.rxjavafx.schedulers.JavaFxScheduler;
+import lombok.extern.log4j.Log4j2;
 import org.quevedo.client.services.ServicesUsuarios;
 import org.quevedo.sharedmodels.usuario.TipoUsuario;
-import org.quevedo.sharedmodels.usuario.UsuarioGetDTO;
 import org.quevedo.sharedmodels.usuario.UsuarioRegisterDTO;
 import retrofit2.HttpException;
 
 import javax.inject.Inject;
 
+@Log4j2
 public class RegisterController {
     private final ServicesUsuarios servicesUsuarios;
     private final Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -49,28 +46,27 @@ public class RegisterController {
             usuarioRegister.setPassword(txPass.getText());
             usuarioRegister.setPasswordConfirmation(txPassConf.getText());
             usuarioRegister.setTipoUsuario(TipoUsuario.NORMAL);
-            Single<Either<String, UsuarioGetDTO>> single = Single
-                    .fromCallable(() -> servicesUsuarios.registrarUsuarioNormal(usuarioRegister))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(JavaFxScheduler.platform())
-                    .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
-            single.subscribe(result -> result
-                            .peek(user -> {
-                                new Alert(Alert.AlertType.INFORMATION, UserMessages.MSG_INFO_EMAIL).showAndWait();
-                                mainController.showLogin();
-                            })
-                            .peekLeft(error -> {
-                                alert.setContentText(error);
+
+            servicesUsuarios.registrarUsuarioNormal(usuarioRegister)
+                    .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                    .subscribe(result -> result
+                                    .peek(user -> {
+                                        new Alert(Alert.AlertType.INFORMATION, UserMessages.MSG_INFO_EMAIL).showAndWait();
+                                        mainController.showLogin();
+                                    })
+                                    .peekLeft(error -> {
+                                        alert.setContentText(error);
+                                        alert.showAndWait();
+                                    }),
+                            throwable -> {
+                                if (throwable instanceof HttpException) {
+                                    alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                                } else {
+                                    alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                                }
+                                log.error(throwable.getMessage(), throwable);
                                 alert.showAndWait();
-                            }),
-                    throwable -> {
-                        if (throwable instanceof HttpException) {
-                            alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                        } else {
-                            alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                        }
-                        alert.showAndWait();
-                    });
+                            });
             mainController.getPantallaPrincipal().setCursor(Cursor.WAIT);
         }
     }

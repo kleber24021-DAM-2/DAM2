@@ -15,6 +15,8 @@ module basketballAppClient {
     requires common;
     requires io.reactivex.rxjava3;
     requires org.pdfsam.rxjavafx;
+    requires retrofit2.converter.scalars;
+    requires retrofit2.adapter.rxjava3;
 
     exports org.quevedo.client.gui.di;
     exports org.quevedo.client.dao.implementations;

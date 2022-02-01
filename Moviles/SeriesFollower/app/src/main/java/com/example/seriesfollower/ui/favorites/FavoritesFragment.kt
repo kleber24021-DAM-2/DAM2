@@ -6,6 +6,9 @@ import android.widget.Toast
 import androidx.appcompat.view.ActionMode
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +18,8 @@ import com.example.seriesfollower.domain.model.favorite.FavoriteItem
 import com.example.seriesfollower.domain.model.queryresult.ResultType
 import com.example.seriesfollower.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FavoritesFragment : Fragment() {
@@ -109,12 +114,20 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun setObservers() {
-        favViewModel.favorites.observe(this, {
-            favAdapter.submitList(it)
-        })
-        favViewModel.error.observe(this, {
-            Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
-        })
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                favViewModel.favorites.collect{
+                    favAdapter.submitList(it)
+                }
+            }
+        }
+        lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                favViewModel.error.collect {
+                    Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun configContextBar() = object : ActionMode.Callback {

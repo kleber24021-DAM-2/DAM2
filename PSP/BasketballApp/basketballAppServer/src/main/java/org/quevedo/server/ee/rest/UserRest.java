@@ -1,18 +1,21 @@
 package org.quevedo.server.ee.rest;
 
 import io.vavr.control.Either;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.security.enterprise.SecurityContext;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.log4j.Log4j2;
 import org.quevedo.server.dao.model.Usuario;
-import org.quevedo.server.ee.filters.AdminFilt;
 import org.quevedo.server.ee.utils.EEConst;
 import org.quevedo.server.services.ServiceMandarMail;
 import org.quevedo.server.services.ServiceUsuarios;
 import org.quevedo.sharedmodels.servererror.ServerError;
 import org.quevedo.sharedmodels.servererror.TipoError;
+import org.quevedo.sharedmodels.usuario.LoginResultDTO;
 import org.quevedo.sharedmodels.usuario.TipoUsuario;
 import org.quevedo.sharedmodels.usuario.UsuarioGetDTO;
 import org.quevedo.sharedmodels.usuario.UsuarioRegisterDTO;
@@ -28,15 +31,35 @@ public class UserRest {
 
     private final ServiceUsuarios serviceUsuarios;
     private final ServiceMandarMail serviceMandarMail;
+    private final SecurityContext securityContext;
 
     @Inject
-    public UserRest(ServiceUsuarios serviceUsuarios, ServiceMandarMail serviceMandarMail) {
+    public UserRest(ServiceUsuarios serviceUsuarios,
+                    ServiceMandarMail serviceMandarMail,
+                    @Context SecurityContext securityContext) {
         this.serviceUsuarios = serviceUsuarios;
         this.serviceMandarMail = serviceMandarMail;
+        this.securityContext = securityContext;
     }
 
     @GET
-    @AdminFilt
+    @Path(EEConst.LOGIN_PATH)
+    @RolesAllowed({EEConst.ADMIN, EEConst.NORMAL})
+    public Response getCurrentUser() {
+        LoginResultDTO loginResult = new LoginResultDTO();
+        loginResult.setLogged(true);
+        loginResult.setCorreo(securityContext.getCallerPrincipal().getName());
+        loginResult.setMessage(EEConst.LOGUEADO_CORRECTAMENTE);
+        if (securityContext.isCallerInRole(EEConst.ADMIN)) {
+            loginResult.setNivelAcceso(TipoUsuario.ADMIN);
+        } else {
+            loginResult.setNivelAcceso(TipoUsuario.NORMAL);
+        }
+        return Response.ok(loginResult).build();
+    }
+
+    @GET
+    @RolesAllowed({EEConst.ADMIN})
     public Response getAllUsers() {
         Either<String, List<UsuarioGetDTO>> result = serviceUsuarios.getAllUsuarios();
         Response response;
@@ -51,7 +74,7 @@ public class UserRest {
 
     @POST
     @Path(EEConst.PATH_ADMIN_USERS)
-    @AdminFilt
+    @RolesAllowed({EEConst.ADMIN})
     public Response registerUser(UsuarioRegisterDTO receivedUser) {
         return registrarUsuario(receivedUser);
     }

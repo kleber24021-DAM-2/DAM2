@@ -31,6 +31,10 @@ public class ServicesConsts {
     public static final String PBKDF_2_PASSWORD_HASH_SALT_SIZE_BYTES_VALUE = "32";
     public static final String PBKDF_2_PASSWORD_HASH_KEY_SIZE_BYTES = "Pbkdf2PasswordHash.KeySizeBytes";
     public static final String PBKDF_2_PASSWORD_HASH_KEY_SIZE_BYTES_VALUE = "32";
+    public static final String QUESTION_MARK = "?";
+    public static final String EQUALS = "=";
+    public static final String CORREO_PARTE1 = "<html><h1>Se ha solicitado un cambio de contraseña con este correo</h1><br> Para realizar el cambio pulse en el siguiente enlace <a href=\"http://localhost:8080/basketballAppServer-1.0-SNAPSHOT";
+    public static final String CORREO_PARTE2 = "\">Aqui</a></html>";
 
     private ServicesConsts() {
     }

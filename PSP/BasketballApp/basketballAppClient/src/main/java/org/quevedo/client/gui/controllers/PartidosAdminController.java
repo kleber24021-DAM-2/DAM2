@@ -1,15 +1,12 @@
 package org.quevedo.client.gui.controllers;
 
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import io.vavr.control.Either;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import org.pdfsam.rxjavafx.schedulers.JavaFxScheduler;
+import lombok.extern.log4j.Log4j2;
 import org.quevedo.client.services.ServiceEquipos;
 import org.quevedo.client.services.ServiceJornada;
 import org.quevedo.client.services.ServicePartidos;
@@ -21,8 +18,8 @@ import org.quevedo.sharedmodels.partido.UpdateResultPartidoDTO;
 import retrofit2.HttpException;
 
 import javax.inject.Inject;
-import java.util.List;
 
+@Log4j2
 public class PartidosAdminController {
 
     private final ServicePartidos servicePartidos;
@@ -42,6 +39,7 @@ public class PartidosAdminController {
     private TextField resultadoLocal;
     @FXML
     private TextField resultadoVisitante;
+
     @Inject
     public PartidosAdminController(ServicePartidos servicePartidos, ServiceJornada serviceJornada, ServiceEquipos serviceEquipos) {
         this.servicePartidos = servicePartidos;
@@ -69,26 +67,25 @@ public class PartidosAdminController {
                 }
             }
 
-            Single<Either<String, Partido>> singleRegisterPartido = Single
-                    .fromCallable(() -> servicePartidos.addPartido(partidoToRegister))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(JavaFxScheduler.platform())
-                    .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
 
-            singleRegisterPartido.subscribe(result -> result
-                            .peek(partido -> lvPartidos.getItems().add(partido))
-                            .peekLeft(errorMensaje -> {
-                                alert.setContentText(errorMensaje);
+            servicePartidos.addPartido(partidoToRegister)
+                    .doFinally(() -> this.mainController
+                            .getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                    .subscribe(result -> result
+                                    .peek(partido -> lvPartidos.getItems().add(partido))
+                                    .peekLeft(errorMensaje -> {
+                                        alert.setContentText(errorMensaje);
+                                        alert.showAndWait();
+                                    }),
+                            throwable -> {
+                                if (throwable instanceof HttpException) {
+                                    alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                                } else {
+                                    alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                                }
+                                log.error(throwable.getMessage(), throwable);
                                 alert.showAndWait();
-                            }),
-                    throwable -> {
-                        if (throwable instanceof HttpException) {
-                            alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                        } else {
-                            alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                        }
-                        alert.showAndWait();
-                    });
+                            });
             mainController.getPantallaPrincipal().setCursor(Cursor.WAIT);
         }
     }
@@ -115,28 +112,26 @@ public class PartidosAdminController {
 
             int lvIndex = lvPartidos.getSelectionModel().getSelectedIndex();
 
-            Single<Either<String, Partido>> singleResultPartido = Single
-                    .fromCallable(() -> servicePartidos.registerResult(newResult))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(JavaFxScheduler.platform())
-                    .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
-
-            singleResultPartido.subscribe(result -> result
-                            .peek(partido -> {
-                                lvPartidos.getItems().remove(lvIndex);
-                                lvPartidos.getItems().add(lvIndex, partido);
-                            }).peekLeft(errorMensaje -> {
-                                alert.setContentText(errorMensaje);
+            servicePartidos.registerResult(newResult)
+                    .doFinally(() -> this.mainController
+                            .getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                    .subscribe(result -> result
+                                    .peek(partido -> {
+                                        lvPartidos.getItems().remove(lvIndex);
+                                        lvPartidos.getItems().add(lvIndex, partido);
+                                    }).peekLeft(errorMensaje -> {
+                                        alert.setContentText(errorMensaje);
+                                        alert.showAndWait();
+                                    }),
+                            throwable -> {
+                                if (throwable instanceof HttpException) {
+                                    alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                                } else {
+                                    alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                                }
+                                log.error(throwable.getMessage(), throwable);
                                 alert.showAndWait();
-                            }),
-                    throwable -> {
-                        if (throwable instanceof HttpException) {
-                            alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                        } else {
-                            alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                        }
-                        alert.showAndWait();
-                    });
+                            });
             mainController.getPantallaPrincipal().setCursor(Cursor.WAIT);
         } else {
             alert.setContentText(UserMessages.MSG_PARTIDO_RESULT_INFO);
@@ -145,66 +140,63 @@ public class PartidosAdminController {
     }
 
     public void loadAllListas() {
-        Single<Either<String, List<Partido>>> singlePartidos = Single
-                .fromCallable(servicePartidos::getAllPartidos)
-                .subscribeOn(Schedulers.io())
-                .observeOn(JavaFxScheduler.platform())
-                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
-        singlePartidos.subscribe(result -> result
-                        .peek(partidos -> lvPartidos.getItems().setAll(partidos))
-                        .peekLeft(errorMensaje -> {
-                            alert.setContentText(errorMensaje);
+
+        servicePartidos.getAllPartidos()
+                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                .subscribe(result -> result
+                                .peek(partidos -> lvPartidos.getItems().setAll(partidos))
+                                .peekLeft(errorMensaje -> {
+                                    alert.setContentText(errorMensaje);
+                                    alert.showAndWait();
+                                }),
+                        throwable -> {
+                            if (throwable instanceof HttpException) {
+                                alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                            } else {
+                                alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                            }
+                            log.error(throwable.getMessage(), throwable);
                             alert.showAndWait();
-                        }),
-                throwable -> {
-                    if (throwable instanceof HttpException) {
-                        alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                    } else {
-                        alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                    }
-                    alert.showAndWait();
-                });
-        Single<Either<String, List<Jornada>>> singleJornada = Single
-                .fromCallable(serviceJornada::getAllJornadas)
-                .subscribeOn(Schedulers.io())
-                .observeOn(JavaFxScheduler.platform())
-                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
-        singleJornada.subscribe(result -> result
-                        .peek(jornadas -> cbJornada.getItems().setAll(jornadas))
-                        .peekLeft(errorMensaje -> {
-                            alert.setContentText(errorMensaje);
+                        });
+
+        serviceJornada.getAllJornadas()
+                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                .subscribe(result -> result
+                                .peek(jornadas -> cbJornada.getItems().setAll(jornadas))
+                                .peekLeft(errorMensaje -> {
+                                    alert.setContentText(errorMensaje);
+                                    alert.showAndWait();
+                                }),
+                        throwable -> {
+                            if (throwable instanceof HttpException) {
+                                alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                            } else {
+                                alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                            }
+                            log.error(throwable.getMessage(), throwable);
                             alert.showAndWait();
-                        }),
-                throwable -> {
-                    if (throwable instanceof HttpException) {
-                        alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                    } else {
-                        alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                    }
-                    alert.showAndWait();
-                });
-        Single<Either<String, List<Equipo>>> singleEquipos = Single
-                .fromCallable(serviceEquipos::getAllEquipos)
-                .subscribeOn(Schedulers.io())
-                .observeOn(JavaFxScheduler.platform())
-                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT));
-        singleEquipos.subscribe(result -> result
-                        .peek(equipoList -> {
-                            cbEquipoLocal.getItems().setAll(equipoList);
-                            cbEquipoVisitante.getItems().setAll(equipoList);
-                        })
-                        .peekLeft(errorMensaje -> {
-                            alert.setContentText(errorMensaje);
+                        });
+
+        serviceEquipos.getAllEquipos()
+                .doFinally(() -> mainController.getPantallaPrincipal().setCursor(Cursor.DEFAULT))
+                .subscribe(result -> result
+                                .peek(equipoList -> {
+                                    cbEquipoLocal.getItems().setAll(equipoList);
+                                    cbEquipoVisitante.getItems().setAll(equipoList);
+                                })
+                                .peekLeft(errorMensaje -> {
+                                    alert.setContentText(errorMensaje);
+                                    alert.showAndWait();
+                                }),
+                        throwable -> {
+                            if (throwable instanceof HttpException) {
+                                alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
+                            } else {
+                                alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
+                            }
+                            log.error(throwable.getMessage(), throwable);
                             alert.showAndWait();
-                        }),
-                throwable -> {
-                    if (throwable instanceof HttpException) {
-                        alert.setContentText(UserMessages.MSG_DB_NO_CONNECTION);
-                    } else {
-                        alert.setContentText(UserMessages.MSG_UNEXPECTED_ERROR);
-                    }
-                    alert.showAndWait();
-                });
+                        });
         mainController.getPantallaPrincipal().setCursor(Cursor.WAIT);
     }
 

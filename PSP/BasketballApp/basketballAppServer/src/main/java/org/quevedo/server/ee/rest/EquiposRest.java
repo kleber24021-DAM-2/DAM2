@@ -1,6 +1,7 @@
 package org.quevedo.server.ee.rest;
 
 import io.vavr.control.Either;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,7 +18,7 @@ import java.util.List;
 @Path(EEConst.PATH_ADMIN_USERS + EEConst.PATH_REST_EQUIPOS)
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@AdminFilt
+
 public class EquiposRest {
     private final ServiceEquipos serviceEquipos;
 
@@ -27,6 +28,7 @@ public class EquiposRest {
     }
 
     @GET
+    @RolesAllowed({EEConst.ADMIN, EEConst.NORMAL})
     public Response getAllEquipos() {
         Either<ServerError, List<Equipo>> result = serviceEquipos.getAllEquipos();
         Response response;
@@ -40,6 +42,7 @@ public class EquiposRest {
     }
 
     @POST
+    @RolesAllowed({EEConst.ADMIN})
     public Response createNewEquipo(@QueryParam(EEConst.QUERY_PARAM_NOMBRE) String nombreEquipo) {
         Either<ServerError, Equipo> result = serviceEquipos.addEquipo(nombreEquipo);
         Response response;

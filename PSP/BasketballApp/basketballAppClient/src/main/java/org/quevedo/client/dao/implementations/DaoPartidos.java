@@ -1,6 +1,7 @@
 package org.quevedo.client.dao.implementations;
 
 import com.google.gson.Gson;
+import io.reactivex.rxjava3.core.Single;
 import io.vavr.control.Either;
 import org.quevedo.client.dao.retrofit.interfaces.PartidosApi;
 import org.quevedo.sharedmodels.partido.Partido;
@@ -20,21 +21,21 @@ public class DaoPartidos extends DaoGeneric {
         this.gson = gson;
     }
 
-    public Either<String, List<Partido>> getAllPartidos() {
-        return safeApiCall(partidosApi.getAllPartidos(), gson);
+    public Single<Either<String, List<Partido>>> getAllPartidos() {
+        return safeSingleApiCall(partidosApi.getAllPartidos(), gson);
     }
 
-    public Either<String, List<Partido>> getFilteredPartidos(String nombrePartidos, String numeroJornada) {
-        return safeApiCall(partidosApi.getFilteredPartidos(nombrePartidos, numeroJornada), gson);
+    public Single<Either<String, List<Partido>>> getFilteredPartidos(String nombrePartidos, String numeroJornada) {
+        return safeSingleApiCall(partidosApi.getFilteredPartidos(nombrePartidos, numeroJornada), gson);
     }
 
     //Funciones admin
 
-    public Either<String, Partido> addPartido(RegisterPartidoDTO partidoToRegister) {
-        return safeApiCall(partidosApi.addPartido(partidoToRegister), gson);
+    public Single<Either<String, Partido>> addPartido(RegisterPartidoDTO partidoToRegister) {
+        return safeSingleApiCall(partidosApi.addPartido(partidoToRegister), gson);
     }
 
-    public Either<String, Partido> registerResult(UpdateResultPartidoDTO partidoResult) {
-        return safeApiCall(partidosApi.registerResult(partidoResult), gson);
+    public Single<Either<String, Partido>> registerResult(UpdateResultPartidoDTO partidoResult) {
+        return safeSingleApiCall(partidosApi.registerResult(partidoResult), gson);
     }
 }
