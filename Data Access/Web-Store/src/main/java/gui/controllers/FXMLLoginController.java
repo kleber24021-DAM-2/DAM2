@@ -44,9 +44,11 @@ public class FXMLLoginController implements Initializable {
     
     
     public void clickLogin(){
-        User inputUser = new User();
-        inputUser.setUsername(fxUser.getText());
-        inputUser.setPassword(passBox.getText());
+        User inputUser = User.builder()
+                .username(fxUser.getText())
+                .password(passBox.getText())
+                .build();
+
         User fetchedUser = userService.checkUserPassword(inputUser);
         if (fetchedUser != null){
 

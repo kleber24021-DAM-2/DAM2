@@ -9,8 +9,8 @@
 <!-- Configuration of the database access information-->
     <entry key="driver">com.mysql.jdbc.Driver</entry>
 <!--    <entry key="urlDB">jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andrePadilla_WebStore</entry>-->
-<!--    <entry key="urlDB">mongodb://informatica.iesquevedo.es:2323</entry>-->
-    <entry key="urlDB">mongodb://10.0.0.1:2323</entry>
+    <entry key="urlDB">mongodb://informatica.iesquevedo.es:2323</entry>
+<!--    <entry key="urlDB">mongodb://10.0.0.1:2323</entry>-->
 <!--    <entry key="urlDB">jdbc:mysql://localhost:3306/WebStore</entry>-->
     <entry key="user_name">root</entry>
     <entry key="password">quevedo2dam</entry>
