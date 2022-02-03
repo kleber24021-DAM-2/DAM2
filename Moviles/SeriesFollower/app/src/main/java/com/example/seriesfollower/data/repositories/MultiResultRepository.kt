@@ -1,6 +1,8 @@
 package com.example.seriesfollower.data.repositories
 
 import com.example.seriesfollower.data.DataConsts
+import com.example.seriesfollower.data.models.localmodels.toEntity
+import com.example.seriesfollower.data.models.localmodels.toUiModel
 import com.example.seriesfollower.data.sources.local.FavoritesDao
 import com.example.seriesfollower.data.sources.remote.RemoteDataSource
 import com.example.seriesfollower.data.utils.NetworkResult
@@ -28,10 +30,20 @@ class MultiResultRepository @Inject constructor(
 
     fun getTrendingResults(page: Int): Flow<NetworkResult<QueryInfo>> {
         return flow {
+            emit(NetworkResult.Success<QueryInfo>(
+                QueryInfo(1,
+                    1,
+                    20,
+                    daoFav.getAllTrending()
+                        .map { it.toUiModel() })
+            ))
             emit(NetworkResult.Loading())
             val result = remoteDataSource.getTrendingResults(page)
             if (result is NetworkResult.Success) {
-                //TODO cacheo
+                result.data?.let { queryInfo ->
+                    daoFav.deleteAllTrendings()
+                    daoFav.insertTrendingResults(queryInfo.results.map { it.toEntity() })
+                }
             }
             emit(result)
         }.flowOn(ioDispatcher)

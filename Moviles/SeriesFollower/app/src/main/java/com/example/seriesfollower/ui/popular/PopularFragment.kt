@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.seriesfollower.databinding.FragmentPopularBinding
@@ -15,6 +18,8 @@ import com.example.seriesfollower.domain.model.queryresult.ResultType
 import com.example.seriesfollower.ui.utils.query.RVPseudoPaginator
 import com.example.seriesfollower.ui.utils.query.ResultAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PopularFragment : Fragment() {
@@ -42,7 +47,7 @@ class PopularFragment : Fragment() {
         setRecyclerViewAdapter()
         setObservers()
         setListeners()
-        viewModel.getTrendingResults(1)
+        viewModel.handleEvent(PopularContract.Event.PedirDatos(1))
 
     }
 
@@ -66,22 +71,34 @@ class PopularFragment : Fragment() {
                 get() = actualPage == limite
 
             override fun loadMore(start: Long, count: Long) {
-                viewModel.getTrendingResults(start.toInt())
+                viewModel.handleEvent(PopularContract.Event.PedirDatos(start.toInt()))
             }
 
         })
     }
 
     private fun setObservers() {
-        viewModel.results.observe(this, {
-            actualPage = it.page
-            limite = it.totalPages
-            resultAdapter.submitList(it.results)
-            binding.rvMovies.layoutManager?.scrollToPosition(1)
-        })
-        viewModel.error.observe(this, { error ->
-            Toast.makeText(binding.root.context, error, Toast.LENGTH_SHORT).show()
-        })
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    binding.loading.visibility =
+                        if (state.isLoading){
+                            View.VISIBLE
+                        }else{
+                            View.GONE
+                        }
+                    state.favoriteItems?.let {
+                        resultAdapter.submitList(it.results)
+                        actualPage = it.page
+                        limite = it.totalPages
+                    }
+                    state.error?.let {
+                        Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
+                        viewModel.handleEvent(PopularContract.Event.ErrorMostrado)
+                    }
+                }
+            }
+        }
     }
 
     private fun showItemDetails(item: OwnResult) {

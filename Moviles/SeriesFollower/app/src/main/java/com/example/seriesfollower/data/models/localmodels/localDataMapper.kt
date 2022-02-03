@@ -2,6 +2,7 @@ package com.example.seriesfollower.data.models.localmodels
 
 import com.example.seriesfollower.domain.model.favorite.FavoriteItem
 import com.example.seriesfollower.domain.model.movies.OwnMovie
+import com.example.seriesfollower.domain.model.queryresult.OwnResult
 import com.example.seriesfollower.domain.model.queryresult.ResultType
 import com.example.seriesfollower.domain.model.series.general.OwnSeries
 import java.time.LocalDate
@@ -41,6 +42,18 @@ fun SeriesEntity.toUiModel() : FavoriteItem{
         voteAverage,
         ResultType.TV,
         nextEpisodeToAir
+    )
+}
+
+fun TrendingResultsEntity.toUiModel() : OwnResult{
+    return OwnResult(
+        id, title, popularity, voteAverage, resultType, mainImage
+    )
+}
+
+fun OwnResult.toEntity() : TrendingResultsEntity{
+    return TrendingResultsEntity(
+        id, title, popularity, voteAverage, resultType, mainImage
     )
 }
 

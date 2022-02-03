@@ -1,17 +1,16 @@
 package com.example.seriesfollower.ui.movie
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.seriesfollower.data.utils.NetworkResult
-import com.example.seriesfollower.domain.model.movies.OwnMovie
 import com.example.seriesfollower.domain.usecases.AddFavoriteItem
 import com.example.seriesfollower.domain.usecases.CheckItemFavorite
 import com.example.seriesfollower.domain.usecases.EraseFavoriteItem
 import com.example.seriesfollower.domain.usecases.GetMovieById
 import com.example.seriesfollower.ui.UserMessages
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,51 +21,75 @@ class MovieViewModel @Inject constructor(
     private val addFavoriteItem: AddFavoriteItem,
     private val eraseFavoriteItem: EraseFavoriteItem
 ) : ViewModel() {
-    private val _movie = MutableLiveData<OwnMovie>()
-    val movie: LiveData<OwnMovie> get() = _movie
 
-    private val _isFavorite = MutableLiveData<Boolean>()
-    val isFavorite: LiveData<Boolean> get() = _isFavorite
+    private val _uiState: MutableStateFlow<MoviesContract.State> by lazy {
+        MutableStateFlow(MoviesContract.State())
+    }
+    val uiState: StateFlow<MoviesContract.State> = _uiState
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> get() = _error
+    private val _error = Channel<String>()
+    val error = _error.receiveAsFlow()
 
-    fun getMovieById(movieInt: Int) {
-        viewModelScope.launch {
-
-            when (val result = useGetMovieById.invoke(movieInt)) {
-                is NetworkResult.Error -> _error.postValue(
-                    result.message ?: UserMessages.UNEXPECTED_DB_ERROR
-                )
-                is NetworkResult.Success -> {
-                    result.data.let {
-                        if (it == null) {
-                            _error.postValue(UserMessages.UNEXPECTED_DB_ERROR)
-                        } else {
-                            _isFavorite.postValue(checkItemFavorite.invoke(it))
-                            _movie.postValue(it)
+    fun handleEvent(event: MoviesContract.Event) {
+        when (event) {
+            is MoviesContract.Event.GetMovie -> {
+                viewModelScope.launch {
+                    useGetMovieById
+                        .invoke(event.movieId)
+                        .catch(action = { cause ->
+                            _error.send(
+                                cause.message ?: UserMessages.UNEXPECTED_DB_ERROR
+                            )
+                        })
+                        .collect { result ->
+                            when (result) {
+                                is NetworkResult.Error -> {
+                                    _uiState.update { it.copy(error = result.message) }
+                                }
+                                is NetworkResult.Loading -> {
+                                    _uiState.update {
+                                        it.copy(isLoading = true)
+                                    }
+                                }
+                                is NetworkResult.Success -> {
+                                    _uiState.update { state ->
+                                        state.copy(
+                                            movie = result.data,
+                                            isLoading = false,
+                                            isFavorite = result.data?.let {
+                                                checkItemFavorite.invoke(it)
+                                            } ?: false
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                }
+            }
+            is MoviesContract.Event.AddMovieToFavorite -> {
+                viewModelScope.launch {
+                    _uiState.value.movie?.let {
+                        addFavoriteItem.invoke(it)
+                        _uiState.update { state ->
+                            state.copy(isFavorite = true)
                         }
                     }
                 }
-                is NetworkResult.Loading -> _error.postValue(result.message ?: UserMessages.LOADING)
             }
-        }
-    }
-
-    fun addFavoriteMovie() {
-        viewModelScope.launch {
-            movie.value?.let {
-                addFavoriteItem.invoke(it)
-                _isFavorite.postValue(true)
+            is MoviesContract.Event.RemoveMovieFavorite -> {
+                viewModelScope.launch {
+                    _uiState.value.movie?.let {
+                        eraseFavoriteItem.invoke(it)
+                        _uiState.update { state ->
+                            state.copy(isFavorite = false)
+                        }
+                    }
+                }
             }
-        }
-    }
-
-    fun removeFavoriteMovie() {
-        viewModelScope.launch {
-            movie.value?.let {
-                eraseFavoriteItem.invoke(it)
-                _isFavorite.postValue(false)
+            is MoviesContract.Event.ErrorMostrado -> {
+                _uiState.update {
+                    it.copy(error = null)
+                }
             }
         }
     }

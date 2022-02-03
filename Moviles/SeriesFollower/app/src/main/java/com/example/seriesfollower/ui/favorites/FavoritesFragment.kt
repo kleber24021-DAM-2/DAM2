@@ -51,7 +51,7 @@ class FavoritesFragment : Fragment() {
         setObservers()
         val touchHelper = ItemTouchHelper(favAdapter.swipeGesture)
         touchHelper.attachToRecyclerView(binding.rvFavMovies)
-        favViewModel.getAllFavs()
+        favViewModel.handleEvents(FavoritesContract.Event.GetFavorites)
     }
 
     private fun setRecyclerViewsAdapter() {
@@ -89,7 +89,7 @@ class FavoritesFragment : Fragment() {
                 }
 
                 override fun deleteFav(item: FavoriteItem) {
-                    favViewModel.deleteFavorite(item)
+                    favViewModel.handleEvents(FavoritesContract.Event.BorrarFavorito(item))
                 }
 
                 override fun changeBarNumber() {
@@ -116,15 +116,12 @@ class FavoritesFragment : Fragment() {
     private fun setObservers() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                favViewModel.favorites.collect{
-                    favAdapter.submitList(it)
-                }
-            }
-        }
-        lifecycleScope.launch{
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                favViewModel.error.collect {
-                    Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
+                favViewModel.uiState.collect{ state ->
+                    favAdapter.submitList(state.favorites)
+                    state.error?.let{
+                        Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
+                        favViewModel.handleEvents(FavoritesContract.Event.ErrorMostrado)
+                    }
                 }
             }
         }

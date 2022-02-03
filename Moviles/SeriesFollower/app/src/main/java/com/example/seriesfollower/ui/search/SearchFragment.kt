@@ -10,6 +10,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.seriesfollower.GeneralConstants
@@ -19,6 +22,8 @@ import com.example.seriesfollower.domain.model.queryresult.ResultType
 import com.example.seriesfollower.ui.utils.query.RVPseudoPaginator
 import com.example.seriesfollower.ui.utils.query.ResultAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -69,13 +74,13 @@ class SearchFragment : Fragment() {
                 get() = actualPage == limite
 
             override fun loadMore(start: Long, count: Long) {
-                searchViewModel.getQueryResult(actualQuery,start.toInt())
+                searchViewModel.handleEvent(SearchContract.Event.GetSearchResults(actualQuery,start.toInt()))
             }
         })
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(inputText: String?): Boolean {
                 inputText?.let{
-                    searchViewModel.getQueryResult(it, actualPage)
+                    searchViewModel.handleEvent(SearchContract.Event.GetSearchResults(it, actualPage))
                     actualQuery = it
                 }
                 return true
@@ -84,7 +89,7 @@ class SearchFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let{
                     if (it.isNotEmpty() || it.isNotBlank()){
-                        searchViewModel.getQueryResult(it, actualPage)
+                        searchViewModel.handleEvent(SearchContract.Event.GetSearchResults(it, actualPage))
                         actualQuery = it
                     }
                 }
@@ -101,14 +106,27 @@ class SearchFragment : Fragment() {
     }
 
     private fun setObservers(){
-        searchViewModel.result.observe(this, {
-            actualPage = it.page
-            limite = it.totalPages
-            resultAdapter.submitList(it.results)
-        })
-        searchViewModel.error.observe(this, {
-            Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
-        })
+        lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                searchViewModel.uiState.collect{state ->
+                    binding.loading.visibility =
+                        if (state.isLoading){
+                            View.VISIBLE
+                        }else{
+                            View.GONE
+                        }
+                    state.queryInfo?.let {
+                        actualPage = it.page
+                        limite = it.totalPages
+                        resultAdapter.submitList(it.results)
+                    }
+                    state.error?.let {
+                        Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
+                        searchViewModel.handleEvent(SearchContract.Event.ErrorMostrado)
+                    }
+                }
+            }
+        }
     }
 
     private fun showItemDetails(item:OwnResult){

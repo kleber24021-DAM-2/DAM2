@@ -6,29 +6,22 @@ import androidx.lifecycle.viewModelScope
 import com.example.seriesfollower.GeneralConstants
 import com.example.seriesfollower.domain.model.favorite.FavoriteItem
 import com.example.seriesfollower.domain.usecases.EraseFavoriteItem
-import com.example.seriesfollower.domain.usecases.GetAllFavoriteMovies
-import com.example.seriesfollower.domain.usecases.GetAllFavoriteSeries
+import com.example.seriesfollower.domain.usecases.GetAllFavoritesAsFlow
 import com.example.seriesfollower.ui.UserMessages
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val getAllFavoriteMovies: GetAllFavoriteMovies,
-    private val getAllFavoriteSeries: GetAllFavoriteSeries,
+    private val getAllFavoritesAsFlow: GetAllFavoritesAsFlow,
     private val eraseFavoriteItem: EraseFavoriteItem,
 ) : ViewModel() {
-    private var _favorites = MutableStateFlow<List<FavoriteItem>>(emptyList())
-    val favorites: StateFlow<List<FavoriteItem>> get() = _favorites
-
-    private val _error = Channel<String>()
-    val error = _error.receiveAsFlow()
+    private val _uiState: MutableStateFlow<FavoritesContract.State> by lazy {
+        MutableStateFlow(FavoritesContract.State())
+    }
+    val uiState: StateFlow<FavoritesContract.State> = _uiState
 
     private val selectedList = mutableListOf<FavoriteItem>()
 
@@ -54,34 +47,42 @@ class FavoritesViewModel @Inject constructor(
 
     fun numSelectedItems(): Int = selectedList.size
 
-    fun getAllFavs() {
-        viewModelScope.launch {
-            try {
-                val resultList : MutableList<FavoriteItem> = mutableListOf()
-                getAllFavoriteMovies.invoke().combine(getAllFavoriteSeries.invoke()){ a,b ->
-                    resultList.addAll(a)
-                    resultList.addAll(b)
+    fun handleEvents(event: FavoritesContract.Event) {
+        when (event) {
+            is FavoritesContract.Event.GetFavorites -> {
+                viewModelScope.launch {
+                    getAllFavoritesAsFlow
+                        .invoke()
+                        .catch(action = { cause ->
+                            _uiState.update {
+                                it.copy(
+                                    error = cause.message
+                                )
+                            }
+                        })
+                        .collect {list ->
+                            _uiState.update{
+                                it.copy(
+                                    favorites = list
+                                )
+                            }
+                        }
                 }
-                _favorites.value = resultList
-
-            } catch (ex: Exception) {
-                _error.send(UserMessages.UNEXPECTED_DB_ERROR)
-                Log.e(GeneralConstants.LOG_TAG, ex.message, ex)
+            }
+            is FavoritesContract.Event.BorrarFavorito -> {
+                viewModelScope.launch {
+                    eraseFavoriteItem
+                        .invoke(event.toDelete)
+                }
+            }
+            is FavoritesContract.Event.ErrorMostrado -> {
+                _uiState.update {
+                    it.copy(
+                        error = null
+                    )
+                }
             }
         }
-    }
-
-
-    fun deleteFavorite(toDelete: FavoriteItem) {
-        viewModelScope.launch {
-            try {
-                eraseFavoriteItem.invoke(toDelete)
-            } catch (ex: Exception) {
-                _error.send(UserMessages.UNEXPECTED_DB_ERROR)
-                Log.e(GeneralConstants.LOG_TAG, ex.message, ex)
-            }
-        }
-        getAllFavs()
     }
 
     fun delAllSelectedItems() {
@@ -90,12 +91,15 @@ class FavoritesViewModel @Inject constructor(
                 try {
                     eraseFavoriteItem.invoke(it)
                 } catch (ex: Exception) {
-                    _error.send(ex.message ?: UserMessages.UNEXPECTED_DB_ERROR)
+                    _uiState.update {
+                        it.copy(
+                            error = ex.message ?: UserMessages.UNEXPECTED_DB_ERROR
+                        )
+                    }
                     Log.e(GeneralConstants.LOG_TAG, ex.message, ex)
                 }
             }
         }
-        getAllFavs()
         selectedList.clear()
     }
 
