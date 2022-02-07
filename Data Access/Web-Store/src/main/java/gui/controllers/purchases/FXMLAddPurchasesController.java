@@ -71,12 +71,11 @@ public class FXMLAddPurchasesController implements Initializable {
 
     public void addPurchase() {
         PurchasesServices service = new PurchasesServices();
-        Purchase toAddPurchase = new Purchase();
+        Purchase toAddPurchase = Purchase.builder().build();
         if (!customerBox.getSelectionModel().isEmpty() && dateBox.getValue() != null && !itemBox.getSelectionModel().isEmpty()) {
-//            toAddPurchase.setCustomersByIdCustomer(customerBox.getSelectionModel().getSelectedItem());
             toAddPurchase.setDate(dateBox.getValue().toString());
-            toAddPurchase.setIdItem(itemBox.getSelectionModel().getSelectedItem().getIdItem());
-            service.addPurchase(toAddPurchase)
+            toAddPurchase.setIdItem(itemBox.getSelectionModel().getSelectedItem().getId().toString());
+            service.addPurchase(toAddPurchase, customerBox.getSelectionModel().getSelectedItem())
                     .peek(purchase -> purchaseList.getItems().add(purchase))
                     .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
         }else {

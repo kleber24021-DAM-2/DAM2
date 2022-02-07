@@ -13,5 +13,6 @@ object ApiConsts {
     const val API_KEY_VALUE = "24aa488432825d5b43b533ed4620f5e4"
     const val API_LANG = "language"
     const val API_LANG_VALUE = "es-ES"
-
+    const val PATH_PARAM_SEASON_NUM = "seasonNum"
+    const val GET_SEASON = "tv/{seriesId}/season/{seasonNum}"
 }

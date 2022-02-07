@@ -18,15 +18,11 @@ import java.util.List;
  *
  */
 public interface DAOCustomers {
-     
-    Either<String, Customer> getCustomerById(String id);
 
     Either<String, List<Customer>> getAllCustomers();
 
     Either<String, Customer> saveCustomer(Customer t);
 
-    Either<String, Customer> updateCustomer(Customer t);
-     
     Either<String, Void> deleteCustomer(Customer t);
 
     Either<String, Purchase> addPurchase(Purchase purchase, Customer referenciaCustomer);
@@ -41,15 +37,15 @@ public interface DAOCustomers {
 
     Either<String, List<Purchase>> getPurchaseByClient(String clientId);
 
-    Either<String, Purchase> savePurchase(Purchase toAdd);
+    Either<String, Purchase> savePurchase(Purchase toAdd, Customer customerToAdd);
 
     Either<String, List<Purchase>> getPurchaseByDate(LocalDate selectedDate);
-
-    Either<String, Purchase> updatePurchase(Purchase updatedPurchase);
 
     Either<String, List<Purchase>> getSortedByItem();
 
     Either<String, List<Purchase>> getSortedByCustomer();
 
     Either<String, List<Purchase>> getInDateRange(LocalDate initialDate, LocalDate finalDate);
+
+    Either<String, Customer> getCustomerById(String id);
 }

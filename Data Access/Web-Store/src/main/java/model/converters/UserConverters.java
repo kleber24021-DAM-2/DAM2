@@ -16,7 +16,6 @@ public class UserConverters {
     public Document convertUserToDocument(User user){
         return new Document()
                 .append("password", user.getPassword())
-                .append("_id", user.getId())
                 .append("username", user.getUsername())
                 .append("userType", user.getUserType());
     }

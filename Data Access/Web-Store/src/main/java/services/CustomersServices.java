@@ -49,9 +49,4 @@ public class CustomersServices {
         DAOCustomers dao = new DaoCustomerMongo();
         return dao.saveCustomer(toAdd);
     }
-
-    public Either<String, Customer> updateCustomer(Customer updatedCustomer) {
-        DAOCustomers daoCustomers = new DaoCustomerMongo();
-         return daoCustomers.updateCustomer(updatedCustomer);
-    }
 }

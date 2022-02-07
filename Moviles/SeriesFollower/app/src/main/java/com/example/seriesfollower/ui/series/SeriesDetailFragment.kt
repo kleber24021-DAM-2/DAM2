@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.seriesfollower.GeneralConstants
@@ -34,6 +35,7 @@ class SeriesDetailFragment : Fragment() {
     private val viewModel: SeriesViewModel by viewModels()
     private lateinit var imageAdapter: ImageAdapter
     private lateinit var seriesUrl: String
+    private lateinit var episodeAdapter : EpisodeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +51,7 @@ class SeriesDetailFragment : Fragment() {
         imageAdapter = ImageAdapter(binding.root.context)
         setObservers()
         setListeners()
+        setRecyclerViewAdapter()
         viewModel.handleEvent(SeriesContract.Event.GetSeries(args.seriesId))
     }
 
@@ -71,6 +74,10 @@ class SeriesDetailFragment : Fragment() {
                     state.error?.let {
                         Toast.makeText(binding.root.context, it, Toast.LENGTH_SHORT).show()
                         viewModel.handleEvent(SeriesContract.Event.ErrorMostrado)
+                    }
+
+                    state.seriesEpisode.let {
+                        episodeAdapter.submitList(it)
                     }
                 }
             }
@@ -114,6 +121,17 @@ class SeriesDetailFragment : Fragment() {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.outline_error_outline_24)
                 .into(seriesImageView)
+
+
+        }
+    }
+
+    private fun setRecyclerViewAdapter(){
+        episodeAdapter = EpisodeAdapter(binding.root.context)
+        with(binding.rvEpisodes){
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+            setHasFixedSize(true)
+            adapter = episodeAdapter
         }
     }
 

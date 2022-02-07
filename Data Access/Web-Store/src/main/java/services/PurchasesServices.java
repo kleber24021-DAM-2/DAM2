@@ -6,12 +6,16 @@
 package services;
 
 import dao.interfaces.DAOCustomers;
+import dao.interfaces.DAOItems;
 import dao.mongo.DaoCustomerMongo;
+import dao.mongo.DaoItemsMongo;
 import io.vavr.control.Either;
+import model.customer.Customer;
 import model.customer.Purchase;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -40,19 +44,18 @@ public class PurchasesServices {
         return deleteResult;
      }
 
-    public Either<String, Purchase> addPurchase(Purchase toAdd) {
-        DAOCustomers daoPurchases = new DaoCustomerMongo();
-       return daoPurchases.savePurchase(toAdd);
+    public Either<String, Purchase> addPurchase(Purchase toAdd, Customer toAddCustomer) {
+        DAOCustomers daoCustomers = new DaoCustomerMongo();
+        DAOItems daoItems = new DaoItemsMongo();
+        UUID uuid = UUID.randomUUID();
+        toAdd.setIdPurchase(uuid.toString());
+        daoCustomers.savePurchase(toAdd, toAddCustomer);
+        return daoItems.addPurchase(toAdd, toAddCustomer);
     }
 
     public Either<String, List<Purchase>> findByDate(LocalDate selectedDate) {
         DAOCustomers dao = new DaoCustomerMongo();
             return dao.getPurchaseByDate(selectedDate);
-    }
-
-    public Either<String, Purchase> updatePurchase(Purchase updatedPurchase) {
-        DAOCustomers daoPurchases = new DaoCustomerMongo();
-        return daoPurchases.updatePurchase(updatedPurchase);
     }
 
     public Either<String, List<Purchase>> getPurchasesSortedByItem() {

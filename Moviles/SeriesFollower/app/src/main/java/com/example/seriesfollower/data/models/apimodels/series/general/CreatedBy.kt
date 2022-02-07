@@ -7,13 +7,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CreatedBy(
     @Json(name = "credit_id")
-    val creditId: String,
+    val creditId: String?,
     @Json(name = "gender")
-    val gender: Int,
+    val gender: Int?,
     @Json(name = "id")
-    val id: Int,
+    val id: Int?,
     @Json(name = "name")
-    val name: String,
+    val name: String?,
     @Json(name = "profile_path")
-    val profilePath: String
+    val profilePath: String?
 )

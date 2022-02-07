@@ -1,12 +1,14 @@
 package model.item;
 
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 public @Data class Review {
-	private String date;
+	private String idReview;
 	private int rating;
+	private String date;
 	private String description;
-	private int idReview;
 	private String title;
 	private String nameCustomer;
 }

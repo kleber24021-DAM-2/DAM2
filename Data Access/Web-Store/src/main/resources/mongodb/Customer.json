@@ -9,11 +9,11 @@
   },
   "purchases": [
     {
-      "id_purchase": 1,
+      "id_purchase": "asdfasf",
       "date": "10/10/2021",
-      "id_Item": 1,
+      "id_Item": "asdfasdfs",
       "reviews": {
-        "id_review": 2,
+        "id_review": "awdfasdfr",
         "title": "Titulo2",
         "description": "Descripción2",
         "rating": 4,
@@ -21,11 +21,11 @@
       }
     },
     {
-      "id_purchase": 2,
+      "id_purchase": "asdfasdfasf",
       "date": "24/01/2022",
-      "id_Item": 1,
+      "id_Item": "asdfasdf",
       "reviews": {
-        "id_review": 2,
+        "id_review": "adsfasf",
         "title": "Titulo2",
         "description": "Descripción2",
         "rating": 4,

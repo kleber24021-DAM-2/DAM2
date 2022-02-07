@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.customer.Address;
 import model.customer.Customer;
 import services.CustomersServices;
 
@@ -24,6 +23,8 @@ import java.util.ResourceBundle;
  */
 public class FXMLAddCustomerController implements Initializable {
 
+    @FXML
+    private TextField txtDni;
     @FXML
     private TextField nameBox;
     @FXML
@@ -46,12 +47,14 @@ public class FXMLAddCustomerController implements Initializable {
         String name = nameBox.getText();
         String phone = phoneBox.getText();
         String address = addressBox.getText();
-        Address itemAddres = new Address();
-        itemAddres.setCalle(address);
-        Customer toSaveCustomer = new Customer();
-        toSaveCustomer.setName(name);
-        toSaveCustomer.setTelephone(phone);
-        toSaveCustomer.setAddress(itemAddres);
+        String dni = txtDni.getText();
+        Customer toSaveCustomer = Customer
+                .builder()
+                .name(name)
+                .id(dni)
+                .telephone(phone)
+                .address(address)
+                .build();
 
         services.addCustomer(toSaveCustomer)
                 .peek(customer -> {

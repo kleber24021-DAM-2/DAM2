@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customers.FXMLListCustomerController">
+<AnchorPane id="AnchorPane" prefHeight="690.0" prefWidth="995.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.customers.FXMLListCustomerController">
    <children>
       <ListView fx:id="customersList" layoutX="29.0" layoutY="89.0" onMouseClicked="#showCustomerInfo" prefHeight="565.0" prefWidth="451.0" />
       <Label layoutX="29.0" layoutY="73.0" text="Customer list" />
@@ -28,7 +30,7 @@
             <Font name="System Bold" size="22.0" />
          </font>
       </Label>
-      <ListView fx:id="purchasesListView" layoutX="569.0" layoutY="398.0" prefHeight="255.0" prefWidth="384.0" />
+      <ListView fx:id="purchasesListView" layoutX="569.0" layoutY="398.0" onMouseClicked="#showPurchaseInfo" prefHeight="255.0" prefWidth="384.0" />
       <TextField fx:id="phoneTv" editable="false" layoutX="672.0" layoutY="132.0" prefHeight="25.0" prefWidth="273.0" />
       <TextField fx:id="addressTv" editable="false" layoutX="672.0" layoutY="224.0" prefHeight="25.0" prefWidth="273.0" />
    </children>

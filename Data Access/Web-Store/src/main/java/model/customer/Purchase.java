@@ -1,11 +1,13 @@
 package model.customer;
 
+import lombok.Builder;
 import lombok.Data;
 import model.item.Review;
 
+@Builder
 public @Data class Purchase {
 	private String date;
 	private Review review;
-	private int idItem;
-	private int idPurchase;
+	private String idItem;
+	private String idPurchase;
 }

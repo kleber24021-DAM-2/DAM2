@@ -24,7 +24,7 @@ public class FXMLReviewInfoModalWindow {
     TextField tfId;
 
     public void loadData(Review selectedReview) {
-        tfId.setText(Integer.toString(selectedReview.getIdReview()));
+        tfId.setText(selectedReview.getIdReview());
         tfRating.setText(Integer.toString(selectedReview.getRating()));
         tfTitle.setText(selectedReview.getTitle());
         tfComment.setText(selectedReview.getDescription());

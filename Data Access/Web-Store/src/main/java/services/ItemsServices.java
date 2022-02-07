@@ -13,6 +13,7 @@ import model.customer.Purchase;
 import model.item.Item;
 import model.item.Review;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,12 +21,6 @@ import java.util.stream.Collectors;
  * @author dam2
  */
 public class ItemsServices {
-
-    public Either<String, Item> getItemById(int itemId){
-        DAOItems daoItems = new DaoItemsMongo();
-        return daoItems.get(itemId);
-    }
-
     public Either<String, List<Item>> getAllItems() {
         DAOItems daoItems = new DaoItemsMongo();
         return daoItems.getAll();
@@ -33,43 +28,41 @@ public class ItemsServices {
 
     public Either<String, Item> addItem(String itemName, String itemCompany, double price) {
         DAOItems daoItems = new DaoItemsMongo();
-        Item it = new Item();
-        it.setName(itemName);
-        it.setCompany(itemCompany);
-        it.setPrice(price);
+        Item it = Item.builder()
+                .name(itemName)
+                .company(itemCompany)
+                .price(price)
+                .reviews(Collections.emptyList())
+                .purchases(Collections.emptyList())
+                .build();
         return daoItems.saveItem(it);
     }
 
-    public Either<DeleteItemResults,Void> deleteItem(Item toDelete, boolean userHasConfirmed) {
+    public Either<DeleteItemResults, Void> deleteItem(Item toDelete, boolean userHasConfirmed) {
         DAOItems daoItems = new DaoItemsMongo();
         Either<DeleteItemResults, Void> deleteResult;
-        if (toDelete.getPurchases().isEmpty()){
-            if (daoItems.deleteWithoutPurchases(toDelete).isRight()){
+        if (toDelete.getPurchases().isEmpty()) {
+            if (daoItems.deleteItem(toDelete).isRight()) {
                 deleteResult = Either.right(null);
-            }else {
+            } else {
                 deleteResult = Either.left(DeleteItemResults.DB_ERROR);
             }
-        }else {
+        } else {
             List<Review> associatedReviews = toDelete.getPurchases().stream().map(Purchase::getReview).collect(Collectors.toList());
-            if (associatedReviews.isEmpty()){
-                if (userHasConfirmed){
-                    if (daoItems.deleteWithPurchases(toDelete).isRight()){
+            if (associatedReviews.isEmpty()) {
+                if (userHasConfirmed) {
+                    if (daoItems.deleteItem(toDelete).isRight()) {
                         deleteResult = Either.right(null);
-                    }else {
+                    } else {
                         deleteResult = Either.left(DeleteItemResults.DB_ERROR);
                     }
-                }else {
+                } else {
                     deleteResult = Either.left(DeleteItemResults.ASSOCIATED_PURCHASES);
                 }
-            }else {
+            } else {
                 deleteResult = Either.left(DeleteItemResults.ASSOCIATED_REVIEWS);
             }
         }
         return deleteResult;
-    }
-
-    public Either<String, Item> updateItem(Item updatedCustomer) {
-        DAOItems daoItems = new DaoItemsMongo();
-        return daoItems.updateItem(updatedCustomer);
     }
 }

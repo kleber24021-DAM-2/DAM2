@@ -5,16 +5,22 @@ import com.example.seriesfollower.data.models.apimodels.movie.ApiMovie
 import com.example.seriesfollower.data.models.apimodels.query.ApiQuery
 import com.example.seriesfollower.data.models.apimodels.series.general.ApiSeries
 import com.example.seriesfollower.data.models.apimodels.series.general.NextEpisodeToAir
+import com.example.seriesfollower.data.models.apimodels.series.general.Season
+import com.example.seriesfollower.data.models.apimodels.series.season.ApiSeason
+import com.example.seriesfollower.data.models.apimodels.series.season.Episode
 import com.example.seriesfollower.domain.model.movies.OwnMovie
 import com.example.seriesfollower.domain.model.queryresult.OwnResult
 import com.example.seriesfollower.domain.model.queryresult.QueryInfo
 import com.example.seriesfollower.domain.model.queryresult.ResultType
 import com.example.seriesfollower.domain.model.series.episode.OwnEpisode
 import com.example.seriesfollower.domain.model.series.general.OwnSeries
+import com.example.seriesfollower.domain.model.series.season.OwnSeason
 import java.time.LocalDate
 
 const val MEDIATYPE_TV = "tv"
 const val NOT_FOUND = "Not found"
+const val UNKNNOWN = "Unknown"
+const val EMPTY = ""
 
 fun ApiMovie.toOwnModel(): OwnMovie {
     return OwnMovie(
@@ -71,7 +77,9 @@ fun ApiSeries.toOwnSeries(): OwnSeries {
         nextEpisodeToAir?.toOwnEpisode(),
         homepage,
         numberOfEpisodes,
-        numberOfSeasons,
+        seasons.map {
+               it.toOwnSeason()
+        },
         overview,
         popularity,
         voteAverage,
@@ -79,12 +87,29 @@ fun ApiSeries.toOwnSeries(): OwnSeries {
         )
 }
 
+fun Season.toOwnSeason(): OwnSeason{
+    return OwnSeason(
+        id, name, seasonNumber)
+}
+
+fun ApiSeason.toListOfEpisodes():List<OwnEpisode>{
+    return episodes!!.map {episode ->
+        OwnEpisode(
+            episode.id?:-1,
+            episode.name?: UNKNNOWN,
+            LocalDate.parse(episode.airDate, DataConsts.DATE_FORMATTER),
+            posterPath?: EMPTY,
+            episode.seasonNumber!!
+        )
+    }
+}
+
 fun NextEpisodeToAir.toOwnEpisode(): OwnEpisode {
     return OwnEpisode(
         id,
         name,
         LocalDate.parse(airDate, DataConsts.DATE_FORMATTER),
-        getImageUrl(stillPath ?: ""),
+        getImageUrl(stillPath ?: EMPTY),
         seasonNumber
     )
 }

@@ -2,23 +2,23 @@
   "_id": {
     "$oid": "61efe733ed5fb220218254a7"
   },
-  "id_item": 1,
+  "id_item": "adsfasdf",
   "name": "nombreItem",
   "company": "compañía",
   "price": 10.2,
   "purchases": [
     {
-      "id_purchase": 1,
+      "id_purchase": "asdfadsf",
       "date": "10/10/2021"
     },
     {
-      "id_purchase": 2,
+      "id_purchase": "asdfadsf",
       "date": "24/01/2022"
     }
   ],
   "reviews": [
     {
-      "id_review": 1,
+      "id_review": "asdfadsf",
       "name_customer": "pepe",
       "title": "Titulo1",
       "description": "Descripción1",
@@ -26,7 +26,7 @@
       "date": "23/01/2022"
     },
     {
-      "id_review": 2,
+      "id_review": "asdfasdf",
       "name_customer": "pepe",
       "title": "Titulo2",
       "description": "Descripción2",

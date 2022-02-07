@@ -19,13 +19,15 @@ public class ReviewsServices {
 
 
     public Either<String, List<Review>> getAllReviews() {
-        DAOItems daoReviews = new DaoItemsMongo();
-        return daoReviews.getAllReviews();
+//        DAOItems daoReviews = new DaoItemsMongo();
+//        return daoReviews.getAllReviews();
+        return null;
     }
 
     public Either<String, List<Review>> getReviewsByCustomer(String customerId){
-        DAOItems daoReviews = new DaoItemsMongo();
-        return daoReviews.getReviewByCustomerId(customerId);
+//        DAOItems daoReviews = new DaoItemsMongo();
+//        return daoReviews.getReviewByCustomerId(customerId);
+        return null;
     }
 
     public Either<String, Void> deleteReview(Review review) {
@@ -33,19 +35,10 @@ public class ReviewsServices {
         return daoReviews.deleteReview(review);
     }
 
-    public Either<String, List<Review>> searchByItem(String id) {
-        DAOItems daoReviews = new DaoItemsMongo();
-        return daoReviews.getReviewByItemId(id);
-    }
-
     public Either<String, Review> addReview(Review review) {
-        DAOItems daoReviews = new DaoItemsMongo();
-        return daoReviews.saveReview(review);
-    }
-
-    public Either<String, Review> updateReview(Review review) {
-        DAOItems daoReviews = new DaoItemsMongo();
-        return daoReviews.updateReview(review);
+//        DAOItems daoReviews = new DaoItemsMongo();
+//        return daoReviews.saveReview(review);
+        return null;
     }
 //
 //

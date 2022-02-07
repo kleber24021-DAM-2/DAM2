@@ -3,6 +3,8 @@ package com.example.seriesfollower.data.sources.remote
 import com.example.seriesfollower.data.models.apimodels.movie.ApiMovie
 import com.example.seriesfollower.data.models.apimodels.query.ApiQuery
 import com.example.seriesfollower.data.models.apimodels.series.general.ApiSeries
+import com.example.seriesfollower.data.models.apimodels.series.season.ApiSeason
+import com.example.seriesfollower.domain.model.series.season.OwnSeason
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,4 +25,7 @@ interface TMDBService {
 
     @GET(ApiConsts.GET_MULTI_TRENDING)
     suspend fun getTrendingResults(@Query(ApiConsts.QUERY_PARAM_PAGE) page: Int): Response<ApiQuery>
+
+    @GET(ApiConsts.GET_SEASON)
+    suspend fun getSeason(@Path(ApiConsts.PATH_PARAM_SERIES_ID) seriesId: Int, @Path(ApiConsts.PATH_PARAM_SEASON_NUM) seasonNum:Int):Response<ApiSeason>
 }

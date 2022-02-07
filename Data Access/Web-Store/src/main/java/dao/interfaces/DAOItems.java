@@ -17,34 +17,18 @@ import java.util.List;
  *
  */
 public interface DAOItems {
-
-    Either<String, Item> get(int id);
      
     Either<String, List<Item>> getAll();
 
     Either<String, Item> saveItem(Item t);
-
-    Either<String, Item> updateItem(Item t);
      
-    Either<String, Void> deleteWithoutPurchases(Item t);
+    Either<String, Void> deleteItem(Item t);
 
-    Either<String, Void> deleteWithPurchases(Item t);
-
-    Either<String, Purchase> addPurchase(Purchase purchase, Customer referenciaCustomer);
+    Either<String, Purchase> addPurchase(Purchase purchase, Customer toAdd);
 
     Either<String, Void> deletePurchase(Purchase purchase);
 
-    Either<String, Review> addReview(Review review, Purchase referenciaPurchase);
+    Either<String, Review> addReview(Review review, Item toAdd);
 
     Either<String, Void> deleteReview(Review review);
-
-    Either<String, List<Review>> getAllReviews();
-
-    Either<String, List<Review>> getReviewByCustomerId(String customerId);
-
-    Either<String, List<Review>> getReviewByItemId(String id);
-
-    Either<String, Review> saveReview(Review review);
-
-    Either<String, Review> updateReview(Review review);
 }

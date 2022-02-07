@@ -9,7 +9,7 @@
       <ListView fx:id="customerListView" layoutX="29.0" layoutY="89.0" prefHeight="565.0" prefWidth="641.0" />
       <TextField fx:id="nameBox" layoutX="770.0" layoutY="245.0" />
       <Button layoutX="786.0" layoutY="452.0" mnemonicParsing="false" onAction="#addCustomer" text="Save new customer" />
-      <Label layoutX="766.0" layoutY="214.0" text="Name" />
+      <Label layoutX="771.0" layoutY="228.0" text="Name" />
       <Label layoutX="766.0" layoutY="277.0" text="Telephone" />
       <Label layoutX="29.0" layoutY="73.0" text="Customer list:" />
       <Label layoutX="29.0" layoutY="38.0" text="ADD A NEW CUSTOMER" textFill="#000000bb">
@@ -20,5 +20,7 @@
       <TextField fx:id="phoneBox" layoutX="770.0" layoutY="294.0" />
       <Label layoutX="765.0" layoutY="324.0" text="Address" />
       <TextField fx:id="addressBox" layoutX="770.0" layoutY="349.0" />
+      <TextField fx:id="txtDni" layoutX="770.0" layoutY="203.0" />
+      <Label layoutX="770.0" layoutY="186.0" text="Dni" />
    </children>
 </AnchorPane>

@@ -51,7 +51,7 @@ public class FXMLAddReviewController implements Initializable {
         Purchase purchase = purchaseBox.getSelectionModel().getSelectedItem();
         Ratings rating = ratingBox.getSelectionModel().getSelectedItem();
         if (purchase != null && rating != null){
-            Review review = new Review();
+            Review review = Review.builder().build();
             review.setRating(rating.getValue());
             review.setTitle(titleBox.getText());
             review.setDate(LocalDate.now().toString());

@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
+import model.customer.Purchase;
 import model.item.Item;
 import model.item.Review;
 import services.ItemsServices;
@@ -90,17 +91,17 @@ public class FXMLListItemsController implements Initializable {
     private void showItemInfo() {
         Item selectedItem = itemsList.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
-//            tfPrice.setText(Double.toString(selectedItem.getPrice()));
-//            double averageRating = selectedItem.getPurchasesByIdItem()
-//                    .stream()
-//                    .flatMap(purchase -> purchase.getReviewsByIdPurchase().stream())
-//                    .mapToInt(Review::getRating)
-//                    .average().orElse(-1.);
-//            if (averageRating == -1) {
-//                tfRating.setText("N/A");
-//            } else {
-//                tfRating.setText(Double.toString(averageRating));
-//            }
+            tfPrice.setText(Double.toString(selectedItem.getPrice()));
+            double averageRating = selectedItem.getPurchases()
+                    .stream()
+                    .map(Purchase::getReview)
+                    .mapToInt(Review::getRating)
+                    .average().orElse(-1.);
+            if (averageRating == -1) {
+                tfRating.setText("N/A");
+            } else {
+                tfRating.setText(Double.toString(averageRating));
+            }
 //            List<Review> reviewList = selectedItem.getPurchasesByIdItem()
 //                    .stream()
 //                    .flatMap(purchase -> purchase.getReviewsByIdPurchase().stream())
