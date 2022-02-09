@@ -8,7 +8,9 @@ package services;
 import dao.interfaces.DAOItems;
 import dao.mongo.DaoItemsMongo;
 import io.vavr.control.Either;
+import model.item.Item;
 import model.item.Review;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -35,10 +37,9 @@ public class ReviewsServices {
         return daoReviews.deleteReview(review);
     }
 
-    public Either<String, Review> addReview(Review review) {
-//        DAOItems daoReviews = new DaoItemsMongo();
-//        return daoReviews.saveReview(review);
-        return null;
+    public Either<String, Review> addReview(Review review, ObjectId item) {
+        DAOItems daoReviews = new DaoItemsMongo();
+        return daoReviews.addReview(review, item);
     }
 //
 //

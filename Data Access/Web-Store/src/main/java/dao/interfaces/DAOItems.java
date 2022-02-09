@@ -10,6 +10,7 @@ import model.customer.Customer;
 import model.customer.Purchase;
 import model.item.Item;
 import model.item.Review;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface DAOItems {
 
     Either<String, Void> deletePurchase(Purchase purchase);
 
-    Either<String, Review> addReview(Review review, Item toAdd);
+    Either<String, Review> addReview(Review review, ObjectId toAdd);
 
     Either<String, Void> deleteReview(Review review);
 }

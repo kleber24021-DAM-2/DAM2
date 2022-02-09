@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import model.customer.Purchase;
 import model.item.Review;
+import org.bson.types.ObjectId;
 import services.PurchasesServices;
 import services.ReviewsServices;
 
@@ -40,7 +41,7 @@ public class FXMLAddReviewController implements Initializable {
 
     public void loadPurchases() {
         PurchasesServices purchasesServices = new PurchasesServices();
-        purchasesServices.getPurchasesByClientId(parent.getLoggedUser().getId())
+        purchasesServices.getAllPurchases()
                 .peek(purchases -> purchaseBox.getItems().setAll(purchases))
                 .peekLeft(error -> UiUtils.showAlert(error, Alert.AlertType.ERROR));
     }
@@ -57,7 +58,7 @@ public class FXMLAddReviewController implements Initializable {
             review.setDate(LocalDate.now().toString());
 //            review.setPurchasesByIdPurchases(purchase);
 
-            reviewsServices.addReview(review)
+            reviewsServices.addReview(review, new ObjectId(purchase.getIdItem()))
                     .peek(__ -> {
                         UiUtils.showAlert("Added review", Alert.AlertType.INFORMATION);
                         clearFields();

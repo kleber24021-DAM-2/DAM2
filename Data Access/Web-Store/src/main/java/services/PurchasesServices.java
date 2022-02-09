@@ -49,6 +49,7 @@ public class PurchasesServices {
         DAOItems daoItems = new DaoItemsMongo();
         UUID uuid = UUID.randomUUID();
         toAdd.setIdPurchase(uuid.toString());
+        daoItems.addPurchase(toAdd, toAddCustomer);
         daoCustomers.savePurchase(toAdd, toAddCustomer);
         return daoItems.addPurchase(toAdd, toAddCustomer);
     }

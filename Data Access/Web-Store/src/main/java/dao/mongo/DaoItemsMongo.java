@@ -16,6 +16,7 @@ import model.item.Item;
 import model.item.Review;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class DaoItemsMongo implements DAOItems {
             Bson updates = Updates.combine(
                     Updates.addToSet("purchases", purchaseConverter.toItemPurchaseDocument(purchase))
             );
-            itemCollection.updateOne(eq("_id", toAdd.getId()), updates);
+            itemCollection.updateOne(eq("_id", new ObjectId(purchase.getIdItem())), updates);
             result = Either.right(purchase);
         }catch (MongoException mongoException){
             log.error(mongoException.getMessage(), mongoException);
@@ -108,13 +109,13 @@ public class DaoItemsMongo implements DAOItems {
     }
 
     @Override
-    public Either<String, Review> addReview(Review review, Item toAdd) {
+    public Either<String, Review> addReview(Review review, ObjectId toAdd) {
         Either<String, Review> result;
         try {
             Bson updates = Updates.combine(
                     Updates.addToSet("reviews", reviewConverter.reviewToDocument(review))
             );
-            itemCollection.updateOne(eq("_id", toAdd.getId()), updates);
+            itemCollection.updateOne(eq("_id", toAdd), updates);
             result = Either.right(review);
         }catch (MongoException mongoException){
             log.error(mongoException.getMessage(), mongoException);
