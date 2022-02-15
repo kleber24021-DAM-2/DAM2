@@ -8,6 +8,7 @@ public class SecurityConsts {
     public static final int KEY_LENGTH = 256;
     public static final String SECRET_KEY_ALGORITHM = "AES";
     public static final String CIPHER_NAME = "Cipher";
+    public static final String KEY_GENERATOR_NAME = "KeyGenerator";
 
     private SecurityConsts() {
     }

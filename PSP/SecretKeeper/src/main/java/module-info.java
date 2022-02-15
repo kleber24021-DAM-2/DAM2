@@ -12,6 +12,7 @@ module SecretKeeper {
     requires com.google.common;
     requires io.vavr;
     requires spring.tx;
+    requires org.bouncycastle.provider;
 
 
     exports org.quevedo.secretkeeper.gui.di;
