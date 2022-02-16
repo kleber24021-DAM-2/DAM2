@@ -6,6 +6,8 @@ public class GuiConsts {
     public static final String MAIN_SCREEN = "/fxml/mainScreen.fxml";
     public static final String STYLE = "/css/dark-theme.css";
     public static final String SCREEN_NAME = "Secret Keeper";
+    public static final String LOGIN_SCREEN = "/fxml/loginScreen.fxml";
+
     private GuiConsts() {
     }
 }

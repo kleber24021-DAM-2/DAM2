@@ -5,12 +5,14 @@ import javafx.scene.control.*;
 import org.quevedo.secretkeeper.gui.utils.GuiConsts;
 import org.quevedo.secretkeeper.model.Secret;
 import org.quevedo.secretkeeper.services.SecretService;
+import org.quevedo.secretkeeper.services.UserService;
 
 import javax.inject.Inject;
 
 public class MainController {
 
     private final SecretService secretService;
+    private final UserService userService;
     @FXML
     private ListView<Secret> lvSecrets;
     @FXML
@@ -19,10 +21,16 @@ public class MainController {
     private TextArea txtFieldMessage;
     @FXML
     private TextField txtOwner;
+    @FXML
+    private TextField txUsuario;
+
+
 
     @Inject
-    public MainController(SecretService secretService) {
+    public MainController(SecretService secretService,
+                          UserService userService) {
         this.secretService = secretService;
+        this.userService = userService;
     }
 
     @FXML
@@ -63,8 +71,25 @@ public class MainController {
                 .peekLeft(error -> new Alert(Alert.AlertType.ERROR, error).showAndWait());
     }
 
-    public void onClose() {
-        secretService.closePool();
+    @FXML
+    private void doLogin() {
+        String usuario = txUsuario.getText();
+        String password = txtPassword.getText();
+        if (!usuario.isBlank() && !password.isBlank()) {
+            userService.doLogin(usuario, password)
+                    .peek(msg -> new Alert(Alert.AlertType.INFORMATION, msg).showAndWait())
+                    .peekLeft(error -> new Alert(Alert.AlertType.ERROR, error).showAndWait());
+        }
     }
 
+    @FXML
+    public void doRegister() {
+        String usuario = txUsuario.getText();
+        String password = txtPassword.getText();
+        if (!usuario.isBlank() && !password.isBlank()) {
+            userService.createUser(usuario, password)
+                    .peek(msg -> new Alert(Alert.AlertType.INFORMATION, msg).showAndWait())
+                    .peekLeft(error -> new Alert(Alert.AlertType.ERROR, error).showAndWait());
+        }
+    }
 }

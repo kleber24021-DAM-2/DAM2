@@ -19,6 +19,8 @@ public class DaoConsts {
     public static final String PREP_STMT_CACHE_SIZE_VALUE = "250";
     public static final String PREP_STMT_CACHE_SQL_LIMIT = "prepStmtCacheSqlLimit";
     public static final String PREP_STMT_CACHE_SQL_LIMIT_VALUE = "2048";
+    public static final String GENERAL_PASSWORD = "generalPass";
+
     private DaoConsts() {
     }
 }

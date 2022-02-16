@@ -57,9 +57,10 @@ public class SecurityModule {
         return new BouncyCastleProvider();
     }
 
-//    @Produces
-//    public SecureRandom producerSecureRandom(){
-//        return new SecureRandom();
-//    }
+    @Produces
+    @Named(SecurityConsts.RANDOM)
+    public SecureRandom producerSecureRandom(){
+        return new SecureRandom();
+    }
 
 }

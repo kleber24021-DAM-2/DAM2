@@ -9,6 +9,15 @@ public class SecurityConsts {
     public static final String SECRET_KEY_ALGORITHM = "AES";
     public static final String CIPHER_NAME = "Cipher";
     public static final String KEY_GENERATOR_NAME = "KeyGenerator";
+    public static final String RANDOM = "random";
+    public static final String CN = "CN=";
+    public static final String CN_ISSUER = "CN=Misco";
+    public static final String SIGNATURE_ALGORITHM = "SHA1WithRSAEncryption";
+    public static final String KEY_STORE_ALGORITHM = "PKCS12";
+    public static final String PRIVATE = " private";
+    public static final String KEY_STORE_PATH = "KeyStore.pfx";
+    public static final String MSG_CREATED_CERT = "Se ha creado el keyStore correctamente";
+    public static final String MSG_PROBLEM_CERT = "Ha surgido un problema al crear el keyStore";
 
     private SecurityConsts() {
     }

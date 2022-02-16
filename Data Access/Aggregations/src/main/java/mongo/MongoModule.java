@@ -13,8 +13,8 @@ public class MongoModule {
 
     public static MongoDatabase getMongoInstance() {
         if (mongoClient == null) {
-            String mongoPath = "mongodb://10.0.0.1:27017";
-            //String mongoPath = "mongodb://informatica.iesquevedo.es:2323"
+//            String mongoPath = "mongodb://10.0.0.1:27017";
+            String mongoPath = "mongodb://informatica.iesquevedo.es:2323";
             mongoClient = MongoClients.create(mongoPath);
             db = mongoClient.getDatabase("andre");
         }

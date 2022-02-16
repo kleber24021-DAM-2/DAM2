@@ -4,9 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import lombok.extern.log4j.Log4j2;
-import org.quevedo.secretkeeper.gui.controllers.MainController;
 import org.quevedo.secretkeeper.gui.utils.GuiConsts;
 
 import javax.enterprise.event.Observes;
@@ -25,14 +23,9 @@ public class MainFX {
             stage.setScene(new Scene(fxmlParent));
             stage.setResizable(false);
             stage.setTitle(GuiConsts.SCREEN_NAME);
-            stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> onClose(fxmlLoader.getController()));
             stage.show();
         } catch (IOException io) {
             log.error(io.getMessage(), io);
         }
-    }
-
-    private void onClose(MainController mainController) {
-        mainController.onClose();
     }
 }

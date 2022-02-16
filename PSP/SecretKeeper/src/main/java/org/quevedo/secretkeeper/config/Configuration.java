@@ -16,6 +16,7 @@ public class Configuration {
     private String user;
     private String password;
     private String driver;
+    private String generalPassword;
 
     public void loadConfig(){
         try {
@@ -29,6 +30,7 @@ public class Configuration {
             this.user = map.get(DaoConsts.USER);
             this.password = map.get(DaoConsts.PASSWORD);
             this.driver = map.get(DaoConsts.DRIVER);
+            this.generalPassword = map.get(DaoConsts.GENERAL_PASSWORD);
         }catch (Exception ex){
             log.error(ex.getMessage(), ex);
         }

@@ -23,6 +23,7 @@ module SecretKeeper {
     exports org.quevedo.secretkeeper.services;
     exports org.quevedo.secretkeeper.dao.spring;
     exports org.quevedo.secretkeeper.model;
+    exports org.quevedo.secretkeeper.config;
 
     opens org.quevedo.secretkeeper.gui.utils;
     opens org.quevedo.secretkeeper.gui.di;
