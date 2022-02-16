@@ -18,7 +18,7 @@ public class Configuration {
     private String driver;
     private String generalPassword;
 
-    public void loadConfig(){
+    public void loadConfig() {
         try {
             Yaml yaml = new Yaml();
             Iterable<Object> it;
@@ -31,7 +31,7 @@ public class Configuration {
             this.password = map.get(DaoConsts.PASSWORD);
             this.driver = map.get(DaoConsts.DRIVER);
             this.generalPassword = map.get(DaoConsts.GENERAL_PASSWORD);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             log.error(ex.getMessage(), ex);
         }
     }

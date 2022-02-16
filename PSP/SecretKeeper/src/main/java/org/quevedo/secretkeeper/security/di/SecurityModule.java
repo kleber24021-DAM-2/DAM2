@@ -1,8 +1,8 @@
-package org.quevedo.secretkeeper.dao.security.di;
+package org.quevedo.secretkeeper.security.di;
 
 import lombok.extern.log4j.Log4j2;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.quevedo.secretkeeper.dao.security.SecurityConsts;
+import org.quevedo.secretkeeper.security.utils.SecurityConsts;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
@@ -41,25 +41,25 @@ public class SecurityModule {
 
     @Produces
     @Named(SecurityConsts.KEY_GENERATOR_NAME)
-    public KeyPairGenerator produceKeyPairGen(){
+    public KeyPairGenerator produceKeyPairGen() {
         KeyPairGenerator keyPairGenerator = null;
         try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator = KeyPairGenerator.getInstance(SecurityConsts.KEYPAIR_ALGORITHM);
             keyPairGenerator.initialize(2048);
-        }catch (NoSuchAlgorithmException noSuchAlgorithmException){
+        } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
             log.error(noSuchAlgorithmException.getMessage(), noSuchAlgorithmException);
         }
         return keyPairGenerator;
     }
 
     @Produces
-    public BouncyCastleProvider bouncyCastleProvider(){
+    public BouncyCastleProvider bouncyCastleProvider() {
         return new BouncyCastleProvider();
     }
 
     @Produces
     @Named(SecurityConsts.RANDOM)
-    public SecureRandom producerSecureRandom(){
+    public SecureRandom producerSecureRandom() {
         return new SecureRandom();
     }
 

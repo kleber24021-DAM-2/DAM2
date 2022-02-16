@@ -1,7 +1,8 @@
-package org.quevedo.secretkeeper.dao.security;
+package org.quevedo.secretkeeper.security.simetrical;
 
 import com.google.common.primitives.Bytes;
 import lombok.extern.log4j.Log4j2;
+import org.quevedo.secretkeeper.security.utils.SecurityConsts;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

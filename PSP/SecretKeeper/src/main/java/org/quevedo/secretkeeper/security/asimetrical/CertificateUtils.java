@@ -1,4 +1,4 @@
-package org.quevedo.secretkeeper.dao.security;
+package org.quevedo.secretkeeper.security.asimetrical;
 
 import io.vavr.control.Either;
 import lombok.extern.log4j.Log4j2;
@@ -6,6 +6,7 @@ import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.quevedo.secretkeeper.config.Configuration;
+import org.quevedo.secretkeeper.security.utils.SecurityConsts;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,7 +24,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Log4j2
-public class CertCreate {
+public class CertificateUtils {
     public static final String KEY_STORES = "keyStores\\";
     private final KeyPairGenerator keyGen;
     private final SecureRandom secureRandom;
@@ -31,7 +32,7 @@ public class CertCreate {
     private final Configuration configuration;
 
     @Inject
-    public CertCreate(
+    public CertificateUtils(
             @Named(SecurityConsts.KEY_GENERATOR_NAME) KeyPairGenerator keyGen,
             @Named(SecurityConsts.RANDOM) SecureRandom secureRandom,
             BouncyCastleProvider bouncyCastleProvider,
@@ -43,8 +44,8 @@ public class CertCreate {
         this.configuration = configuration;
     }
 
-    public Either<String, String> createNewCertEntry(String username, String password) {
-        Either<String, String> result;
+    public Either<String, Boolean> createNewCertEntry(String username, String password) {
+        Either<String, Boolean> result;
         try {
             configuration.loadConfig();
             Security.addProvider(bouncyCastleProvider);
@@ -70,11 +71,11 @@ public class CertCreate {
             keyStore.load(null, null);
             keyStore.setCertificateEntry(username, cert);
             keyStore.setKeyEntry(username + SecurityConsts.PRIVATE, clavePrivada, passChar, new Certificate[]{cert});
-            FileOutputStream fileOutputStream = new FileOutputStream(KEY_STORES + username+SecurityConsts.KEY_STORE_PATH);
+            FileOutputStream fileOutputStream = new FileOutputStream(KEY_STORES + username + SecurityConsts.KEY_STORE_PATH);
             keyStore.store(fileOutputStream, configuration.getGeneralPassword().toCharArray());
             fileOutputStream.close();
 
-            result = Either.right(SecurityConsts.MSG_CREATED_CERT);
+            result = Either.right(true);
         } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException | KeyStoreException | IOException | CertificateException e) {
             log.error(e.getMessage(), e);
             result = Either.left(SecurityConsts.MSG_PROBLEM_CERT);
@@ -82,19 +83,33 @@ public class CertCreate {
         return result;
     }
 
-    public Either<String, String> checkUserCertificate(String username, String password) {
-        Either<String, String> result;
-        try {
+    public Either<String, KeyPair> checkUserCertificate(String username, String password) {
+        Either<String, KeyPair> result;
+        try (FileInputStream fis = new FileInputStream(KEY_STORES + username + SecurityConsts.KEY_STORE_PATH)) {
             configuration.loadConfig();
             KeyStore ksLoad = KeyStore.getInstance(SecurityConsts.KEY_STORE_ALGORITHM);
-            ksLoad.load(new FileInputStream(KEY_STORES + username+SecurityConsts.KEY_STORE_PATH), configuration.getGeneralPassword().toCharArray());
+            ksLoad.load(fis, configuration.getGeneralPassword().toCharArray());
             X509Certificate certificateLoaded = (X509Certificate) ksLoad.getCertificate(username);
             KeyStore.PasswordProtection pt = new KeyStore.PasswordProtection(password.toCharArray());
             KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) ksLoad.getEntry(username + SecurityConsts.PRIVATE, pt);
             PrivateKey keyLoaded = privateKeyEntry.getPrivateKey();
-            result = Either.right(keyLoaded.toString());
+            result = Either.right(new KeyPair(certificateLoaded.getPublicKey(), keyLoaded));
         } catch (NoSuchAlgorithmException | KeyStoreException | IOException | CertificateException | UnrecoverableEntryException e) {
             log.error(e.getMessage(), e);
+            result = Either.left(SecurityConsts.MSG_PROBLEM_OPEN_CERT);
+        }
+        return result;
+    }
+
+    public Either<String, PublicKey> getUserPublicKey(String username) {
+        Either<String, PublicKey> result;
+        try (FileInputStream fis = new FileInputStream(KEY_STORES + username + SecurityConsts.KEY_STORE_PATH)) {
+            KeyStore ksLoad = KeyStore.getInstance(SecurityConsts.KEY_STORE_ALGORITHM);
+            ksLoad.load(fis, configuration.getGeneralPassword().toCharArray());
+            X509Certificate certificateLoaded = (X509Certificate) ksLoad.getCertificate(username);
+            result = Either.right(certificateLoaded.getPublicKey());
+        } catch (NoSuchAlgorithmException | IOException | KeyStoreException | CertificateException exception) {
+            log.error(exception.getMessage(), exception);
             result = Either.left(SecurityConsts.MSG_PROBLEM_CERT);
         }
         return result;

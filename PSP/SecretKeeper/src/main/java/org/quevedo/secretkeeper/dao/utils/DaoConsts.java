@@ -20,6 +20,12 @@ public class DaoConsts {
     public static final String PREP_STMT_CACHE_SQL_LIMIT = "prepStmtCacheSqlLimit";
     public static final String PREP_STMT_CACHE_SQL_LIMIT_VALUE = "2048";
     public static final String GENERAL_PASSWORD = "generalPass";
+    public static final String QUERY_INSERT_SECRET = "INSERT INTO Secrets(message, SecretName) VALUES (?, ?)";
+    public static final String QUERY_INSERT_SHARED = "INSERT INTO Shared_Users (NombreUsuario, IdSecreto, PasswordCifrada) VALUES (?, ?, ?)";
+    public static final String EMPTY_STRING = "";
+    public static final String QUERY_GET_SHARED_WITH_BY_ID = "select NombreUsuario, PasswordCifrada from Shared_Users where IdSecreto = ?";
+    public static final String NOMBRE_USUARIO = "NombreUsuario";
+    public static final String PASSWORD_CIFRADA = "PasswordCifrada";
 
     private DaoConsts() {
     }

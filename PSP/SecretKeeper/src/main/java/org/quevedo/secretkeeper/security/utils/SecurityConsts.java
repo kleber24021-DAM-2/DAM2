@@ -1,4 +1,4 @@
-package org.quevedo.secretkeeper.dao.security;
+package org.quevedo.secretkeeper.security.utils;
 
 public class SecurityConsts {
     public static final String CIPHER_ALGORITHM = "AES/GCM/noPadding";
@@ -18,6 +18,11 @@ public class SecurityConsts {
     public static final String KEY_STORE_PATH = "KeyStore.pfx";
     public static final String MSG_CREATED_CERT = "Se ha creado el keyStore correctamente";
     public static final String MSG_PROBLEM_CERT = "Ha surgido un problema al crear el keyStore";
+    public static final String FOLDER_PATH = "keyStores";
+    public static final String RANDOM_PASS_GENERATOR = "RandomPassGenerator";
+    public static final String ASIM_CIPHER_ALGORITHM = "RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING";
+    public static final String KEYPAIR_ALGORITHM = "RSA";
+    public static final String MSG_PROBLEM_OPEN_CERT = "No se ha podido obtener el certificado. Posiblemente la contraseña sea invalida";
 
     private SecurityConsts() {
     }

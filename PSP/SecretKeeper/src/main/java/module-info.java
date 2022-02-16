@@ -18,17 +18,22 @@ module SecretKeeper {
     exports org.quevedo.secretkeeper.gui.di;
     exports org.quevedo.secretkeeper.gui.controllers;
     exports org.quevedo.secretkeeper.dao.utils;
-    exports org.quevedo.secretkeeper.dao.security;
-    exports org.quevedo.secretkeeper.dao.security.di;
+    exports org.quevedo.secretkeeper.security.di;
     exports org.quevedo.secretkeeper.services;
-    exports org.quevedo.secretkeeper.dao.spring;
+    exports org.quevedo.secretkeeper.dao.api;
     exports org.quevedo.secretkeeper.model;
     exports org.quevedo.secretkeeper.config;
+    exports org.quevedo.secretkeeper.dao.implementations;
+    exports org.quevedo.secretkeeper.security.utils;
 
     opens org.quevedo.secretkeeper.gui.utils;
     opens org.quevedo.secretkeeper.gui.di;
     opens org.quevedo.secretkeeper.gui.controllers;
     opens org.quevedo.secretkeeper.config;
     opens org.quevedo.secretkeeper.dao.utils;
-    opens org.quevedo.secretkeeper.dao.security;
+    exports org.quevedo.secretkeeper.security.simetrical;
+    opens org.quevedo.secretkeeper.security.simetrical;
+    opens org.quevedo.secretkeeper.security.utils;
+    exports org.quevedo.secretkeeper.security.asimetrical;
+    opens org.quevedo.secretkeeper.security.asimetrical;
 }
