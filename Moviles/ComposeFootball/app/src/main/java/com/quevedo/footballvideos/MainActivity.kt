@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.quevedo.footballvideos.ui.theme.FootballVideosTheme
@@ -16,34 +14,26 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FootballVideosTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+            MessageCard(name = "Andre")
         }
     }
 }
 
+data class Message(val author: String, val body: String)
+
 @Composable
-fun Greeting(name: String) {
-    LoginText(name, )
+fun MessageCard(name :String){
+    Text(text = "Hello $name!")
 }
 
 @Composable
-fun LoginText(
-    text:String,
-){
+fun MessageCard(msg:Message){
+    Text(text = msg.author)
+    Text(text = msg.body)
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun DefaultPreview() {
-    FootballVideosTheme {
-        Greeting("Android")
-    }
+fun PreviewMessageCard(){
+    MessageCard(name = "Android")
 }
