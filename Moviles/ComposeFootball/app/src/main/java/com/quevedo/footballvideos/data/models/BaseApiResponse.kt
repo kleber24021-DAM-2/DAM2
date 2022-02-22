@@ -1,8 +1,7 @@
-package com.example.seriesfollower.data.models.apimodels
+package com.quevedo.footballvideos.data.models
 
 import android.util.Log
-import com.example.seriesfollower.GeneralConstants
-import com.example.seriesfollower.data.utils.NetworkResult
+import com.quevedo.footballvideos.utils.GeneralConsts
 import retrofit2.Response
 
 abstract class BaseApiResponse {
@@ -20,7 +19,7 @@ abstract class BaseApiResponse {
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
-            Log.e(GeneralConstants.LOG_TAG, e.message.toString())
+            Log.e(GeneralConsts.ERROR_TAG, e.message.toString(), e)
             return error(e.message ?: e.toString())
         }
     }
@@ -36,11 +35,12 @@ abstract class BaseApiResponse {
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {
+            Log.e(GeneralConsts.ERROR_TAG, e.message.toString(), e)
             return error(e.message ?: e.toString())
         }
     }
 
 
     private fun <T> error(errorMessage: String): NetworkResult<T> =
-        NetworkResult.Error(GeneralConstants.API_CALL_FAILED + errorMessage)
+        NetworkResult.Error(GeneralConsts.API_CALL_FAILED + errorMessage)
 }
