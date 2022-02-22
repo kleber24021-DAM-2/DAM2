@@ -6,7 +6,6 @@ import com.quevedo.footballvideos.data.models.NetworkResult
 import com.quevedo.footballvideos.data.repositories.VideoRepository
 import com.quevedo.footballvideos.utils.GeneralConsts
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,8 +21,11 @@ class MainViewmodel @Inject constructor(
     }
     val uiState: StateFlow<MainContract.State> get() = _uiState
 
-    private val _error = Channel<String>()
-    val error: Channel<String> get() = _error
+    init {
+        viewModelScope.launch {
+            handleEvent(MainContract.Event.GetData)
+        }
+    }
 
     fun handleEvent(event: MainContract.Event) {
         when (event) {
@@ -32,9 +34,11 @@ class MainViewmodel @Inject constructor(
                     videoRepository
                         .getAllVideos()
                         .catch(action = { cause ->
-                            _error.send(
-                                cause.message ?: GeneralConsts.UNEXPECTED_REST_ERROR
-                            )
+                            _uiState.update {
+                                it.copy(
+                                    error = cause.message ?: GeneralConsts.UNEXPECTED_REST_ERROR
+                                )
+                            }
                         })
                         .collect { result ->
                             when (result) {
@@ -55,6 +59,13 @@ class MainViewmodel @Inject constructor(
             is MainContract.Event.ErrorMostrado -> {
                 _uiState.update {
                     it.copy(error = null)
+                }
+            }
+            is MainContract.Event.SelectVideo -> {
+                _uiState.update {
+                    it.copy(
+                        selectedVideo = event.selectedVideo
+                    )
                 }
             }
         }

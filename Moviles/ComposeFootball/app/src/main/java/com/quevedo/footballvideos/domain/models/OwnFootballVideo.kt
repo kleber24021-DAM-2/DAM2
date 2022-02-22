@@ -7,5 +7,5 @@ data class OwnFootballVideo(
     val date: LocalDateTime,
     val thumbnail: String,
     val title: String,
-    val videos: List<String>
+    val video: String
 )

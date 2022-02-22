@@ -1,4 +1,4 @@
-package com.quevedo.footballvideos.ui.screens.main
+package com.quevedo.footballvideos.ui.screens.main.components
 
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
