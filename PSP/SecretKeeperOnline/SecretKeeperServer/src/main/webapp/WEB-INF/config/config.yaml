@@ -1,5 +1,6 @@
 #Database connection config
-path: jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andrePadilla_LigaBaloncesto?useSSL=false
+path: jdbc:mysql://dam2.mysql.iesquevedo.es:3335/andre_secret_keeper?useSSL=false
 user: root
 password: quevedo2dam
 driver: com.mysql.cj.jdbc.Driver
+generalPass: 89y7345ghuit45g
