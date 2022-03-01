@@ -17,6 +17,7 @@ module SecretKeeperClient {
     requires javafx.controls;
     requires org.bouncycastle.provider;
     requires com.nimbusds.jose.jwt;
+    requires com.google.common;
 
     exports org.quevedo.client.gui.di;
     exports org.quevedo.client.services;
@@ -27,10 +28,14 @@ module SecretKeeperClient {
     exports org.quevedo.client.security.di;
     exports org.quevedo.client.dao.implementations;
     exports org.quevedo.client.security.asimetrical;
+    exports org.quevedo.client.dao.di.retrofit.interfaces;
+    exports org.quevedo.client.dao.utils;
+    exports org.quevedo.client.dao.interfaces;
 
     opens org.quevedo.client.dao.utils;
     opens org.quevedo.client.dao.di.retrofit;
     opens org.quevedo.client.gui.di;
     opens org.quevedo.client.gui.utils;
     opens org.quevedo.client.gui.controllers;
+    exports org.quevedo.client.security.simetrical;
 }

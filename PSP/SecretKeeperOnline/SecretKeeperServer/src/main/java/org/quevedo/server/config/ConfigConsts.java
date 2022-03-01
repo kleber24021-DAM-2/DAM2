@@ -8,6 +8,8 @@ public class ConfigConsts {
     public static final String DRIVER_PARAMETER = "driver";
     public static final String PATH_PARAMETER = "path";
     public static final String GENERAL_PASS = "generalPass";
+    public static final String ROOT = "root";
+    public static final String ROOT_PRIVATE = "root private";
 
     private ConfigConsts() {
     }

@@ -1,8 +1,10 @@
 package org.quevedo.client.services;
 
+import io.vavr.Tuple2;
 import io.vavr.control.Either;
 import org.quevedo.client.dao.interfaces.DaoUsuario;
-import org.quevedo.client.security.asimetrical.CertificateUtils;
+import org.quevedo.client.gui.utils.GuiConsts;
+import org.quevedo.client.security.asimetrical.CertUtils;
 import org.quevedo.client.security.utils.KeyUtils;
 import org.quevedo.common.models.Usuario;
 
@@ -13,13 +15,13 @@ import java.util.List;
 public class ServiceUsuario {
 
     private final DaoUsuario daoUsuario;
-    private final CertificateUtils certificateUtils;
+    private final CertUtils certificateUtils;
     private final KeyUtils keyUtils;
 
     @Inject
     public ServiceUsuario(
             DaoUsuario daoUsuario,
-            CertificateUtils certificateUtils,
+            CertUtils certificateUtils,
             KeyUtils keyUtils) {
         this.daoUsuario = daoUsuario;
         this.certificateUtils = certificateUtils;
@@ -30,7 +32,7 @@ public class ServiceUsuario {
     public Either<String, Usuario> createUser(String username, String password) {
         Either<String, Usuario> result;
         Either<String, Boolean> nameCheckResult = daoUsuario.userExists(username);
-        if (nameCheckResult.isRight()){
+        if (nameCheckResult.isRight()) {
             if (Boolean.FALSE.equals(nameCheckResult.get())) {
                 KeyPair keyPair = certificateUtils.createUserKeyPair();
                 Either<String, Usuario> resultOfCreation = daoUsuario.registerUser(username, keyUtils.passKeyToBase64(keyPair.getPublic()));
@@ -45,21 +47,21 @@ public class ServiceUsuario {
                     result = Either.left(resultOfCreation.getLeft());
                 }
             } else {
-                result = Either.left("User already exists");
+                result = Either.left(GuiConsts.MSG_USER_EXISTS);
             }
-        }else {
+        } else {
             result = Either.left(nameCheckResult.getLeft());
         }
         return result;
     }
 
-    public Either<String, Boolean> doLogin(String username, String password) {
-        Either<String, Boolean> doLogin;
+    public Either<String, Usuario> doLogin(String username, String password) {
+        Either<String, Usuario> doLogin;
         //1.Cogemos el certificado guardado en local
-        Either<String, String> certificateResult = certificateUtils.getUserCertificate(username, password);
+        Either<String, Tuple2<String, KeyPair>> certificateResult = certificateUtils.getUserCertificateAndKeyPair(username, password);
         if (certificateResult.isRight()) {
             //2.Enviamos el certificado al servidor
-            doLogin = daoUsuario.loginUser(certificateResult.get());
+            doLogin = daoUsuario.loginUser(username, certificateResult.get());
         } else {
             doLogin = Either.left(certificateResult.getLeft());
         }

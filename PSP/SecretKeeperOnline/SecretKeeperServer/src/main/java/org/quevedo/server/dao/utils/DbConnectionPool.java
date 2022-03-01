@@ -20,7 +20,7 @@ public class DbConnectionPool {
     private final DataSource hikariDatasource;
 
     @Inject
-    public DbConnectionPool(DataSource hikariDatasource){
+    public DbConnectionPool(DataSource hikariDatasource) {
         this.hikariDatasource = hikariDatasource;
     }
 

@@ -4,10 +4,10 @@ import com.google.gson.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import org.quevedo.client.config.Configuration;
+import org.quevedo.client.dao.di.retrofit.interfaces.SecretosApi;
 import org.quevedo.client.dao.di.retrofit.interfaces.UsuariosApi;
 import org.quevedo.client.dao.utils.StringConst;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
@@ -25,13 +25,13 @@ import java.util.List;
 public class RetrofitModule {
     @Produces
     @Singleton
-    public OkHttpClient getOkHttp() {
+    public OkHttpClient getOkHttp(AuthInterceptor authInterceptor) {
         return new OkHttpClient.Builder()
                 .protocols(List.of(Protocol.HTTP_1_1))
                 .readTimeout(Duration.of(3, ChronoUnit.MINUTES))
                 .callTimeout(Duration.of(3, ChronoUnit.MINUTES))
                 .connectTimeout(Duration.of(3, ChronoUnit.MINUTES))
-//                .addInterceptor(authInterceptor)
+                .addInterceptor(authInterceptor)
                 .build();
     }
 
@@ -63,6 +63,7 @@ public class RetrofitModule {
                         LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString()))
                 .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) -> new JsonPrimitive(localDate.toString()))
+                .setLenient()
                 .create();
     }
 
@@ -73,14 +74,20 @@ public class RetrofitModule {
                 .baseUrl(pathBase)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .client(httpClient)
                 .build();
     }
 
     @Produces
     @Singleton
-    public UsuariosApi createUsuariosApi(Retrofit retrofit){
+    public UsuariosApi createUsuariosApi(Retrofit retrofit) {
         return retrofit.create(UsuariosApi.class);
     }
+
+    @Produces
+    @Singleton
+    public SecretosApi createSecretosApi(Retrofit retrofit) {
+        return retrofit.create(SecretosApi.class);
+    }
 }
+

@@ -1,5 +1,7 @@
 package org.quevedo.client.security.asimetrical;
 
+import com.nimbusds.jose.util.X509CertUtils;
+import io.vavr.Tuple2;
 import io.vavr.control.Either;
 import lombok.extern.log4j.Log4j2;
 import org.bouncycastle.jce.X509Principal;
@@ -14,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -23,10 +26,9 @@ import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
 import java.util.Date;
-import com.nimbusds.jose.util.X509CertUtils;
 
 @Log4j2
-public class CertificateUtils {
+public class CertUtils {
     public static final String KEY_STORES = "keyStores\\";
     private final KeyPairGenerator keyGen;
     private final SecureRandom secureRandom;
@@ -34,7 +36,7 @@ public class CertificateUtils {
     private final Configuration configuration;
 
     @Inject
-    public CertificateUtils(
+    public CertUtils(
             @Named(SecurityConsts.KEY_GENERATOR_NAME) KeyPairGenerator keyGen,
             @Named(SecurityConsts.RANDOM) SecureRandom secureRandom,
             BouncyCastleProvider bouncyCastleProvider,
@@ -46,13 +48,13 @@ public class CertificateUtils {
         this.configuration = configuration;
     }
 
-    public KeyPair createUserKeyPair(){
+    public KeyPair createUserKeyPair() {
         configuration.loadConfig();
         Security.addProvider(bouncyCastleProvider);
         return keyGen.generateKeyPair();
     }
 
-    public Either<String, Boolean> createKeyStore(String serverCertificate, KeyPair userKeys, String username, String password){
+    public Either<String, Boolean> createKeyStore(String serverCertificate, KeyPair userKeys, String username, String password) {
         Either<String, Boolean> result;
         try {
             X509Certificate cert = X509CertUtils.parse(Base64.getUrlDecoder().decode(serverCertificate));
@@ -129,31 +131,53 @@ public class CertificateUtils {
         return result;
     }
 
-    public Either<String, String> getUserCertificate(String username, String password){
-        Either<String, String> result;
-        try (FileInputStream fis = new FileInputStream(KEY_STORES+username+SecurityConsts.KEY_STORE_PATH)){
+    public Either<String, Tuple2<String, KeyPair>> getUserCertificateAndKeyPair(String username, String password) {
+        Either<String, Tuple2<String, KeyPair>> result;
+        Tuple2<String, KeyPair> certificateAndKeyPair = new Tuple2<>("", null);
+        try (FileInputStream fis = new FileInputStream(KEY_STORES + username + SecurityConsts.KEY_STORE_PATH)) {
             configuration.loadConfig();
             KeyStore ksLoad = KeyStore.getInstance(SecurityConsts.KEY_STORE_ALGORITHM);
             ksLoad.load(fis, password.toCharArray());
             X509Certificate certificateLoaded = (X509Certificate) ksLoad.getCertificate(username);
-            result = Either.right(X509CertUtils.toPEMString(certificateLoaded));
-        } catch (IOException | KeyStoreException | CertificateException | NoSuchAlgorithmException exception) {
+            certificateAndKeyPair = certificateAndKeyPair.update1(X509CertUtils.toPEMString(certificateLoaded));
+            KeyStore.PasswordProtection pt = new KeyStore.PasswordProtection(password.toCharArray());
+            KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) ksLoad.getEntry(username + SecurityConsts.PRIVATE, pt);
+            PrivateKey keyLoaded = privateKeyEntry.getPrivateKey();
+            certificateAndKeyPair = certificateAndKeyPair.update2(new KeyPair(certificateLoaded.getPublicKey(), keyLoaded));
+            result = Either.right(certificateAndKeyPair);
+        } catch (IOException | KeyStoreException | CertificateException | NoSuchAlgorithmException | UnrecoverableEntryException exception) {
             log.error(exception.getMessage(), exception);
             result = Either.left(exception.getMessage());
         }
         return result;
     }
 
-    public Either<String, PublicKey> getUserPublicKey(String username) {
-        Either<String, PublicKey> result;
-        try (FileInputStream fis = new FileInputStream(KEY_STORES + username + SecurityConsts.KEY_STORE_PATH)) {
-            KeyStore ksLoad = KeyStore.getInstance(SecurityConsts.KEY_STORE_ALGORITHM);
-            ksLoad.load(fis, configuration.getGeneralPassword().toCharArray());
-            X509Certificate certificateLoaded = (X509Certificate) ksLoad.getCertificate(username);
-            result = Either.right(certificateLoaded.getPublicKey());
-        } catch (NoSuchAlgorithmException | IOException | KeyStoreException | CertificateException exception) {
+    public Either<String, String> signMessage(String message, PrivateKey privateKey) {
+        Either<String, String> result;
+        try {
+            Signature sign = Signature.getInstance(SecurityConsts.SIGN_ALGORITHM);
+            sign.initSign(privateKey);
+            sign.update(message.getBytes(StandardCharsets.UTF_8));
+            byte[] firma = sign.sign();
+            result = Either.right(Base64.getUrlEncoder().encodeToString(firma));
+        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException exception) {
             log.error(exception.getMessage(), exception);
-            result = Either.left(SecurityConsts.MSG_PROBLEM_CERT);
+            result = Either.left(exception.getMessage());
+        }
+        return result;
+    }
+
+    public Either<String, Boolean> verifySign(String message, String firma, String userCertificateBase64) {
+        Either<String, Boolean> result;
+        try {
+            X509Certificate userCertificate = X509CertUtils.parse(Base64.getUrlDecoder().decode(userCertificateBase64));
+            Signature sign = Signature.getInstance(SecurityConsts.SIGN_ALGORITHM);
+            sign.initVerify(userCertificate.getPublicKey());
+            sign.update(message.getBytes(StandardCharsets.UTF_8));
+            result = Either.right(sign.verify(Base64.getUrlDecoder().decode(firma)));
+        } catch (NoSuchAlgorithmException | SignatureException | InvalidKeyException exception) {
+            log.error(exception.getMessage(), exception);
+            result = Either.left(exception.getMessage());
         }
         return result;
     }

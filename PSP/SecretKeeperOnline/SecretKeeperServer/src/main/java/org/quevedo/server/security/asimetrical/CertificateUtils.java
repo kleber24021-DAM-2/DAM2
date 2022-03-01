@@ -1,5 +1,6 @@
 package org.quevedo.server.security.asimetrical;
 
+import com.nimbusds.jose.util.X509CertUtils;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import lombok.extern.log4j.Log4j2;
@@ -8,9 +9,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.quevedo.common.consts.SecurityConsts;
 import org.quevedo.server.config.Configuration;
+import org.quevedo.server.ee.EEConsts;
 
-import javax.crypto.spec.SecretKeySpec;
-import java.io.FileInputStream;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.CertificateEncodingException;
@@ -28,14 +28,14 @@ public class CertificateUtils {
     private final Configuration config;
 
     @Inject
-    private CertificateUtils(Configuration config){
+    private CertificateUtils(Configuration config) {
         this.config = config;
     }
 
-    public Either<String, String> createNewCert(String username, String publicKeyAsBase64){
+    public Either<String, String> createNewCert(String username, String publicKeyAsBase64) {
         Either<String, String> result;
+        Security.addProvider(new BouncyCastleProvider());
         try {
-            Security.addProvider(new BouncyCastleProvider());  // Cargar el provider BC
             byte[] publicKeyArrays = Base64.getUrlDecoder().decode(publicKeyAsBase64);
             PublicKey userPublicKey = KeyFactory.getInstance(SecurityConsts.KEYPAIR_ALGORITHM).generatePublic(new X509EncodedKeySpec(publicKeyArrays));
             X509V3CertificateGenerator certGenerator = new X509V3CertificateGenerator();
@@ -56,5 +56,38 @@ public class CertificateUtils {
             result = Either.left(e.getMessage());
         }
         return result;
+    }
+
+    public Either<String, Void> checkCert(String certificate) {
+        Either<String, Void> result;
+        try {
+            Security.addProvider(new BouncyCastleProvider());
+            byte[] certBytes = Base64.getUrlDecoder().decode(certificate);
+            X509Certificate cert = X509CertUtils.parse(certBytes);
+            cert.verify(config.getServerKeys().getPublic());
+            if (cert.getIssuerDN().getName().equals(SecurityConsts.CN_ISSUER)) {
+                result = Either.right(null);
+            } else {
+                result = Either.left(EEConsts.ISSUER_INCORRECTO);
+            }
+        } catch (InvalidKeyException invalidKeySpecException) {
+            result = Either.left(EEConsts.FIRMA_INCORRECTA);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            result = Either.left(e.getMessage());
+        }
+        return result;
+    }
+
+    public String getNameOfCertificate(String certificate) {
+        try {
+            Security.addProvider(new BouncyCastleProvider());
+            byte[] certBytes = Base64.getUrlDecoder().decode(certificate);
+            X509Certificate cert = X509CertUtils.parse(certBytes);
+            return cert.getSubjectDN().getName();
+        } catch (Exception exception) {
+            log.error(exception.getMessage(), exception);
+            return null;
+        }
     }
 }

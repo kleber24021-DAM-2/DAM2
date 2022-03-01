@@ -2,17 +2,15 @@ package org.quevedo.client.dao.interfaces;
 
 import io.vavr.control.Either;
 import org.quevedo.common.models.Secreto;
+import org.quevedo.common.models.SecretoDTO;
+import org.quevedo.common.models.UserPassword;
 
 import java.util.List;
 
 public interface DaoSecretos {
-    Either<String, Secreto> saveSecret(Secreto toSave);
+    Either<String, SecretoDTO> saveSecret(Secreto toSave);
 
-    Either<String, Secreto> fetchSecreto(Secreto toFetch);
+    Either<String, List<Secreto>> getAllSecretsByLoggedUser();
 
-    Either<String, Secreto> shareSecretoWithUsers(Secreto toShare);
-
-    Either<String, List<Secreto>> getAllUndecryptedSecrets();
-
-    void closePool();
+    Either<String , UserPassword> getPasswordBySecretUserId(int secretId, int userId);
 }

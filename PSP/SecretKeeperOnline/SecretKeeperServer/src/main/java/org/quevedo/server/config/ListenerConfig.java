@@ -10,7 +10,7 @@ public class ListenerConfig implements ServletContextListener {
     private final Configuration config;
 
     @Inject
-    public ListenerConfig(Configuration config){
+    public ListenerConfig(Configuration config) {
         this.config = config;
     }
 

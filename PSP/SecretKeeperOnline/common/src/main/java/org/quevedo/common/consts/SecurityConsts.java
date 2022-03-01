@@ -12,17 +12,17 @@ public class SecurityConsts {
     public static final String RANDOM = "random";
     public static final String CN = "CN=";
     public static final String CN_ISSUER = "CN=Misco";
-    public static final String SIGNATURE_ALGORITHM = "SHA1WithRSAEncryption";
+    public static final String SIGNATURE_ALGORITHM = "SHA1WITHRSAENCRYPTION";
     public static final String KEY_STORE_ALGORITHM = "PKCS12";
     public static final String PRIVATE = " private";
     public static final String KEY_STORE_PATH = "KeyStore.pfx";
-    public static final String MSG_CREATED_CERT = "Se ha creado el keyStore correctamente";
     public static final String MSG_PROBLEM_CERT = "Ha surgido un problema al crear el keyStore";
-    public static final String FOLDER_PATH = "keyStores";
     public static final String RANDOM_PASS_GENERATOR = "RandomPassGenerator";
     public static final String ASIM_CIPHER_ALGORITHM = "RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING";
     public static final String KEYPAIR_ALGORITHM = "RSA";
     public static final String MSG_PROBLEM_OPEN_CERT = "No se ha podido obtener el certificado. Posiblemente la contraseña sea invalida";
+    public static final String SIGN_ALGORITHM = "SHA256WithRSA";
+    public static final String CIPHER = "Cipher";
 
     private SecurityConsts() {
     }

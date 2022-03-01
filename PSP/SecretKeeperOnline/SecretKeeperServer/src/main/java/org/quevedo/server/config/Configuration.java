@@ -42,16 +42,16 @@ public class Configuration {
         }
     }
 
-    void loadServerKey(InputStream fileStream){
+    void loadServerKey(InputStream fileStream) {
         try {
             KeyStore ksLoad = KeyStore.getInstance(SecurityConsts.KEY_STORE_ALGORITHM);
             ksLoad.load(fileStream, generalPass.toCharArray());
-            X509Certificate certicateLoaded = (X509Certificate) ksLoad.getCertificate("root");
-            KeyStore.PasswordProtection pt = new KeyStore.PasswordProtection("root".toCharArray());
-            KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) ksLoad.getEntry("root private", pt);
+            X509Certificate certicateLoaded = (X509Certificate) ksLoad.getCertificate(ConfigConsts.ROOT);
+            KeyStore.PasswordProtection pt = new KeyStore.PasswordProtection(ConfigConsts.ROOT.toCharArray());
+            KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) ksLoad.getEntry(ConfigConsts.ROOT_PRIVATE, pt);
             PrivateKey keyLoaded = privateKeyEntry.getPrivateKey();
             serverKeys = new KeyPair(certicateLoaded.getPublicKey(), keyLoaded);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
     }
